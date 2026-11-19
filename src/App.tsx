@@ -608,9 +608,6 @@ export default function App(){
         <span className="detail-badge" style={{color:selectedMetro.color}}><TrainFront size={12}/>{selectedMetro.city==='sz'?'深圳地铁':'香港港铁'}{selectedMetro.interchange?' · 换乘':''}</span>
         <h1>{selectedMetro.name}站</h1>
         <p className="detail-sub">{selectedMetro.lineLabel}</p>
-        <div className="detail-actions">
-         <button className="action-pill" onClick={()=>fly(selectedMetro.coordinates,15.5)}><MapPin size={14}/><span>定位</span></button>
-        </div>
         <h2 className="section-label">附近路线</h2>
         <div className="clean-list">{metroNearbyRoutes.map(({r,km})=>routeRow(r,`距 ${km.toFixed(1)} km`))}</div>
         {metroNearbySpots.length>0&&(
@@ -646,7 +643,6 @@ export default function App(){
           {selectedXhs.hours&&<p className="detail-hours"><Clock size={13}/><span>{selectedXhs.hours}</span></p>}
           <div className="detail-actions">
            {placeActions(selectedXhs.id)}
-           <button className="action-pill" onClick={()=>focusXhs(selectedXhs,16)}><MapPin size={14}/><span>定位</span></button>
            <a className="action-pill" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(selectedXhs.name+(selectedXhs.city==='sz'?' 深圳':' 香港'))}`} target="_blank" rel="noreferrer"><ArrowUpRight size={14}/><span>导航</span></a>
           </div>
           {nearbyRoutes.length>0&&(
