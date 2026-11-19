@@ -2,5 +2,7 @@ node_modules/
 dist/
 output/
 data/raw/expansion-sources/
+__pycache__/
+*.pyc
 *.tsbuildinfo
 .DS_Store
