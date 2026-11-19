@@ -12,4 +12,4 @@ export interface Route {city?:City;itineraryLegs:{fromIndex:number;toIndex:numbe
 export interface XhsSpot {id:string;city:City;name:string;category:string;coordinates:Coord;address:string;source:string;sourceUrl:string;noteId:string;noteTitle:string;noteUrl:string;snippet:string;status?:'closed'|'ended'|'seasonal';statusNote?:string;hours?:string;menuUrl?:string;orderNote?:string;geometry?:FeatureCollection<LineString>}
 export interface XhsNote {id:string;city:City;title:string;category:string;noteUrl:string;hints:string[];snippet:string}
 export interface MetroStation {name:string;city:City;color:string;interchange:boolean;lineLabel:string;coordinates:Coord}
-export interface Records {favorites:string[];visits:Record<string,string>;completed:Record<string,string>;checkins?:Record<string,string>;likes?:string[];tried?:Record<string,string>}
+export interface Records {favorites:string[];visits:Record<string,string>;completed:Record<string,string>;checkins?:Record<string,string>}

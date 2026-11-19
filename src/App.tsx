@@ -1,7 +1,7 @@
 import {type ComponentType,useEffect,useMemo,useRef,useState} from 'react';
 import type {Map} from 'maplibre-gl';
 import type {FeatureCollection} from 'geojson';
-import {Search,Sun,Moon,Heart,Compass,ArrowLeft,X,ArrowUpRight,MapPin,Check,ChevronRight,ChevronDown,TrainFront,Clock,Maximize2,Route as RouteIcon,LocateFixed,Stamp,ThumbsUp,Sprout} from 'lucide-react';
+import {Search,Sun,Moon,Heart,Compass,ArrowLeft,X,ArrowUpRight,MapPin,Check,ChevronRight,ChevronDown,TrainFront,Clock,Maximize2,Route as RouteIcon,LocateFixed,Stamp} from 'lucide-react';
 import MapView from './MapView';
 import PlacePhoto from './PlacePhoto';
 import {TransportDetails} from './Transport';
@@ -32,7 +32,9 @@ const CITY_CONFIG:Record<City,{name:string;center:Coord;zoom:number;bounds:[numb
   transitLabel:'地铁出口与离开点',
  },
 };
-const emptyRecords:Records={favorites:[],visits:{},completed:{},checkins:{},likes:[],tried:{}};
+const emptyRecords:Records={favorites:[],visits:{},completed:{},checkins:{}};
+const DEFAULT_HIDDEN_SPOT_CATS=new Set(['超市','商场','校园设施','医院']);
+const defaultSpotCatsFor=(spots:XhsSpot[],c:City)=>[...new Set(spots.filter(s=>s.city===c).map(s=>s.category))].filter(cat=>!DEFAULT_HIDDEN_SPOT_CATS.has(cat));
 
 function readRecords():{value:Records;error:string}{
  try{
@@ -40,9 +42,8 @@ function readRecords():{value:Records;error:string}{
   if(!s)return {value:emptyRecords,error:''};
   const v=JSON.parse(s);
   if(!Array.isArray(v.favorites)||!v.favorites.every((x:unknown)=>typeof x==='string')||!v.visits||!v.completed||typeof v.visits!=='object'||typeof v.completed!=='object')throw Error();
-  const strArr=(x:unknown)=>Array.isArray(x)&&x.every((i):i is string=>typeof i==='string')?x:[];
   const strMap=(x:unknown)=>x&&typeof x==='object'&&!Array.isArray(x)?x as Record<string,string>:{};
-  return {value:{favorites:v.favorites,visits:v.visits,completed:v.completed,checkins:strMap(v.checkins),likes:strArr(v.likes),tried:strMap(v.tried)},error:''};
+  return {value:{favorites:v.favorites,visits:v.visits,completed:v.completed,checkins:strMap(v.checkins)},error:''};
  }catch{
   return {value:emptyRecords,error:'本地记录无法读取；本次改动暂不覆盖原记录。'};
  }
@@ -92,7 +93,11 @@ export default function App(){
    }
    return r.json();
   }))).then(([areas,places,routes,xhsSpots,xhsNotes,metroData])=>{
-   if(active)setData({areas,places:places.features.map((f:{properties:Place})=>f.properties),routes,xhsSpots:Array.isArray(xhsSpots)?xhsSpots:[],xhsNotes:Array.isArray(xhsNotes)?xhsNotes:[],metroData:metroData&&metroData.type==='FeatureCollection'?metroData:null});
+   if(active){
+    const spots:XhsSpot[]=Array.isArray(xhsSpots)?xhsSpots:[];
+    setSpotCats(defaultSpotCatsFor(spots,city));
+    setData({areas,places:places.features.map((f:{properties:Place})=>f.properties),routes,xhsSpots:spots,xhsNotes:Array.isArray(xhsNotes)?xhsNotes:[],metroData:metroData&&metroData.type==='FeatureCollection'?metroData:null});
+   }
   }).catch(()=>{if(active)setError('内容未能加载，请刷新重试。');});
   return()=>{active=false;};
  },[]);
@@ -126,17 +131,15 @@ export default function App(){
   try{localStorage.setItem(KEY,JSON.stringify(next));setNotice('已保存在这台设备');}
   catch{setNotice('浏览器无法保存，记录仅在当前页面有效。');}
  }
- function toggleRecordTag(id:string,field:'favorites'|'likes'){
-  const list=records[field]??[];
-  save({...records,[field]:list.includes(id)?list.filter(i=>i!==id):[...list,id]});
+ function favorite(id:string){
+  save({...records,favorites:records.favorites.includes(id)?records.favorites.filter(i=>i!==id):[...records.favorites,id]});
  }
- function toggleRecordDate(id:string,field:'checkins'|'tried'){
-  const next={...(records[field]??{})};
+ function toggleCheckin(id:string){
+  const next={...(records.checkins??{})};
   if(next[id])delete next[id];
   else next[id]=todayStr;
-  save({...records,[field]:next});
+  save({...records,checkins:next});
  }
- function favorite(id:string){toggleRecordTag(id,'favorites');}
  function toggleDone(r:Route){
   const completed={...records.completed};
   const visits={...records.visits};
@@ -161,7 +164,7 @@ export default function App(){
  }
  function switchCity(next:City){
   if(next===city)return;
-  setCity(next);setQuery('');setMetroLines(null);setSpotCats(null);setOpenMenu(null);
+  setCity(next);setQuery('');setMetroLines(null);setSpotCats(data?defaultSpotCatsFor(data.xhsSpots,next):null);setOpenMenu(null);
   close();
   map.current?.fitBounds(CITY_CONFIG[next].bounds,{padding:60,duration:850});
  }
@@ -229,19 +232,11 @@ export default function App(){
  const placeActions=(id:string)=>{
   const label=itemLabel(id);
   const checked=!!records.checkins?.[id];
-  const liked=records.likes?.includes(id)??false;
-  const tried=!!records.tried?.[id];
   return (
    <>
     {favButton(id)}
-    <button className={`action-pill ${checked?'is-checkin':''}`} aria-pressed={checked} aria-label={`${checked?'取消打卡':'打卡'}${label}`} onClick={()=>toggleRecordDate(id,'checkins')}>
+    <button className={`action-pill ${checked?'is-checkin':''}`} aria-pressed={checked} aria-label={`${checked?'取消打卡':'打卡'}${label}`} onClick={()=>toggleCheckin(id)}>
      <Stamp size={14}/><span>{checked?'已打卡':'打卡'}</span>
-    </button>
-    <button className={`action-pill ${liked?'is-liked':''}`} aria-pressed={liked} aria-label={`${liked?'取消点赞':'点赞'}${label}`} onClick={()=>toggleRecordTag(id,'likes')}>
-     <ThumbsUp size={14} fill={liked?'currentColor':'none'}/><span>{liked?'已点赞':'点赞'}</span>
-    </button>
-    <button className={`action-pill ${tried?'is-done':''}`} aria-pressed={tried} aria-label={`${tried?'取消拔草':'拔草'}${label}`} onClick={()=>toggleRecordDate(id,'tried')}>
-     <Sprout size={14}/><span>{tried?'已拔草':'拔草'}</span>
     </button>
    </>
   );
@@ -333,17 +328,12 @@ export default function App(){
  const completedRoutes=useMemo(()=>routes.filter(r=>records.completed[r.id]),[routes,records.completed]);
  const spotFootprints=useMemo(()=>{
   const list:{id:string;kind:'place'|'xhs';city:City;title:string;cat:string;sub:string;obj:Place|XhsSpot|XhsNote;isNote?:boolean}[]=[];
-  const tag=(id:string)=>{
-   const parts:string[]=[];
-   if(records.checkins?.[id])parts.push(`打卡 ${records.checkins[id]}`);
-   if(records.tried?.[id])parts.push(`拔草 ${records.tried[id]}`);
-   return parts.join(' · ');
-  };
+  const tag=(id:string)=>records.checkins?.[id]?`打卡 ${records.checkins[id]}`:'';
   for(const p of places){const sub=tag(p.id);if(sub)list.push({id:p.id,kind:'place',city:p.city??'hk',title:p.nameZh,cat:p.categories[0]??'地点',sub,obj:p});}
   for(const s of xhsSpots){const sub=tag(s.id);if(sub)list.push({id:s.id,kind:'xhs',city:s.city,title:s.name,cat:s.category,sub,obj:s});}
   for(const n of xhsNotes){const sub=tag(n.id);if(sub)list.push({id:n.id,kind:'xhs',city:n.city,title:n.title,cat:n.category,sub,obj:n,isNote:true});}
   return list;
- },[places,xhsSpots,xhsNotes,records.checkins,records.tried]);
+ },[places,xhsSpots,xhsNotes,records.checkins]);
  const footprintCount=completedRoutes.length+spotFootprints.length;
 
  const nearbyRoutes=selectedXhs?cityRoutes.map(r=>{const a=areas.find(x=>x.id===r.areaId);return a?{r,km:distanceKm(selectedXhs.coordinates,a.coordinates)}:null;}).filter((x):x is {r:Route;km:number}=>!!x).sort((a,b)=>a.km-b.km).slice(0,2):[];
@@ -368,7 +358,7 @@ export default function App(){
      <button className={`spot-bubble-btn ${saved?'is-saved':''}`} aria-pressed={saved} onClick={()=>favorite(bubbleSpot.id)}>
       <Heart size={12} fill={saved?'currentColor':'none'}/><span>{saved?'已收藏':'收藏'}</span>
      </button>
-     <button className={`spot-bubble-btn ${checked?'is-checkin':''}`} aria-pressed={checked} onClick={()=>toggleRecordDate(bubbleSpot.id,'checkins')}>
+     <button className={`spot-bubble-btn ${checked?'is-checkin':''}`} aria-pressed={checked} onClick={()=>toggleCheckin(bubbleSpot.id)}>
       <Stamp size={12}/><span>{checked?'已打卡':'打卡'}</span>
      </button>
      <a className="spot-bubble-btn" href={navUrl} target="_blank" rel="noreferrer">
@@ -606,7 +596,7 @@ export default function App(){
              {completedRoutes.map(r=>routeRow(r,`走过 ${records.completed[r.id]}`))}
              {spotFootprints.map(spotRow)}
             </>
-           ):<p className="empty">暂无足迹，在路线或地点页点击「标记走过」「打卡」「拔草」即可记录。</p>
+           ):<p className="empty">暂无足迹，在路线或地点页点击「标记走过」「打卡」即可记录。</p>
           )}
          </div>
         </>
