@@ -70,6 +70,7 @@ export default function App(){
  const [xhsNoteId,setXhsNoteId]=useState('');
  const [selectedMetro,setSelectedMetro]=useState<MetroStation|null>(null);
  const [bubbleSpot,setBubbleSpot]=useState<XhsSpot|null>(null);
+ const [bubbleExpanded,setBubbleExpanded]=useState(false);
  const [showRoutes,setShowRoutes]=useState(false);
  const [showMetro,setShowMetro]=useState(false);
  const [showPlaces,setShowPlaces]=useState(true);
@@ -108,7 +109,7 @@ export default function App(){
  useEffect(()=>{
   if(!openMenu&&!bubbleSpot)return;
   const onDown=(e:PointerEvent)=>{if(openMenu&&!layerRef.current?.contains(e.target as Node))setOpenMenu(null);};
-  const onKey=(e:KeyboardEvent)=>{if(e.key==='Escape'){setOpenMenu(null);setBubbleSpot(null);}};
+  const onKey=(e:KeyboardEvent)=>{if(e.key==='Escape'){setOpenMenu(null);setBubbleSpot(null);setBubbleExpanded(false);}};
   window.addEventListener('pointerdown',onDown);
   window.addEventListener('keydown',onKey);
   return()=>{window.removeEventListener('pointerdown',onDown);window.removeEventListener('keydown',onKey);};
@@ -160,7 +161,7 @@ export default function App(){
   map.current?.fitBounds(a.bounds,{padding:window.innerWidth<700?{top:140,bottom:window.innerHeight*.48,left:40,right:40}:{top:90,bottom:80,left:430,right:80},maxZoom:15,duration:700});
  }
  function close(){
-  setView(null);setAreaId('');setPlaceId('');setRouteId('');setXhsId('');setXhsNoteId('');setSelectedMetro(null);setBubbleSpot(null);
+  setView(null);setAreaId('');setPlaceId('');setRouteId('');setXhsId('');setXhsNoteId('');setSelectedMetro(null);setBubbleSpot(null);setBubbleExpanded(false);
  }
  function switchCity(next:City){
   if(next===city)return;
@@ -193,19 +194,20 @@ export default function App(){
   const pts=s.geometry?.features.flatMap(f=>f.geometry.coordinates)??[];
   if(pts.length>1){
    const lons=pts.map(c=>c[0]),lats=pts.map(c=>c[1]);
-   map.current?.fitBounds([[Math.min(...lons),Math.min(...lats)],[Math.max(...lons),Math.max(...lats)]],{padding:window.innerWidth<700?{top:140,bottom:window.innerHeight*.48,left:40,right:40}:{top:90,bottom:80,left:430,right:80},maxZoom:16.8,duration:700});
-  }else fly(s.coordinates,zoom);
+   map.current?.fitBounds([[Math.min(...lons),Math.min(...lats)],[Math.max(...lons),Math.max(...lats)]],{padding:{top:190,bottom:80,left:60,right:60},maxZoom:16.8,duration:700});
+  }else map.current?.flyTo({center:s.coordinates,zoom,offset:[0,95],duration:650,essential:false});
  }
  function previewXhs(s:XhsSpot){
   setView(null);setAreaId('');setPlaceId('');setRouteId('');setXhsId('');setXhsNoteId('');setSelectedMetro(null);
-  setBubbleSpot(s);
+  setBubbleSpot(s);setBubbleExpanded(false);
   const z=map.current?.getZoom()??11.5;
-  map.current?.easeTo({center:s.coordinates,zoom:Math.max(z,13.5),duration:450,essential:false});
+  map.current?.easeTo({center:s.coordinates,zoom:Math.max(z,13.5),offset:[0,65],duration:450,essential:false});
  }
  function selectXhs(s:XhsSpot){
-  if(s.city!==city)setCity(s.city);
-  setAreaId('');setRouteId('');setPlaceId('');setXhsId(s.id);setXhsNoteId('');setSelectedMetro(null);setBubbleSpot(null);
-  setShowPlaces(true);setQuery('');setView('xhs');focusXhs(s,15.5);
+  if(s.city!==city){setCity(s.city);setSpotCats(data?defaultSpotCatsFor(data.xhsSpots,s.city):null);}
+  setView(null);setAreaId('');setRouteId('');setPlaceId('');setXhsId('');setXhsNoteId('');setSelectedMetro(null);
+  setBubbleSpot(s);setBubbleExpanded(true);
+  setShowPlaces(true);setQuery('');focusXhs(s,15.5);
  }
  function selectXhsNote(n:XhsNote){
   if(n.city!==city)setCity(n.city);
@@ -299,8 +301,8 @@ export default function App(){
  const showPlacesEffective=showPlaces&&activeSpotCats.length>0;
  const mapXhsSpots=useMemo(()=>{
   if(spotCats===null)return cityXhs;
-  return cityXhs.filter(s=>spotCats.includes(s.category)||s.id===xhsId);
- },[cityXhs,spotCats,xhsId]);
+  return cityXhs.filter(s=>spotCats.includes(s.category)||s.id===bubbleSpot?.id);
+ },[cityXhs,spotCats,bubbleSpot?.id]);
  function toggleLayerCat(name:string,allNames:string[],visible:boolean,selected:string[]|null,setSelected:(v:string[]|null)=>void,setVisible:(v:boolean)=>void){
   if(!visible){setSelected([name]);setVisible(true);return;}
   const cur=selected===null?allNames:selected;
@@ -336,7 +338,7 @@ export default function App(){
  },[places,xhsSpots,xhsNotes,records.checkins]);
  const footprintCount=completedRoutes.length+spotFootprints.length;
 
- const nearbyRoutes=selectedXhs?cityRoutes.map(r=>{const a=areas.find(x=>x.id===r.areaId);return a?{r,km:distanceKm(selectedXhs.coordinates,a.coordinates)}:null;}).filter((x):x is {r:Route;km:number}=>!!x).sort((a,b)=>a.km-b.km).slice(0,2):[];
+ const nearbyRoutes=bubbleSpot?cityRoutes.map(r=>{const a=areas.find(x=>x.id===r.areaId);return a?{r,km:distanceKm(bubbleSpot.coordinates,a.coordinates)}:null;}).filter((x):x is {r:Route;km:number}=>!!x).sort((a,b)=>a.km-b.km).slice(0,2):[];
  const metroNearbyRoutes=selectedMetro?cityRoutes.map(r=>{const a=areas.find(x=>x.id===r.areaId);return a?{r,km:distanceKm(selectedMetro.coordinates,a.coordinates)}:null;}).filter((x):x is {r:Route;km:number}=>!!x).sort((a,b)=>a.km-b.km).slice(0,4):[];
  const metroNearbySpots=selectedMetro?cityXhs.map(s=>({s,km:distanceKm(selectedMetro.coordinates,s.coordinates)})).sort((a,b)=>a.km-b.km).slice(0,5):[];
 
@@ -347,27 +349,68 @@ export default function App(){
   const checked=!!records.checkins?.[bubbleSpot.id];
   const navUrl=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(bubbleSpot.name+(bubbleSpot.city==='sz'?' 深圳':' 香港'))}`;
   return (
-   <div className="spot-bubble" role="dialog" aria-label={bubbleSpot.name} onClick={e=>e.stopPropagation()}>
+   <div className={`spot-bubble ${bubbleExpanded?'is-expanded':''}`} role="dialog" aria-label={bubbleSpot.name} onClick={e=>e.stopPropagation()}>
     <div className="spot-bubble-head">
      <span className="spot-bubble-cat" style={{color:bm.color}}><BIcon size={12}/><span>{bubbleSpot.category}</span></span>
-     <button className="spot-bubble-close" aria-label="关闭气泡" onClick={()=>setBubbleSpot(null)}><X size={13}/></button>
+     <button className="spot-bubble-close" aria-label="关闭气泡" onClick={()=>{setBubbleSpot(null);setBubbleExpanded(false);}}><X size={13}/></button>
     </div>
     <h2 className="spot-bubble-title">{bubbleSpot.name}</h2>
-    {(bubbleSpot.address||bubbleSpot.hours)&&<p className="spot-bubble-sub">{bubbleSpot.address||bubbleSpot.hours}</p>}
-    <div className="spot-bubble-actions">
-     <button className={`spot-bubble-btn ${saved?'is-saved':''}`} aria-pressed={saved} onClick={()=>favorite(bubbleSpot.id)}>
-      <Heart size={12} fill={saved?'currentColor':'none'}/><span>{saved?'已收藏':'收藏'}</span>
-     </button>
-     <button className={`spot-bubble-btn ${checked?'is-checkin':''}`} aria-pressed={checked} onClick={()=>toggleCheckin(bubbleSpot.id)}>
-      <Stamp size={12}/><span>{checked?'已打卡':'打卡'}</span>
-     </button>
-     <a className="spot-bubble-btn" href={navUrl} target="_blank" rel="noreferrer">
-      <ArrowUpRight size={12}/><span>导航</span>
-     </a>
-     <button className="spot-bubble-btn is-detail" onClick={()=>selectXhs(bubbleSpot)}>
-      <span>详情</span><ChevronRight size={12}/>
-     </button>
-    </div>
+    {bubbleExpanded?(
+     <>
+      {(bubbleSpot.address||bubbleSpot.hours)&&(
+       <div className="spot-bubble-meta">
+        {bubbleSpot.address&&<p><MapPin size={12}/><span>{bubbleSpot.address}</span></p>}
+        {bubbleSpot.hours&&<p><Clock size={12}/><span>{bubbleSpot.hours}</span></p>}
+       </div>
+      )}
+      <div className="spot-bubble-actions">
+       <button className={`spot-bubble-btn ${saved?'is-saved':''}`} aria-pressed={saved} onClick={()=>favorite(bubbleSpot.id)}>
+        <Heart size={12} fill={saved?'currentColor':'none'}/><span>{saved?'已收藏':'收藏'}</span>
+       </button>
+       <button className={`spot-bubble-btn ${checked?'is-checkin':''}`} aria-pressed={checked} onClick={()=>toggleCheckin(bubbleSpot.id)}>
+        <Stamp size={12}/><span>{checked?'已打卡':'打卡'}</span>
+       </button>
+       <a className="spot-bubble-btn" href={navUrl} target="_blank" rel="noreferrer">
+        <ArrowUpRight size={12}/><span>导航</span>
+       </a>
+      </div>
+      {nearbyRoutes.length>0&&(
+       <div className="spot-bubble-routes">
+        <div className="spot-bubble-routes-title">顺路路线</div>
+        <div className="spot-bubble-routes-list">
+         {nearbyRoutes.map(({r,km})=>(
+          <button key={r.id} className="spot-bubble-route-row" onClick={()=>selectRoute(r)}>
+           <i className="row-dot" style={{background:categoryColor(routeCategory(r,''),dark)}}/>
+           <span className="row-body">
+            <strong>{r.title}</strong>
+            <small>{((r.distance??0)/1000).toFixed(1)} km · 距 {km.toFixed(1)} km</small>
+           </span>
+           <ChevronRight size={13}/>
+          </button>
+         ))}
+        </div>
+       </div>
+      )}
+     </>
+    ):(
+     <>
+      {(bubbleSpot.address||bubbleSpot.hours)&&<p className="spot-bubble-sub">{bubbleSpot.address||bubbleSpot.hours}</p>}
+      <div className="spot-bubble-actions">
+       <button className={`spot-bubble-btn ${saved?'is-saved':''}`} aria-pressed={saved} onClick={()=>favorite(bubbleSpot.id)}>
+        <Heart size={12} fill={saved?'currentColor':'none'}/><span>{saved?'已收藏':'收藏'}</span>
+       </button>
+       <button className={`spot-bubble-btn ${checked?'is-checkin':''}`} aria-pressed={checked} onClick={()=>toggleCheckin(bubbleSpot.id)}>
+        <Stamp size={12}/><span>{checked?'已打卡':'打卡'}</span>
+       </button>
+       <a className="spot-bubble-btn" href={navUrl} target="_blank" rel="noreferrer">
+        <ArrowUpRight size={12}/><span>导航</span>
+       </a>
+       <button className="spot-bubble-btn is-detail" onClick={()=>{setBubbleExpanded(true);focusXhs(bubbleSpot,Math.max(map.current?.getZoom()??14,14.5));}}>
+        <span>详情</span><ChevronRight size={12}/>
+       </button>
+      </div>
+     </>
+    )}
    </div>
   );
  })():null;
@@ -394,8 +437,8 @@ export default function App(){
     onPlace={p=>selectPlace(p,!!activeRoute)}
     onReady={m=>{map.current=m;}}
     xhsSpots={mapXhsSpots}
-    showXhs={!!selectedXhs}
-    selectedXhs={selectedXhs??bubbleSpot??undefined}
+    showXhs={!!bubbleSpot&&bubbleExpanded}
+    selectedXhs={bubbleSpot??undefined}
     onXhs={previewXhs}
     favorites={records.favorites}
     showRoutes={showRoutesEffective}
@@ -408,7 +451,7 @@ export default function App(){
     onMetroStation={selectMetroStation}
     bubbleCoord={bubbleSpot?.coordinates}
     bubble={spotBubble}
-    onMapClick={()=>setBubbleSpot(null)}
+    onMapClick={()=>{setBubbleSpot(null);setBubbleExpanded(false);}}
    />
 
    <header className="topbar">
@@ -631,43 +674,20 @@ export default function App(){
        </>
       )}
 
-      {view==='xhs'&&(
-       selectedXhs?(()=>{
-        const sm=xhsCategoryMeta(selectedXhs.category,dark);
-        const SIcon=sm.icon;
-        return (
-         <>
-          <span className="detail-badge" style={{color:sm.color}}><SIcon size={12}/>{selectedXhs.category}</span>
-          <h1>{selectedXhs.name}</h1>
-          {selectedXhs.address&&<p className="detail-addr"><MapPin size={13}/><span>{selectedXhs.address}</span></p>}
-          {selectedXhs.hours&&<p className="detail-hours"><Clock size={13}/><span>{selectedXhs.hours}</span></p>}
-          <div className="detail-actions">
-           {placeActions(selectedXhs.id)}
-           <a className="action-pill" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(selectedXhs.name+(selectedXhs.city==='sz'?' 深圳':' 香港'))}`} target="_blank" rel="noreferrer"><ArrowUpRight size={14}/><span>导航</span></a>
-          </div>
-          {nearbyRoutes.length>0&&(
-           <>
-            <h2 className="section-label">顺路路线</h2>
-            <div className="clean-list">{nearbyRoutes.map(({r,km})=>routeRow(r,`距 ${km.toFixed(1)} km`))}</div>
-           </>
-          )}
-         </>
-        );
-       })():selectedXhsNote?(()=>{
-        const nm=xhsCategoryMeta(selectedXhsNote.category,dark);
-        const NIcon=nm.icon;
-        return (
-         <>
-          <span className="detail-badge" style={{color:nm.color}}><NIcon size={12}/>{selectedXhsNote.category} · 待定位</span>
-          <h1>{selectedXhsNote.title}</h1>
-          {selectedXhsNote.hints.length>0&&<p className="detail-addr"><MapPin size={13}/><span>{selectedXhsNote.hints.join(' · ')}</span></p>}
-          <div className="detail-actions">
-           {placeActions(selectedXhsNote.id)}
-          </div>
-         </>
-        );
-       })():null
-      )}
+      {view==='xhs'&&selectedXhsNote&&(()=>{
+       const nm=xhsCategoryMeta(selectedXhsNote.category,dark);
+       const NIcon=nm.icon;
+       return (
+        <>
+         <span className="detail-badge" style={{color:nm.color}}><NIcon size={12}/>{selectedXhsNote.category} · 待定位</span>
+         <h1>{selectedXhsNote.title}</h1>
+         {selectedXhsNote.hints.length>0&&<p className="detail-addr"><MapPin size={13}/><span>{selectedXhsNote.hints.join(' · ')}</span></p>}
+         <div className="detail-actions">
+          {placeActions(selectedXhsNote.id)}
+         </div>
+        </>
+       );
+      })()}
      </div>
     </aside>
    )}
