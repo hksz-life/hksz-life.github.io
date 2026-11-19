@@ -199,6 +199,17 @@ h1{text-wrap:balance;overflow-wrap:break-word}
 [data-theme=dark] .layer-orb{background:rgba(255,255,255,.08)}
 .layer-chip-btn.on .layer-orb,.layer-all-btn.on .layer-orb{background:color-mix(in srgb,currentColor 13%,transparent);color:currentColor}
 .stop-pin,.transport-marker,.selected-place-pin,.camera-pin,.location-dot,.selected-metro-pin{left:0;top:0;will-change:transform}
+.transport-marker{height:28px;min-height:28px;padding:0 10px 0 4px;gap:5px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--text);box-shadow:0 2px 8px rgba(18,40,44,.16);font-size:11px}
+.transport-marker b{font-weight:600;line-height:1;letter-spacing:.2px}
+.transport-marker .tm-orb{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;background:var(--tint);color:var(--accent)}
+.transport-marker .tm-orb svg{width:11px;height:11px}
+.transport-marker.endpoint{background:var(--paper);color:var(--text);border-color:var(--paper);box-shadow:0 3px 12px rgba(18,40,44,.22);z-index:2}
+.transport-marker.is-start .tm-orb{background:#1f7a5c;color:#ffffff}
+.transport-marker.is-end .tm-orb{background:#c53030;color:#ffffff}
+.transport-marker.is-loop .tm-orb{background:var(--accent);color:#ffffff}
+[data-theme=dark] .transport-marker.is-loop .tm-orb{color:#12262a}
+.transport-marker:hover{filter:none;box-shadow:0 4px 14px rgba(18,40,44,.26);z-index:5}
+.selected-place-pin{border-radius:999px;min-height:32px;padding:0 12px 0 9px;border-width:1.5px;box-shadow:0 4px 14px rgba(18,40,44,.22)}
 .spot-bubble-anchor{position:absolute;left:0;top:0;pointer-events:auto;z-index:8}
 .spot-bubble{position:absolute;left:-128px;bottom:22px;width:256px;max-width:calc(100vw - 24px);background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:10px 11px;box-shadow:var(--shadow);animation:panelEnter .16s cubic-bezier(.2,.8,.2,1)}
 .spot-bubble::after{content:'';position:absolute;left:50%;bottom:-6px;width:10px;height:10px;background:var(--paper);border-right:1px solid var(--line);border-bottom:1px solid var(--line);transform:translateX(-50%) rotate(45deg)}

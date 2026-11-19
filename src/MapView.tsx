@@ -359,9 +359,11 @@ export default function MapView(p:Props){
  const shown=transport.filter((n,i)=>transport.findIndex(t=>t.placeId===n.placeId)===i).map(n=>{
   const place=p.places.find(x=>x.id===n.placeId);if(!place)return null;
   const roles=transport.filter(t=>t.placeId===n.placeId).map(t=>t.role);
-  const label=roles.includes('start')&&roles.includes('end')?'起 / 终':roleLabels[n.role];
+  const isStart=roles.includes('start'),isEnd=roles.includes('end');
+  const label=isStart&&isEnd?'起 · 终':roleLabels[n.role];
   const orderText=(stopIndicesByPlace[n.placeId]??[]).join('/');
-  return {node:n,place,label,orderText,endpoint:roles.includes('start')||roles.includes('end')};
+  const kind=isStart&&isEnd?'is-loop':isStart?'is-start':isEnd?'is-end':'';
+  return {node:n,place,label,orderText,endpoint:isStart||isEnd,kind};
  }).filter(n=>n!==null);
 
  const transportIds=new Set(shown.map(n=>n.place.id));
@@ -391,9 +393,9 @@ export default function MapView(p:Props){
      <b>{orderText}</b>
     </button>
    ))}
-   {m&&showSpots&&shown.filter(n=>n.place.id!==p.selectedPlace?.id).map(({node,place,label,orderText,endpoint})=>(
-    <button key={place.id} className={`transport-marker ${endpoint?'endpoint':''}`} data-lng={place.coordinates[0]} data-lat={place.coordinates[1]} style={posStyle(place.coordinates)} title={`第 ${orderText} 站 · ${label} · ${place.nameZh} · ${node.service}`} aria-label={`第 ${orderText} 站 ${label}：${place.nameZh}，${node.service}`} onClick={()=>p.onPlace(place)}>
-     <TransportIcon mode={node.mode}/>
+   {m&&showSpots&&shown.filter(n=>n.place.id!==p.selectedPlace?.id).map(({node,place,label,orderText,endpoint,kind})=>(
+    <button key={place.id} className={`transport-marker ${endpoint?'endpoint':''} ${kind}`} data-lng={place.coordinates[0]} data-lat={place.coordinates[1]} style={posStyle(place.coordinates)} title={`第 ${orderText} 站 · ${label} · ${place.nameZh} · ${node.service}`} aria-label={`第 ${orderText} 站 ${label}：${place.nameZh}，${node.service}`} onClick={()=>p.onPlace(place)}>
+     <span className="tm-orb"><TransportIcon mode={node.mode}/></span>
      <b>{label}</b>
     </button>
    ))}
