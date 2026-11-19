@@ -1,4 +1,4 @@
-import {Footprints,Waves,Store,Building2,Ship,Landmark,UtensilsCrossed,Coffee,Palette,Trees,Wine,Compass,Camera,Bookmark} from 'lucide-react';
+import {Footprints,Waves,Store,Building2,Ship,Landmark,UtensilsCrossed,Coffee,Palette,Trees,Wine,Compass,Camera,Bookmark,ShoppingCart,ShoppingBag,Hospital} from 'lucide-react';
 export const categories=[
  {name:'城市街巷',color:'#b65343',darkColor:'#f18c77',icon:Footprints,description:'走老街、看社区，感受城市日常。'},
  {name:'山海之间',color:'#357b45',darkColor:'#8bd294',icon:Waves,description:'海岸、沙滩、村落与山间步道。'},
@@ -19,6 +19,9 @@ export const xhsCategoryList=[
  {name:'酒吧饮品',icon:Wine,color:'#a8365b',darkColor:'#ed99b3',bg:'#fdf0f4',darkBg:'#3e1e29'},
  {name:'旅行',icon:Compass,color:'#276898',darkColor:'#8cc0ea',bg:'#edf5fb',darkBg:'#1b3142'},
  {name:'机位与拍照',icon:Camera,color:'#0e7490',darkColor:'#67d4ec',bg:'#ecfafd',darkBg:'#16353e'},
+ {name:'超市',icon:ShoppingCart,color:'#1f7a5c',darkColor:'#72d9b2',bg:'#edf8f3',darkBg:'#19372d'},
+ {name:'商场',icon:ShoppingBag,color:'#c2416c',darkColor:'#f48fb1',bg:'#fdf0f5',darkBg:'#3e1e2b'},
+ {name:'医院',icon:Hospital,color:'#c53030',darkColor:'#fc8181',bg:'#fef2f2',darkBg:'#3d1c1c'},
  {name:'校园设施',icon:Building2,color:'#3d5a80',darkColor:'#93b4db',bg:'#eef3f8',darkBg:'#1e2b3a'},
  {name:'待分类',icon:Bookmark,color:'#5c6770',darkColor:'#adb7bf',bg:'#f2f5f7',darkBg:'#283036'},
 ] as const;

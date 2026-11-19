@@ -10986,5 +10986,2908 @@
     "noteUrl": "https://www.cuhk.edu.hk/",
     "hours": "24小时前台（3943 5298）；办公时间周一至五 08:45–13:00 & 14:00–18:00。",
     "snippet": "大学宾馆系统独立建筑（与雅礼宾馆分属两栋），M 层设宾馆总办事处及登记柜台，主要提供标准双人房。"
+  },
+  {
+    "id": "osm-hk-医院-way-101460515",
+    "city": "hk",
+    "name": "博愛醫院",
+    "category": "医院",
+    "coordinates": [
+      114.04158,
+      22.44536
+    ],
+    "address": "小商路 Siu Sheung Road",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/101460515",
+    "noteId": "osm-way-101460515",
+    "noteTitle": "博愛醫院 · 医院",
+    "noteUrl": "http://www.ha.org.hk/poh",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority；设有急诊服务"
+  },
+  {
+    "id": "osm-hk-医院-way-242831571",
+    "city": "hk",
+    "name": "香港兒童醫院",
+    "category": "医院",
+    "coordinates": [
+      114.20887,
+      22.31575
+    ],
+    "address": "承昌道 Shing Cheong Road 1",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/242831571",
+    "noteId": "osm-way-242831571",
+    "noteTitle": "香港兒童醫院 · 医院",
+    "noteUrl": "https://www31.ha.org.hk/hkch/",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority"
+  },
+  {
+    "id": "osm-hk-医院-way-292823213",
+    "city": "hk",
+    "name": "伊利沙伯医院",
+    "category": "医院",
+    "coordinates": [
+      114.17432,
+      22.30891
+    ],
+    "address": "加士居道 Gascoigne Road 30",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/292823213",
+    "noteId": "osm-way-292823213",
+    "noteTitle": "伊利沙伯医院 · 医院",
+    "noteUrl": "http://www3.ha.org.hk/qeh/index.htm",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority；设有急诊服务"
+  },
+  {
+    "id": "osm-hk-医院-relation-7145319",
+    "city": "hk",
+    "name": "仁濟醫院",
+    "category": "医院",
+    "coordinates": [
+      114.11946,
+      22.36987
+    ],
+    "address": "仁濟街 Yan Chai Street 7-11",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/relation/7145319",
+    "noteId": "osm-relation-7145319",
+    "noteTitle": "仁濟醫院 · 医院",
+    "noteUrl": "https://www.yanchai.org.hk/",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority；设有急诊服务"
+  },
+  {
+    "id": "osm-hk-医院-way-453319885",
+    "city": "hk",
+    "name": "香港中文大學醫院",
+    "category": "医院",
+    "coordinates": [
+      114.21139,
+      22.41352
+    ],
+    "address": "澤祥街 Chak Cheung Street 9",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/453319885",
+    "noteId": "osm-way-453319885",
+    "noteTitle": "香港中文大學醫院 · 医院",
+    "noteUrl": "https://www.cuhkmc.hk/",
+    "snippet": "运营/品牌：香港中文大學醫學中心有限公司 CUHK Medical Centre Limited；设有急诊服务"
+  },
+  {
+    "id": "osm-hk-医院-relation-3459948",
+    "city": "hk",
+    "name": "屯门医院",
+    "category": "医院",
+    "coordinates": [
+      113.97598,
+      22.40824
+    ],
+    "address": "青松觀路 Ching Chung Koon Road 23",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/relation/3459948",
+    "noteId": "osm-relation-3459948",
+    "noteTitle": "屯门医院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/relation/3459948",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority；设有急诊服务"
+  },
+  {
+    "id": "osm-hk-医院-way-293754282",
+    "city": "hk",
+    "name": "香港浸信会医院",
+    "category": "医院",
+    "coordinates": [
+      114.17992,
+      22.33964
+    ],
+    "address": "窩打老道 Waterloo Road 222",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/293754282",
+    "noteId": "osm-way-293754282",
+    "noteTitle": "香港浸信会医院 · 医院",
+    "noteUrl": "https://www.hkbh.org.hk/",
+    "snippet": "设有急诊服务"
+  },
+  {
+    "id": "osm-hk-医院-way-159467846",
+    "city": "hk",
+    "name": "威爾斯親王醫院",
+    "category": "医院",
+    "coordinates": [
+      114.20221,
+      22.37966
+    ],
+    "address": "銀城街 Ngan Shing Street 30-32",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/159467846",
+    "noteId": "osm-way-159467846",
+    "noteTitle": "威爾斯親王醫院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/159467846",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority；设有急诊服务",
+    "hours": "24/7"
+  },
+  {
+    "id": "osm-hk-医院-way-176710996",
+    "city": "hk",
+    "name": "荃灣港安醫院",
+    "category": "医院",
+    "coordinates": [
+      114.10458,
+      22.37686
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/176710996",
+    "noteId": "osm-way-176710996",
+    "noteTitle": "荃灣港安醫院 · 医院",
+    "noteUrl": "https://www.twah.org.hk/new/eng",
+    "snippet": "香港医院，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-医院-way-226591494",
+    "city": "hk",
+    "name": "基督教聯合醫院",
+    "category": "医院",
+    "coordinates": [
+      114.2274,
+      22.32248
+    ],
+    "address": "協和街 Hip Wo Street 130",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/226591494",
+    "noteId": "osm-way-226591494",
+    "noteTitle": "基督教聯合醫院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/226591494",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority；设有急诊服务"
+  },
+  {
+    "id": "osm-hk-医院-way-887885238",
+    "city": "hk",
+    "name": "香港眼科醫院",
+    "category": "医院",
+    "coordinates": [
+      114.18465,
+      22.325
+    ],
+    "address": "亞皆老街 Argyle Street 147K",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/887885238",
+    "noteId": "osm-way-887885238",
+    "noteTitle": "香港眼科醫院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/887885238",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority"
+  },
+  {
+    "id": "osm-hk-医院-way-279720946",
+    "city": "hk",
+    "name": "北區醫院",
+    "category": "医院",
+    "coordinates": [
+      114.12417,
+      22.49669
+    ],
+    "address": "保健路 Po Kin Road 9",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/279720946",
+    "noteId": "osm-way-279720946",
+    "noteTitle": "北區醫院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/279720946",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority；设有急诊服务"
+  },
+  {
+    "id": "osm-hk-医院-way-286896696",
+    "city": "hk",
+    "name": "大埔醫院",
+    "category": "医院",
+    "coordinates": [
+      114.17453,
+      22.46116
+    ],
+    "address": "全安路 Chuen On Road 9",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/286896696",
+    "noteId": "osm-way-286896696",
+    "noteTitle": "大埔醫院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/286896696",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority"
+  },
+  {
+    "id": "osm-hk-医院-way-44627848",
+    "city": "hk",
+    "name": "玛丽医院",
+    "category": "医院",
+    "coordinates": [
+      114.13169,
+      22.26988
+    ],
+    "address": "薄扶林道 Pok Fu Lam Road 102",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/44627848",
+    "noteId": "osm-way-44627848",
+    "noteTitle": "玛丽医院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/44627848",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority；设有急诊服务"
+  },
+  {
+    "id": "osm-hk-医院-way-384838107",
+    "city": "hk",
+    "name": "明爱医院",
+    "category": "医院",
+    "coordinates": [
+      114.15373,
+      22.34144
+    ],
+    "address": "永康街 Wing Hong Street 111",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/384838107",
+    "noteId": "osm-way-384838107",
+    "noteTitle": "明爱医院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/384838107",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority；设有急诊服务"
+  },
+  {
+    "id": "osm-hk-医院-way-44492633",
+    "city": "hk",
+    "name": "葛量洪醫院",
+    "category": "医院",
+    "coordinates": [
+      114.17278,
+      22.25158
+    ],
+    "address": "黃竹坑道 Wong Chuk Hang Road 125",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/44492633",
+    "noteId": "osm-way-44492633",
+    "noteTitle": "葛量洪醫院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/44492633",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority"
+  },
+  {
+    "id": "osm-hk-医院-way-224774042",
+    "city": "hk",
+    "name": "北大屿山医院",
+    "category": "医院",
+    "coordinates": [
+      113.93928,
+      22.28205
+    ],
+    "address": "松仁路 Chung Yan Road 8",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/224774042",
+    "noteId": "osm-way-224774042",
+    "noteTitle": "北大屿山医院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/224774042",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority；设有急诊服务"
+  },
+  {
+    "id": "osm-hk-医院-way-101515099",
+    "city": "hk",
+    "name": "葵涌醫院",
+    "category": "医院",
+    "coordinates": [
+      114.13343,
+      22.3427
+    ],
+    "address": "葵涌醫院道 Kwai Chung Hospital Road 3-15",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/101515099",
+    "noteId": "osm-way-101515099",
+    "noteTitle": "葵涌醫院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/101515099",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority"
+  },
+  {
+    "id": "osm-hk-医院-way-219403165",
+    "city": "hk",
+    "name": "鄧肇堅醫院",
+    "category": "医院",
+    "coordinates": [
+      114.17773,
+      22.27543
+    ],
+    "address": "皇后大道東 Queen's Road East 282",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/219403165",
+    "noteId": "osm-way-219403165",
+    "noteTitle": "鄧肇堅醫院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/219403165",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority"
+  },
+  {
+    "id": "osm-hk-医院-way-617578350",
+    "city": "hk",
+    "name": "灵实医院",
+    "category": "医院",
+    "coordinates": [
+      114.25661,
+      22.31459
+    ],
+    "address": "靈實路 Haven of Hope Road 8",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/617578350",
+    "noteId": "osm-way-617578350",
+    "noteTitle": "灵实医院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/617578350",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority"
+  },
+  {
+    "id": "osm-hk-医院-way-263310024",
+    "city": "hk",
+    "name": "香港佛教醫院",
+    "category": "医院",
+    "coordinates": [
+      114.18875,
+      22.33554
+    ],
+    "address": "杏林街 Heng Lam Street 10",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/263310024",
+    "noteId": "osm-way-263310024",
+    "noteTitle": "香港佛教醫院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/263310024",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority"
+  },
+  {
+    "id": "osm-hk-医院-way-314060497",
+    "city": "hk",
+    "name": "天水圍醫院",
+    "category": "医院",
+    "coordinates": [
+      113.9957,
+      22.45836
+    ],
+    "address": "天壇街 Tin Tan Street 11",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/314060497",
+    "noteId": "osm-way-314060497",
+    "noteTitle": "天水圍醫院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/314060497",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority；设有急诊服务"
+  },
+  {
+    "id": "osm-hk-医院-way-1326226144",
+    "city": "hk",
+    "name": "贊育醫院",
+    "category": "医院",
+    "coordinates": [
+      114.14458,
+      22.28633
+    ],
+    "address": "醫院道 Hospital Road 30",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1326226144",
+    "noteId": "osm-way-1326226144",
+    "noteTitle": "贊育醫院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/1326226144",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority"
+  },
+  {
+    "id": "osm-hk-医院-way-101227825",
+    "city": "hk",
+    "name": "東區尤德夫人那打素醫院",
+    "category": "医院",
+    "coordinates": [
+      114.23636,
+      22.27036
+    ],
+    "address": "樂民道 Lok Man Road 3",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/101227825",
+    "noteId": "osm-way-101227825",
+    "noteTitle": "東區尤德夫人那打素醫院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/101227825",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority；设有急诊服务"
+  },
+  {
+    "id": "osm-hk-医院-way-169026660",
+    "city": "hk",
+    "name": "聖母醫院",
+    "category": "医院",
+    "coordinates": [
+      114.19675,
+      22.34555
+    ],
+    "address": "沙田坳道 Shatin Pass Road 118",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/169026660",
+    "noteId": "osm-way-169026660",
+    "noteTitle": "聖母醫院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/169026660",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority"
+  },
+  {
+    "id": "osm-hk-医院-way-739719184",
+    "city": "hk",
+    "name": "沙田醫院",
+    "category": "医院",
+    "coordinates": [
+      114.21282,
+      22.399
+    ],
+    "address": "亞公角街 A Kung Kok Street 33",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/739719184",
+    "noteId": "osm-way-739719184",
+    "noteTitle": "沙田醫院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/739719184",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority"
+  },
+  {
+    "id": "osm-hk-医院-way-1318084446",
+    "city": "hk",
+    "name": "長洲醫院",
+    "category": "医院",
+    "coordinates": [
+      114.0314,
+      22.2081
+    ],
+    "address": "長洲醫院路 Cheung Chau Hospital Road",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1318084446",
+    "noteId": "osm-way-1318084446",
+    "noteTitle": "長洲醫院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/1318084446",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority；设有急诊服务"
+  },
+  {
+    "id": "osm-hk-医院-way-113146461",
+    "city": "hk",
+    "name": "聖保祿醫院",
+    "category": "医院",
+    "coordinates": [
+      114.18822,
+      22.27809
+    ],
+    "address": "東院道 Eastern Hospital Road 2",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/113146461",
+    "noteId": "osm-way-113146461",
+    "noteTitle": "聖保祿醫院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/113146461",
+    "snippet": "香港医院，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-医院-way-402597591",
+    "city": "hk",
+    "name": "香港中医医院",
+    "category": "医院",
+    "coordinates": [
+      114.27245,
+      22.30445
+    ],
+    "address": "百勝角路 Pak Shing Kok Road 1",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/402597591",
+    "noteId": "osm-way-402597591",
+    "noteTitle": "香港中医医院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/402597591",
+    "snippet": "香港医院，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-医院-relation-13667266",
+    "city": "hk",
+    "name": "將軍澳醫院",
+    "category": "医院",
+    "coordinates": [
+      114.26969,
+      22.31829
+    ],
+    "address": "寶寧里 Po Ning Lane 2",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/relation/13667266",
+    "noteId": "osm-relation-13667266",
+    "noteTitle": "將軍澳醫院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/relation/13667266",
+    "snippet": "运营/品牌：醫院管理局 Hospital Authority；设有急诊服务"
+  },
+  {
+    "id": "osm-sz-医院-way-456825812",
+    "city": "sz",
+    "name": "深圳市南山区人民医院",
+    "category": "医院",
+    "coordinates": [
+      113.91784,
+      22.53371
+    ],
+    "address": "南山区 桃园路 89",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/456825812",
+    "noteId": "osm-way-456825812",
+    "noteTitle": "深圳市南山区人民医院 · 医院",
+    "noteUrl": "http://www.sznsyy.net",
+    "snippet": "运营/品牌：华中科技大学；设有急诊服务"
+  },
+  {
+    "id": "osm-sz-医院-way-322631273",
+    "city": "sz",
+    "name": "香港大学深圳医院",
+    "category": "医院",
+    "coordinates": [
+      113.99112,
+      22.52814
+    ],
+    "address": "福田区 海园一路 1",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/322631273",
+    "noteId": "osm-way-322631273",
+    "noteTitle": "香港大学深圳医院 · 医院",
+    "noteUrl": "https://www.hku-szh.org",
+    "snippet": "设有急诊服务"
+  },
+  {
+    "id": "osm-sz-医院-way-513502377",
+    "city": "sz",
+    "name": "前海蛇口自贸区医院",
+    "category": "医院",
+    "coordinates": [
+      113.91686,
+      22.49957
+    ],
+    "address": "南山区 工业七路 36",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/513502377",
+    "noteId": "osm-way-513502377",
+    "noteTitle": "前海蛇口自贸区医院 · 医院",
+    "noteUrl": "https://www.skhosp.cn/",
+    "snippet": "设有急诊服务"
+  },
+  {
+    "id": "osm-sz-医院-way-493114482",
+    "city": "sz",
+    "name": "深圳市第二人民医院",
+    "category": "医院",
+    "coordinates": [
+      114.08057,
+      22.55982
+    ],
+    "address": "福田区 笋岗路 3002",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/493114482",
+    "noteId": "osm-way-493114482",
+    "noteTitle": "深圳市第二人民医院 · 医院",
+    "noteUrl": "http://www.szrch.com/",
+    "snippet": "运营/品牌：深圳市卫生健康委员会；设有急诊服务"
+  },
+  {
+    "id": "osm-sz-医院-way-657177578",
+    "city": "sz",
+    "name": "中山大学附属第八医院",
+    "category": "医院",
+    "coordinates": [
+      114.07429,
+      22.54118
+    ],
+    "address": "福田区 深南大道 3025号",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/657177578",
+    "noteId": "osm-way-657177578",
+    "noteTitle": "中山大学附属第八医院 · 医院",
+    "noteUrl": "http://www.sysu8h.com.cn/",
+    "snippet": "设有急诊服务"
+  },
+  {
+    "id": "osm-sz-医院-way-765144388",
+    "city": "sz",
+    "name": "深圳市第三人民医院",
+    "category": "医院",
+    "coordinates": [
+      114.12151,
+      22.63825
+    ],
+    "address": "龙岗区 布澜路 29号",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/765144388",
+    "noteId": "osm-way-765144388",
+    "noteTitle": "深圳市第三人民医院 · 医院",
+    "noteUrl": "http://www.szdsyy.com/",
+    "snippet": "运营/品牌：深圳市卫生健康委；设有急诊服务"
+  },
+  {
+    "id": "osm-sz-医院-way-318485858",
+    "city": "sz",
+    "name": "深圳市龙华区人民医院",
+    "category": "医院",
+    "coordinates": [
+      114.02767,
+      22.65814
+    ],
+    "address": "龙华区 景龙建设路 38",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/318485858",
+    "noteId": "osm-way-318485858",
+    "noteTitle": "深圳市龙华区人民医院 · 医院",
+    "noteUrl": "https://www.lhrmyy.cn/",
+    "snippet": "设有急诊服务"
+  },
+  {
+    "id": "osm-sz-医院-way-533912106",
+    "city": "sz",
+    "name": "阜外医院深圳医院",
+    "category": "医院",
+    "coordinates": [
+      113.94275,
+      22.55981
+    ],
+    "address": "南山区 朗山路 12",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/533912106",
+    "noteId": "osm-way-533912106",
+    "noteTitle": "阜外医院深圳医院 · 医院",
+    "noteUrl": "https://www.fuwaisz.cn/",
+    "snippet": "深圳医院，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-医院-way-778406380",
+    "city": "sz",
+    "name": "深圳口岸医院",
+    "category": "医院",
+    "coordinates": [
+      114.07453,
+      22.53078
+    ],
+    "address": "福田区 滨河大道",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/778406380",
+    "noteId": "osm-way-778406380",
+    "noteTitle": "深圳口岸医院 · 医院",
+    "noteUrl": "http://www.szkah.com/",
+    "snippet": "运营/品牌：深圳国际旅行卫生保健中心"
+  },
+  {
+    "id": "osm-sz-医院-way-929842141",
+    "city": "sz",
+    "name": "深圳市肿瘤医院",
+    "category": "医院",
+    "coordinates": [
+      114.24601,
+      22.69711
+    ],
+    "address": "龙岗区 宝荷路 113",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/929842141",
+    "noteId": "osm-way-929842141",
+    "noteTitle": "深圳市肿瘤医院 · 医院",
+    "noteUrl": "http://www.szch-cn.com",
+    "snippet": "运营/品牌：中国医学科学院；设有急诊服务"
+  },
+  {
+    "id": "osm-sz-医院-relation-19673011",
+    "city": "sz",
+    "name": "深圳恒生医院",
+    "category": "医院",
+    "coordinates": [
+      113.84711,
+      22.57974
+    ],
+    "address": "宝安区 银田路 20",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/relation/19673011",
+    "noteId": "osm-relation-19673011",
+    "noteTitle": "深圳恒生医院 · 医院",
+    "noteUrl": "https://www.hsyy.com.cn/",
+    "snippet": "深圳医院，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-医院-way-971183855",
+    "city": "sz",
+    "name": "惠州市第六人民医院",
+    "category": "医院",
+    "coordinates": [
+      114.47465,
+      22.78238
+    ],
+    "address": "惠阳区 爱民东路 2号",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/971183855",
+    "noteId": "osm-way-971183855",
+    "noteTitle": "惠州市第六人民医院 · 医院",
+    "noteUrl": "https://www.hzsdlrmyy.com",
+    "snippet": "运营/品牌：惠州市惠阳区卫生健康局；设有急诊服务"
+  },
+  {
+    "id": "osm-sz-医院-way-1454560444",
+    "city": "sz",
+    "name": "深圳市龙岗区第二人民医院(龙岭院区)",
+    "category": "医院",
+    "coordinates": [
+      114.11068,
+      22.60827
+    ],
+    "address": "龙岗区 吉华路 175",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1454560444",
+    "noteId": "osm-way-1454560444",
+    "noteTitle": "深圳市龙岗区第二人民医院(龙岭院区) · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/1454560444",
+    "snippet": "深圳医院，坐标核自 OpenStreetMap。",
+    "hours": "Mo-Su 08:00-21:00"
+  },
+  {
+    "id": "osm-sz-医院-way-819148982",
+    "city": "sz",
+    "name": "深圳市萨米国际医疗中心（深圳市第四人民医院）",
+    "category": "医院",
+    "coordinates": [
+      114.3734,
+      22.70711
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/819148982",
+    "noteId": "osm-way-819148982",
+    "noteTitle": "深圳市萨米国际医疗中心（深圳市第四人民医院） · 医院",
+    "noteUrl": "http://www.ssmc-sz.com/",
+    "snippet": "设有急诊服务"
+  },
+  {
+    "id": "osm-sz-医院-way-1245469357",
+    "city": "sz",
+    "name": "龙岗区耳鼻咽喉医院",
+    "category": "医院",
+    "coordinates": [
+      114.21452,
+      22.72434
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1245469357",
+    "noteId": "osm-way-1245469357",
+    "noteTitle": "龙岗区耳鼻咽喉医院 · 医院",
+    "noteUrl": "https://wjw.sz.gov.cn/xxgk/zyhy_2/content/post_12250547.html",
+    "snippet": "深圳医院，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-医院-way-415703358",
+    "city": "sz",
+    "name": "南方科技大学医院",
+    "category": "医院",
+    "coordinates": [
+      113.94458,
+      22.58267
+    ],
+    "address": "南山区 留仙大道 6019",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/415703358",
+    "noteId": "osm-way-415703358",
+    "noteTitle": "南方科技大学医院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/415703358",
+    "snippet": "设有急诊服务"
+  },
+  {
+    "id": "osm-sz-医院-way-492870872",
+    "city": "sz",
+    "name": "南方医科大学深圳医院",
+    "category": "医院",
+    "coordinates": [
+      113.89134,
+      22.54735
+    ],
+    "address": "宝安区 新湖路 1333",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/492870872",
+    "noteId": "osm-way-492870872",
+    "noteTitle": "南方医科大学深圳医院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/492870872",
+    "snippet": "运营/品牌：南方医科大学，深圳市卫生健康委员会；设有急诊服务"
+  },
+  {
+    "id": "osm-sz-医院-way-824883032",
+    "city": "sz",
+    "name": "广东医科大学附属东莞第一医院",
+    "category": "医院",
+    "coordinates": [
+      114.05454,
+      22.78306
+    ],
+    "address": "塘厦镇 蛟坪大道 42",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/824883032",
+    "noteId": "osm-way-824883032",
+    "noteTitle": "广东医科大学附属东莞第一医院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/824883032",
+    "snippet": "运营/品牌：东莞市卫生健康局、广东医科大学；设有急诊服务"
+  },
+  {
+    "id": "osm-sz-医院-way-946103593",
+    "city": "sz",
+    "name": "福田区第二人民医院",
+    "category": "医院",
+    "coordinates": [
+      114.05368,
+      22.5691
+    ],
+    "address": "福田区 中康路 27",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/946103593",
+    "noteId": "osm-way-946103593",
+    "noteTitle": "福田区第二人民医院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/946103593",
+    "snippet": "深圳医院，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-医院-way-585481095",
+    "city": "sz",
+    "name": "宝安区人民医院",
+    "category": "医院",
+    "coordinates": [
+      113.90942,
+      22.56487
+    ],
+    "address": "宝安区 龙井二路 118号",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/585481095",
+    "noteId": "osm-way-585481095",
+    "noteTitle": "宝安区人民医院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/585481095",
+    "snippet": "运营/品牌：宝安区卫生健康局；设有急诊服务"
+  },
+  {
+    "id": "osm-sz-医院-way-687491600",
+    "city": "sz",
+    "name": "中山大学第七附属医院",
+    "category": "医院",
+    "coordinates": [
+      113.94745,
+      22.78954
+    ],
+    "address": "光明区 圳园路 628号",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/687491600",
+    "noteId": "osm-way-687491600",
+    "noteTitle": "中山大学第七附属医院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/687491600",
+    "snippet": "设有急诊服务"
+  },
+  {
+    "id": "osm-sz-医院-way-759525430",
+    "city": "sz",
+    "name": "深圳市龙岗区人民医院",
+    "category": "医院",
+    "coordinates": [
+      114.22263,
+      22.72876
+    ],
+    "address": "龙岗区 爱心路 53",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/759525430",
+    "noteId": "osm-way-759525430",
+    "noteTitle": "深圳市龙岗区人民医院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/759525430",
+    "snippet": "设有急诊服务"
+  },
+  {
+    "id": "osm-sz-医院-way-1335901515",
+    "city": "sz",
+    "name": "深圳前海泰康医院",
+    "category": "医院",
+    "coordinates": [
+      113.88729,
+      22.51767
+    ],
+    "address": "南山区 梦海大道 3099",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1335901515",
+    "noteId": "osm-way-1335901515",
+    "noteTitle": "深圳前海泰康医院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/1335901515",
+    "snippet": "深圳医院，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-医院-way-1444398546",
+    "city": "sz",
+    "name": "深圳春天阳光医院",
+    "category": "医院",
+    "coordinates": [
+      113.89727,
+      22.56203
+    ],
+    "address": "宝安区 广深路 159",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1444398546",
+    "noteId": "osm-way-1444398546",
+    "noteTitle": "深圳春天阳光医院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/1444398546",
+    "snippet": "深圳医院，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-医院-way-364733593",
+    "city": "sz",
+    "name": "广州中医药大学深圳医院（福田区中医院）",
+    "category": "医院",
+    "coordinates": [
+      114.0372,
+      22.56185
+    ],
+    "address": "福田区 北环大道 6001",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/364733593",
+    "noteId": "osm-way-364733593",
+    "noteTitle": "广州中医药大学深圳医院（福田区中医院） · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/364733593",
+    "snippet": "设有急诊服务"
+  },
+  {
+    "id": "osm-sz-医院-way-523229003",
+    "city": "sz",
+    "name": "深圳市人民医院第一门诊部",
+    "category": "医院",
+    "coordinates": [
+      114.11113,
+      22.54588
+    ],
+    "address": "罗湖区 深南东路 3046",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/523229003",
+    "noteId": "osm-way-523229003",
+    "noteTitle": "深圳市人民医院第一门诊部 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/523229003",
+    "snippet": "设有急诊服务"
+  },
+  {
+    "id": "osm-sz-医院-way-1331505747",
+    "city": "sz",
+    "name": "深圳市中医肛肠医院（福田）梅林院区",
+    "category": "医院",
+    "coordinates": [
+      114.05217,
+      22.5789
+    ],
+    "address": "福田区 梅坳二路 1",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1331505747",
+    "noteId": "osm-way-1331505747",
+    "noteTitle": "深圳市中医肛肠医院（福田）梅林院区 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/1331505747",
+    "snippet": "深圳医院，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-医院-way-1501623550",
+    "city": "sz",
+    "name": "深圳侨爱中医院",
+    "category": "医院",
+    "coordinates": [
+      114.11603,
+      22.70488
+    ],
+    "address": "龙岗区 东林一路 10",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1501623550",
+    "noteId": "osm-way-1501623550",
+    "noteTitle": "深圳侨爱中医院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/1501623550",
+    "snippet": "深圳医院，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-医院-way-1369548906",
+    "city": "sz",
+    "name": "深圳大学附属华南医院",
+    "category": "医院",
+    "coordinates": [
+      114.13924,
+      22.67711
+    ],
+    "address": "龙岗区 福新路 1",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1369548906",
+    "noteId": "osm-way-1369548906",
+    "noteTitle": "深圳大学附属华南医院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/1369548906",
+    "snippet": "深圳医院，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-医院-way-1425709989",
+    "city": "sz",
+    "name": "深圳坂田医院",
+    "category": "医院",
+    "coordinates": [
+      114.06189,
+      22.63054
+    ],
+    "address": "龙岗区 布龙路 552",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1425709989",
+    "noteId": "osm-way-1425709989",
+    "noteTitle": "深圳坂田医院 · 医院",
+    "noteUrl": "https://www.openstreetmap.org/way/1425709989",
+    "snippet": "深圳医院，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-node-14335336201",
+    "city": "hk",
+    "name": "香港佛罗伦斯小镇",
+    "category": "商场",
+    "coordinates": [
+      114.13244,
+      22.36087
+    ],
+    "address": "葵昌路 Kwai Cheong Road 100",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/14335336201",
+    "noteId": "osm-node-14335336201",
+    "noteTitle": "香港佛罗伦斯小镇 · 商场",
+    "noteUrl": "https://florentiavillage.com/hongkong",
+    "snippet": "运营/品牌：佛羅倫斯小鎮 Florentia Village",
+    "hours": "Mo-Fr 10:00-19:00; Sa,Su,PH 10:30-19:30"
+  },
+  {
+    "id": "osm-hk-商场-way-1502508497",
+    "city": "hk",
+    "name": "AIRSIDE",
+    "category": "商场",
+    "coordinates": [
+      114.19815,
+      22.33098
+    ],
+    "address": "協調道 Concorde Road 2",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1502508497",
+    "noteId": "osm-way-1502508497",
+    "noteTitle": "AIRSIDE · 商场",
+    "noteUrl": "https://www.airside.com.hk/",
+    "snippet": "运营/品牌：南豐集團 Nam Fung Group",
+    "hours": "10:00-22:00"
+  },
+  {
+    "id": "osm-hk-商场-way-1445402642",
+    "city": "hk",
+    "name": "海港城",
+    "category": "商场",
+    "coordinates": [
+      114.16705,
+      22.297
+    ],
+    "address": "廣東道 Canton Road 3--27",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1445402642",
+    "noteId": "osm-way-1445402642",
+    "noteTitle": "海港城 · 商场",
+    "noteUrl": "https://www.harbourcity.com.hk/",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。",
+    "hours": "Mo-Su 10:00-22:00"
+  },
+  {
+    "id": "osm-hk-商场-way-100227831",
+    "city": "hk",
+    "name": "兴东商场",
+    "category": "商场",
+    "coordinates": [
+      114.22007,
+      22.28071
+    ],
+    "address": "耀興道 Yiu Hing Road 55",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/100227831",
+    "noteId": "osm-way-100227831",
+    "noteTitle": "兴东商场 · 商场",
+    "noteUrl": "https://www.linkhk.com/tc/shopCentre/htgxc2",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。",
+    "hours": "Mo-Su,PH 00:00-24:00"
+  },
+  {
+    "id": "osm-hk-商场-way-227778953",
+    "city": "hk",
+    "name": "The Pulse",
+    "category": "商场",
+    "coordinates": [
+      114.19799,
+      22.23596
+    ],
+    "address": "海灘道 Beach Road 28",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/227778953",
+    "noteId": "osm-way-227778953",
+    "noteTitle": "The Pulse · 商场",
+    "noteUrl": "https://www.thepulse.com.hk/",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。",
+    "hours": "Mo-Su 10:00-22:00"
+  },
+  {
+    "id": "osm-hk-商场-relation-12456322",
+    "city": "hk",
+    "name": "The Forest",
+    "category": "商场",
+    "coordinates": [
+      114.17149,
+      22.31909
+    ],
+    "address": "奶路臣街 Nelson Street 17",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/relation/12456322",
+    "noteId": "osm-relation-12456322",
+    "noteTitle": "The Forest · 商场",
+    "noteUrl": "https://www.theforest.hk/",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。",
+    "hours": "Mo-Su 10:30-22:30"
+  },
+  {
+    "id": "osm-hk-商场-relation-7513286",
+    "city": "hk",
+    "name": "綠楊坊",
+    "category": "商场",
+    "coordinates": [
+      114.11886,
+      22.37304
+    ],
+    "address": "蕙荃路 Wai Tsuen Road 22-66",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/relation/7513286",
+    "noteId": "osm-relation-7513286",
+    "noteTitle": "綠楊坊 · 商场",
+    "noteUrl": "https://www.lukyeunggalleria.com/",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-relation-19456338",
+    "city": "hk",
+    "name": "wwwtc mall",
+    "category": "商场",
+    "coordinates": [
+      114.18409,
+      22.28171
+    ],
+    "address": "告士打道 Gloucester Road 280",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/relation/19456338",
+    "noteId": "osm-relation-19456338",
+    "noteTitle": "wwwtc mall · 商场",
+    "noteUrl": "https://www.wwwtc.hk/",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-relation-21106948",
+    "city": "hk",
+    "name": "The ANGLE",
+    "category": "商场",
+    "coordinates": [
+      114.22123,
+      22.31274
+    ],
+    "address": "巧明街 How Ming Street 98",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/relation/21106948",
+    "noteId": "osm-relation-21106948",
+    "noteTitle": "The ANGLE · 商场",
+    "noteUrl": "https://www.theangle.com.hk",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-way-41498903",
+    "city": "hk",
+    "name": "太古广场",
+    "category": "商场",
+    "coordinates": [
+      114.1654,
+      22.27726
+    ],
+    "address": "金鐘道 Queensway 88",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/41498903",
+    "noteId": "osm-way-41498903",
+    "noteTitle": "太古广场 · 商场",
+    "noteUrl": "https://www.pacificplace.com.hk/",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-relation-16345072",
+    "city": "hk",
+    "name": "西九龍中心",
+    "category": "商场",
+    "coordinates": [
+      114.15976,
+      22.33109
+    ],
+    "address": "欽州街 Yen Chow Street 37K",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/relation/16345072",
+    "noteId": "osm-relation-16345072",
+    "noteTitle": "西九龍中心 · 商场",
+    "noteUrl": "https://www.dragoncentre.com.hk/",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-way-169423315",
+    "city": "hk",
+    "name": "錦泰商場",
+    "category": "商场",
+    "coordinates": [
+      114.22195,
+      22.40881
+    ],
+    "address": "寧泰路 Ning Tai Road 31",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/169423315",
+    "noteId": "osm-way-169423315",
+    "noteTitle": "錦泰商場 · 商场",
+    "noteUrl": "http://www.thelinkreit.com/EN/leasing/Pages/Property-Locator-Details.aspx?pid=115",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-relation-22013482",
+    "city": "hk",
+    "name": "杏花新城",
+    "category": "商场",
+    "coordinates": [
+      114.23997,
+      22.27666
+    ],
+    "address": "盛泰道 Shing Tai Road 100",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/relation/22013482",
+    "noteId": "osm-relation-22013482",
+    "noteTitle": "杏花新城 · 商场",
+    "noteUrl": "https://www.paradise-mall.com.hk",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-way-187241859",
+    "city": "hk",
+    "name": "元朗千色汇",
+    "category": "商场",
+    "coordinates": [
+      114.02853,
+      22.44263
+    ],
+    "address": "教育路 Kau Yuk Road 1",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/187241859",
+    "noteId": "osm-way-187241859",
+    "noteTitle": "元朗千色汇 · 商场",
+    "noteUrl": "http://www.kolour-yuenlong.com.hk/",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-way-178174720",
+    "city": "hk",
+    "name": "家居廣場",
+    "category": "商场",
+    "coordinates": [
+      114.18785,
+      22.38555
+    ],
+    "address": "沙田鄉事會路 Sha Tin Rural Committee Road 138",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/178174720",
+    "noteId": "osm-way-178174720",
+    "noteTitle": "家居廣場 · 商场",
+    "noteUrl": "https://www.homesquare.com.hk/",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-way-256538224",
+    "city": "hk",
+    "name": "迎海薈",
+    "category": "商场",
+    "coordinates": [
+      114.24352,
+      22.43014
+    ],
+    "address": "烏溪沙路 Wu Kai Sha Road",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/256538224",
+    "noteId": "osm-way-256538224",
+    "noteTitle": "迎海薈 · 商场",
+    "noteUrl": "https://www.doublecoveplace.com.hk/",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-way-143716612",
+    "city": "hk",
+    "name": "凌霄閣",
+    "category": "商场",
+    "coordinates": [
+      114.14999,
+      22.27126
+    ],
+    "address": "山頂道 Peak Road 128",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/143716612",
+    "noteId": "osm-way-143716612",
+    "noteTitle": "凌霄閣 · 商场",
+    "noteUrl": "https://www.thepeak.com.hk/en/1_2_1.asp",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-way-201152960",
+    "city": "hk",
+    "name": "天慈商場",
+    "category": "商场",
+    "coordinates": [
+      114.00697,
+      22.45323
+    ],
+    "address": "元朗天水圍 Tin Shui Wai, Yuen Long 天喜街 Tin Hei Street 9",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/201152960",
+    "noteId": "osm-way-201152960",
+    "noteTitle": "天慈商場 · 商场",
+    "noteUrl": "https://www.linkhk.com/tc/shop/?cid=&did=3&scid=150",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-way-232010574",
+    "city": "hk",
+    "name": "V City",
+    "category": "商场",
+    "coordinates": [
+      113.97397,
+      22.39557
+    ],
+    "address": "屯門鄉事會路 Tuen Mun Heung Sze Wui Road 83",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/232010574",
+    "noteId": "osm-way-232010574",
+    "noteTitle": "V City · 商场",
+    "noteUrl": "https://www.vcity.com.hk",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-way-628515212",
+    "city": "hk",
+    "name": "V Walk",
+    "category": "商场",
+    "coordinates": [
+      114.15381,
+      22.32697
+    ],
+    "address": "深旺道 Sham Mong Road",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/628515212",
+    "noteId": "osm-way-628515212",
+    "noteTitle": "V Walk · 商场",
+    "noteUrl": "https://www.vwalk.com.hk",
+    "snippet": "运营/品牌：Sung Hung Kai Properties"
+  },
+  {
+    "id": "osm-hk-商场-way-1021194324",
+    "city": "hk",
+    "name": "D2 Place One",
+    "category": "商场",
+    "coordinates": [
+      114.14884,
+      22.33613
+    ],
+    "address": "長義街 Cheung Yee Street 9",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1021194324",
+    "noteId": "osm-way-1021194324",
+    "noteTitle": "D2 Place One · 商场",
+    "noteUrl": "https://www.d2place.com/",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-way-228769731",
+    "city": "hk",
+    "name": "北角匯",
+    "category": "商场",
+    "coordinates": [
+      114.20071,
+      22.29301
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/228769731",
+    "noteId": "osm-way-228769731",
+    "noteTitle": "北角匯 · 商场",
+    "noteUrl": "https://www.harbournorth.com.hk/",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-relation-12796991",
+    "city": "hk",
+    "name": "形點",
+    "category": "商场",
+    "coordinates": [
+      114.03654,
+      22.44433
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/relation/12796991",
+    "noteId": "osm-relation-12796991",
+    "noteTitle": "形點 · 商场",
+    "noteUrl": "https://www.yohomall.hk/",
+    "snippet": "运营/品牌：YOHO"
+  },
+  {
+    "id": "osm-hk-商场-relation-17417565",
+    "city": "hk",
+    "name": "置地廣場",
+    "category": "商场",
+    "coordinates": [
+      114.15841,
+      22.28141
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/relation/17417565",
+    "noteId": "osm-relation-17417565",
+    "noteTitle": "置地廣場 · 商场",
+    "noteUrl": "https://www.landmark.hk/",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-way-64388591",
+    "city": "hk",
+    "name": "新海怡廣場",
+    "category": "商场",
+    "coordinates": [
+      114.15252,
+      22.23898
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/64388591",
+    "noteId": "osm-way-64388591",
+    "noteTitle": "新海怡廣場 · 商场",
+    "noteUrl": "http://www.horizonplazahk.com/",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-way-158126084",
+    "city": "hk",
+    "name": "荷里活廣場",
+    "category": "商场",
+    "coordinates": [
+      114.20232,
+      22.34068
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/158126084",
+    "noteId": "osm-way-158126084",
+    "noteTitle": "荷里活廣場 · 商场",
+    "noteUrl": "https://www.plazahollywood.com.hk/",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-way-205740146",
+    "city": "hk",
+    "name": "PopCorn",
+    "category": "商场",
+    "coordinates": [
+      114.25974,
+      22.30802
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/205740146",
+    "noteId": "osm-way-205740146",
+    "noteTitle": "PopCorn · 商场",
+    "noteUrl": "https://www.popcorntko.com.hk/en",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-relation-12990394",
+    "city": "hk",
+    "name": "新港城中心",
+    "category": "商场",
+    "coordinates": [
+      114.23132,
+      22.4244
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/relation/12990394",
+    "noteId": "osm-relation-12990394",
+    "noteTitle": "新港城中心 · 商场",
+    "noteUrl": "https://www.mostown.com",
+    "snippet": "运营/品牌：新港城中心 MOSTown"
+  },
+  {
+    "id": "osm-hk-商场-relation-22002133",
+    "city": "hk",
+    "name": "如心廣場 Nina Mall",
+    "category": "商场",
+    "coordinates": [
+      114.11223,
+      22.36861
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/relation/22002133",
+    "noteId": "osm-relation-22002133",
+    "noteTitle": "如心廣場 Nina Mall · 商场",
+    "noteUrl": "https://www.ninamall.com.hk/",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-relation-12937309",
+    "city": "hk",
+    "name": "奧海城",
+    "category": "商场",
+    "coordinates": [
+      114.16154,
+      22.31788
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/relation/12937309",
+    "noteId": "osm-relation-12937309",
+    "noteTitle": "奧海城 · 商场",
+    "noteUrl": "https://www.olympiancity.com.hk/",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-way-1415166820",
+    "city": "hk",
+    "name": "圆方",
+    "category": "商场",
+    "coordinates": [
+      114.16166,
+      22.30491
+    ],
+    "address": "柯士甸道西 Austin Road West 1",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1415166820",
+    "noteId": "osm-way-1415166820",
+    "noteTitle": "圆方 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/1415166820",
+    "snippet": "运营/品牌：港鐵物業管理 MTR Property Management"
+  },
+  {
+    "id": "osm-hk-商场-way-1381619181",
+    "city": "hk",
+    "name": "K11人文購物藝術館",
+    "category": "商场",
+    "coordinates": [
+      114.17447,
+      22.29458
+    ],
+    "address": "梳士巴利道 Salisbury Road 18",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1381619181",
+    "noteId": "osm-way-1381619181",
+    "noteTitle": "K11人文購物藝術館 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/1381619181",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-way-26448717",
+    "city": "hk",
+    "name": "又一城",
+    "category": "商场",
+    "coordinates": [
+      114.1746,
+      22.33733
+    ],
+    "address": "達之路 Tat Chee Avenue 80",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/26448717",
+    "noteId": "osm-way-26448717",
+    "noteTitle": "又一城 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/26448717",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-way-1156038297",
+    "city": "hk",
+    "name": "圍方",
+    "category": "商场",
+    "coordinates": [
+      114.17954,
+      22.37321
+    ],
+    "address": "車公廟路 Che Kung Miu Road 18",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1156038297",
+    "noteId": "osm-way-1156038297",
+    "noteTitle": "圍方 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/1156038297",
+    "snippet": "香港商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-商场-way-965352215",
+    "city": "hk",
+    "name": "德福廣場",
+    "category": "商场",
+    "coordinates": [
+      114.21276,
+      22.32306
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/965352215",
+    "noteId": "osm-way-965352215",
+    "noteTitle": "德福廣場 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/965352215",
+    "snippet": "运营/品牌：香港鐵路有限公司 MTR Corporation Limited"
+  },
+  {
+    "id": "osm-sz-商场-way-193921211",
+    "city": "sz",
+    "name": "皇庭广场",
+    "category": "商场",
+    "coordinates": [
+      114.05468,
+      22.53639
+    ],
+    "address": "福田区 福华三路 118",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/193921211",
+    "noteId": "osm-way-193921211",
+    "noteTitle": "皇庭广场 · 商场",
+    "noteUrl": "http://www.wongteeplaza.com",
+    "snippet": "深圳商场，坐标核自 OpenStreetMap。",
+    "hours": "Su-Th 10:00-22:00; Fr-Sa 10:00-22:30"
+  },
+  {
+    "id": "osm-sz-商场-way-638856663",
+    "city": "sz",
+    "name": "KK ONE",
+    "category": "商场",
+    "coordinates": [
+      114.02178,
+      22.53077
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/638856663",
+    "noteId": "osm-way-638856663",
+    "noteTitle": "KK ONE · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/638856663",
+    "snippet": "运营/品牌：京基百纳",
+    "hours": "Mo-Su 10:00-22:00"
+  },
+  {
+    "id": "osm-sz-商场-relation-12463913",
+    "city": "sz",
+    "name": "宝能环球汇",
+    "category": "商场",
+    "coordinates": [
+      113.99329,
+      22.59354
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/relation/12463913",
+    "noteId": "osm-relation-12463913",
+    "noteTitle": "宝能环球汇 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/relation/12463913",
+    "snippet": "深圳商场，坐标核自 OpenStreetMap。",
+    "hours": "Su-Th 10:00-22:00;Fr-Sa 10:00-22:30"
+  },
+  {
+    "id": "osm-sz-商场-way-543052135",
+    "city": "sz",
+    "name": "海雅缤纷城",
+    "category": "商场",
+    "coordinates": [
+      113.90112,
+      22.56292
+    ],
+    "address": "宝安区 建安一路 99",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/543052135",
+    "noteId": "osm-way-543052135",
+    "noteTitle": "海雅缤纷城 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/543052135",
+    "snippet": "深圳商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-商场-way-535309689",
+    "city": "sz",
+    "name": "前海壹方城",
+    "category": "商场",
+    "coordinates": [
+      113.88295,
+      22.55536
+    ],
+    "address": "宝安中心区 新湖路 99",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/535309689",
+    "noteId": "osm-way-535309689",
+    "noteTitle": "前海壹方城 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/535309689",
+    "snippet": "运营/品牌：鸿荣源集团"
+  },
+  {
+    "id": "osm-sz-商场-way-1009536338",
+    "city": "sz",
+    "name": "万象前海",
+    "category": "商场",
+    "coordinates": [
+      113.8945,
+      22.53433
+    ],
+    "address": "南山区 桂湾四路 169",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1009536338",
+    "noteId": "osm-way-1009536338",
+    "noteTitle": "万象前海 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/1009536338",
+    "snippet": "运营/品牌：MixC"
+  },
+  {
+    "id": "osm-sz-商场-way-727054447",
+    "city": "sz",
+    "name": "星河WORLD COCO Park",
+    "category": "商场",
+    "coordinates": [
+      114.05422,
+      22.60662
+    ],
+    "address": "龙岗区 雅星路 8",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/727054447",
+    "noteId": "osm-way-727054447",
+    "noteTitle": "星河WORLD COCO Park · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/727054447",
+    "snippet": "运营/品牌：星河集团"
+  },
+  {
+    "id": "osm-sz-商场-way-245047091",
+    "city": "sz",
+    "name": "花园城中心",
+    "category": "商场",
+    "coordinates": [
+      113.91826,
+      22.50446
+    ],
+    "address": "南山区 南海大道 1086",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/245047091",
+    "noteId": "osm-way-245047091",
+    "noteTitle": "花园城中心 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/245047091",
+    "snippet": "运营/品牌：招商蛇口"
+  },
+  {
+    "id": "osm-sz-商场-way-1445999874",
+    "city": "sz",
+    "name": "缤纷时代广场",
+    "category": "商场",
+    "coordinates": [
+      113.86944,
+      22.5956
+    ],
+    "address": "宝安区 宝民二路 190-3",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1445999874",
+    "noteId": "osm-way-1445999874",
+    "noteTitle": "缤纷时代广场 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/1445999874",
+    "snippet": "深圳商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-商场-relation-8841461",
+    "city": "sz",
+    "name": "海岸城购物中心",
+    "category": "商场",
+    "coordinates": [
+      113.93086,
+      22.52025
+    ],
+    "address": "南山区 文心五路 33号",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/relation/8841461",
+    "noteId": "osm-relation-8841461",
+    "noteTitle": "海岸城购物中心 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/relation/8841461",
+    "snippet": "深圳商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-商场-way-181234749",
+    "city": "sz",
+    "name": "益田假日广场",
+    "category": "商场",
+    "coordinates": [
+      113.97013,
+      22.54053
+    ],
+    "address": "南山区 深南大道 9028",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/181234749",
+    "noteId": "osm-way-181234749",
+    "noteTitle": "益田假日广场 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/181234749",
+    "snippet": "深圳商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-商场-way-913559047",
+    "city": "sz",
+    "name": "得丰·圆方购物中心",
+    "category": "商场",
+    "coordinates": [
+      113.88938,
+      22.55249
+    ],
+    "address": "宝安中心区 甲岸路 4",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/913559047",
+    "noteId": "osm-way-913559047",
+    "noteTitle": "得丰·圆方购物中心 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/913559047",
+    "snippet": "深圳商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-商场-way-1095595906",
+    "city": "sz",
+    "name": "石厦时代广场",
+    "category": "商场",
+    "coordinates": [
+      114.04796,
+      22.52363
+    ],
+    "address": "福田区 石厦街",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1095595906",
+    "noteId": "osm-way-1095595906",
+    "noteTitle": "石厦时代广场 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/1095595906",
+    "snippet": "深圳商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-商场-way-1448137178",
+    "city": "sz",
+    "name": "百盛佳时代广场",
+    "category": "商场",
+    "coordinates": [
+      113.80623,
+      22.70665
+    ],
+    "address": "宝安区",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1448137178",
+    "noteId": "osm-way-1448137178",
+    "noteTitle": "百盛佳时代广场 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/1448137178",
+    "snippet": "深圳商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-商场-relation-19776630",
+    "city": "sz",
+    "name": "万丰海岸城购物中心",
+    "category": "商场",
+    "coordinates": [
+      113.81637,
+      22.71602
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/relation/19776630",
+    "noteId": "osm-relation-19776630",
+    "noteTitle": "万丰海岸城购物中心 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/relation/19776630",
+    "snippet": "深圳商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-商场-way-1299307175",
+    "city": "sz",
+    "name": "壹方天地",
+    "category": "商场",
+    "coordinates": [
+      114.02645,
+      22.64929
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1299307175",
+    "noteId": "osm-way-1299307175",
+    "noteTitle": "壹方天地 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/1299307175",
+    "snippet": "深圳商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-商场-relation-19692109",
+    "city": "sz",
+    "name": "深圳湾万象城",
+    "category": "商场",
+    "coordinates": [
+      113.93911,
+      22.51903
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/relation/19692109",
+    "noteId": "osm-relation-19692109",
+    "noteTitle": "深圳湾万象城 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/relation/19692109",
+    "snippet": "运营/品牌：华润置地"
+  },
+  {
+    "id": "osm-sz-商场-way-549180086",
+    "city": "sz",
+    "name": "欢乐海岸购物中心",
+    "category": "商场",
+    "coordinates": [
+      113.98438,
+      22.52848
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/549180086",
+    "noteId": "osm-way-549180086",
+    "noteTitle": "欢乐海岸购物中心 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/549180086",
+    "snippet": "深圳商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-商场-way-271080467",
+    "city": "sz",
+    "name": "金光华广场",
+    "category": "商场",
+    "coordinates": [
+      114.11519,
+      22.54214
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/271080467",
+    "noteId": "osm-way-271080467",
+    "noteTitle": "金光华广场 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/271080467",
+    "snippet": "深圳商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-商场-way-684494957",
+    "city": "sz",
+    "name": "深业上城购物中心",
+    "category": "商场",
+    "coordinates": [
+      114.0642,
+      22.55889
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/684494957",
+    "noteId": "osm-way-684494957",
+    "noteTitle": "深业上城购物中心 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/684494957",
+    "snippet": "深圳商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-商场-way-238824954",
+    "city": "sz",
+    "name": "宝能城市广场",
+    "category": "商场",
+    "coordinates": [
+      114.24363,
+      22.72742
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/238824954",
+    "noteId": "osm-way-238824954",
+    "noteTitle": "宝能城市广场 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/238824954",
+    "snippet": "深圳商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-商场-way-755787695",
+    "city": "sz",
+    "name": "正力时代广场",
+    "category": "商场",
+    "coordinates": [
+      113.93985,
+      22.76288
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/755787695",
+    "noteId": "osm-way-755787695",
+    "noteTitle": "正力时代广场 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/755787695",
+    "snippet": "深圳商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-商场-way-1444974518",
+    "city": "sz",
+    "name": "江南时代广场",
+    "category": "商场",
+    "coordinates": [
+      114.06476,
+      22.6587
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1444974518",
+    "noteId": "osm-way-1444974518",
+    "noteTitle": "江南时代广场 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/1444974518",
+    "snippet": "深圳商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-商场-way-1449565919",
+    "city": "sz",
+    "name": "东方时代广场",
+    "category": "商场",
+    "coordinates": [
+      114.18647,
+      22.64086
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/1449565919",
+    "noteId": "osm-way-1449565919",
+    "noteTitle": "东方时代广场 · 商场",
+    "noteUrl": "https://www.openstreetmap.org/way/1449565919",
+    "snippet": "深圳商场，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-超市-node-4860805871",
+    "city": "hk",
+    "name": "Don Don Donki",
+    "category": "超市",
+    "coordinates": [
+      114.1889,
+      22.30507
+    ],
+    "address": "船景街 Shung King Street 9",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/4860805871",
+    "noteId": "osm-node-4860805871",
+    "noteTitle": "Don Don Donki · 超市",
+    "noteUrl": "https://www.thewhampoa.com/store/detail-645.html",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。",
+    "hours": "09:00-24:00"
+  },
+  {
+    "id": "osm-hk-超市-node-4858634121",
+    "city": "hk",
+    "name": "AEON SUPERMARKET",
+    "category": "超市",
+    "coordinates": [
+      114.17269,
+      22.29987
+    ],
+    "address": "彌敦道 Nathan Road 100",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/4858634121",
+    "noteId": "osm-node-4858634121",
+    "noteTitle": "AEON SUPERMARKET · 超市",
+    "noteUrl": "https://www.aeonstores.com.hk/shop_info/detail?id=100",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。",
+    "hours": "Mo-Su 10:00-23:00"
+  },
+  {
+    "id": "osm-hk-超市-node-12427962105",
+    "city": "hk",
+    "name": "AEON STYLE",
+    "category": "超市",
+    "coordinates": [
+      114.19581,
+      22.32579
+    ],
+    "address": "承啟道 Shing Kai Road 38",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/12427962105",
+    "noteId": "osm-node-12427962105",
+    "noteTitle": "AEON STYLE · 超市",
+    "noteUrl": "https://www.aeonstores.com.hk/shop_info/detail?id=273",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。",
+    "hours": "Mo-Su 10:00-22:00"
+  },
+  {
+    "id": "osm-hk-超市-node-3958056000",
+    "city": "hk",
+    "name": "百佳",
+    "category": "超市",
+    "coordinates": [
+      114.17007,
+      22.31507
+    ],
+    "address": "Basement, Full Win Commercial Centre, 573 Nathan Road, Yau Ma Tei, Kowloon 彌敦道 Nathan Road 573",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/3958056000",
+    "noteId": "osm-node-3958056000",
+    "noteTitle": "百佳 · 超市",
+    "noteUrl": "https://www.parknshop.com/",
+    "snippet": "运营/品牌：百佳超級市場 PARKnSHOP",
+    "hours": "08:00-23:00"
+  },
+  {
+    "id": "osm-hk-超市-node-4549338712",
+    "city": "hk",
+    "name": "惠康",
+    "category": "超市",
+    "coordinates": [
+      114.12653,
+      22.50359
+    ],
+    "address": "新豐路 San Fung Avenue 130-132",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/4549338712",
+    "noteId": "osm-node-4549338712",
+    "noteTitle": "惠康 · 超市",
+    "noteUrl": "https://www.wellcome.com.hk/",
+    "snippet": "运营/品牌：惠康 Wellcome",
+    "hours": "Mo-Su,PH 07:30-23:00"
+  },
+  {
+    "id": "osm-hk-超市-node-4437332799",
+    "city": "hk",
+    "name": "Taste",
+    "category": "超市",
+    "coordinates": [
+      114.00082,
+      22.26424
+    ],
+    "address": "梅窩碼頭路 Mui Wo Ferry Pier Road 12",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/4437332799",
+    "noteId": "osm-node-4437332799",
+    "noteTitle": "Taste · 超市",
+    "noteUrl": "https://www.parknshop.com/",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。",
+    "hours": "08:00 - 22:00"
+  },
+  {
+    "id": "osm-hk-超市-node-2399550347",
+    "city": "hk",
+    "name": "百佳超级市场",
+    "category": "超市",
+    "coordinates": [
+      114.13006,
+      22.26166
+    ],
+    "address": "數碼港道 Cyberport Road 100",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/2399550347",
+    "noteId": "osm-node-2399550347",
+    "noteTitle": "百佳超级市场 · 超市",
+    "noteUrl": "https://www.pns.hk/en/store-finder",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。",
+    "hours": "Mo-Su 08:00-21:00"
+  },
+  {
+    "id": "osm-hk-超市-node-4239530853",
+    "city": "hk",
+    "name": "Market Place",
+    "category": "超市",
+    "coordinates": [
+      114.15089,
+      22.28449
+    ],
+    "address": "皇后大道中 Queen's Road Central 270-276",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/4239530853",
+    "noteId": "osm-node-4239530853",
+    "noteTitle": "Market Place · 超市",
+    "noteUrl": "https://www.marketplacebyjasons.com",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。",
+    "hours": "Mo-Su 08:00-22:00"
+  },
+  {
+    "id": "osm-hk-超市-node-3791456156",
+    "city": "hk",
+    "name": "永旺",
+    "category": "超市",
+    "coordinates": [
+      114.12084,
+      22.36925
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/3791456156",
+    "noteId": "osm-node-3791456156",
+    "noteTitle": "永旺 · 超市",
+    "noteUrl": "https://www.aeonstores.com.hk/",
+    "snippet": "运营/品牌：永旺 AEON",
+    "hours": "Mo-Su 10:00-22:30"
+  },
+  {
+    "id": "osm-hk-超市-node-4168537789",
+    "city": "hk",
+    "name": "fusion by PARKnSHOP",
+    "category": "超市",
+    "coordinates": [
+      114.16517,
+      22.27864
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/4168537789",
+    "noteId": "osm-node-4168537789",
+    "noteTitle": "fusion by PARKnSHOP · 超市",
+    "noteUrl": "https://www.parknshop.com/",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-超市-node-4862057457",
+    "city": "hk",
+    "name": "U购Select",
+    "category": "超市",
+    "coordinates": [
+      114.13741,
+      22.28694
+    ],
+    "address": "德輔道西 Des Voeux Road West 374-378",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/4862057457",
+    "noteId": "osm-node-4862057457",
+    "noteTitle": "U购Select · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/4862057457",
+    "snippet": "运营/品牌：U購Select U Select",
+    "hours": "Mo-Su 08:30-21:30"
+  },
+  {
+    "id": "osm-hk-超市-node-1236860761",
+    "city": "hk",
+    "name": "Fusion",
+    "category": "超市",
+    "coordinates": [
+      114.06242,
+      22.35276
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/1236860761",
+    "noteId": "osm-node-1236860761",
+    "noteTitle": "Fusion · 超市",
+    "noteUrl": "https://www.parknshop.com/",
+    "snippet": "运营/品牌：Taste"
+  },
+  {
+    "id": "osm-hk-超市-node-4796625665",
+    "city": "hk",
+    "name": "Market Place by Jasons",
+    "category": "超市",
+    "coordinates": [
+      114.19903,
+      22.39542
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/4796625665",
+    "noteId": "osm-node-4796625665",
+    "noteTitle": "Market Place by Jasons · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/4796625665",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。",
+    "hours": "Mo-Su 08:00-22:00"
+  },
+  {
+    "id": "osm-hk-超市-node-9053731154",
+    "city": "hk",
+    "name": "惠康超級市場 - 屏欣",
+    "category": "超市",
+    "coordinates": [
+      114.00346,
+      22.44598
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/9053731154",
+    "noteId": "osm-node-9053731154",
+    "noteTitle": "惠康超級市場 - 屏欣 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/9053731154",
+    "snippet": "运营/品牌：The Dairy Farm Company Limited",
+    "hours": "Mo-Su 08:00-22:00"
+  },
+  {
+    "id": "osm-hk-超市-node-12744205268",
+    "city": "hk",
+    "name": "city'super neighborhood",
+    "category": "超市",
+    "coordinates": [
+      114.16745,
+      22.24734
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/12744205268",
+    "noteId": "osm-node-12744205268",
+    "noteTitle": "city'super neighborhood · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/12744205268",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。",
+    "hours": "Mo-Su 10:00-22:00"
+  },
+  {
+    "id": "osm-hk-超市-node-11957724964",
+    "city": "hk",
+    "name": "每日一田",
+    "category": "超市",
+    "coordinates": [
+      113.96854,
+      22.4115
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/11957724964",
+    "noteId": "osm-node-11957724964",
+    "noteTitle": "每日一田 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/11957724964",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。",
+    "hours": "Mo-Su 09:00-21:00"
+  },
+  {
+    "id": "osm-hk-超市-node-14314280001",
+    "city": "hk",
+    "name": "Ole' supermarket",
+    "category": "超市",
+    "coordinates": [
+      113.91095,
+      22.48849
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/14314280001",
+    "noteId": "osm-node-14314280001",
+    "noteTitle": "Ole' supermarket · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/14314280001",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。",
+    "hours": "Mo-Su 10:00-22:30"
+  },
+  {
+    "id": "osm-hk-超市-node-14325298479",
+    "city": "hk",
+    "name": "U購Select",
+    "category": "超市",
+    "coordinates": [
+      114.14353,
+      22.4872
+    ],
+    "address": "一鳴路 Yat Ming Road 23",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/14325298479",
+    "noteId": "osm-node-14325298479",
+    "noteTitle": "U購Select · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/14325298479",
+    "snippet": "运营/品牌：U購Select U Select"
+  },
+  {
+    "id": "osm-hk-超市-node-13927555771",
+    "city": "hk",
+    "name": "沃尔玛",
+    "category": "超市",
+    "coordinates": [
+      113.9213,
+      22.51753
+    ],
+    "address": "南海大道 来福士广场",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/13927555771",
+    "noteId": "osm-node-13927555771",
+    "noteTitle": "沃尔玛 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/13927555771",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-超市-node-4350598402",
+    "city": "hk",
+    "name": "惠康超級市場",
+    "category": "超市",
+    "coordinates": [
+      114.23601,
+      22.42262
+    ],
+    "address": "錦英路 Kam Ying Road 9",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/4350598402",
+    "noteId": "osm-node-4350598402",
+    "noteTitle": "惠康超級市場 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/4350598402",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-超市-node-4518705790",
+    "city": "hk",
+    "name": "一田",
+    "category": "超市",
+    "coordinates": [
+      114.22507,
+      22.3126
+    ],
+    "address": "觀塘道 Kwun Tong Road 418",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/4518705790",
+    "noteId": "osm-node-4518705790",
+    "noteTitle": "一田 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/4518705790",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-超市-node-1298704546",
+    "city": "hk",
+    "name": "華潤萬家",
+    "category": "超市",
+    "coordinates": [
+      114.19514,
+      22.28686
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/1298704546",
+    "noteId": "osm-node-1298704546",
+    "noteTitle": "華潤萬家 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/1298704546",
+    "snippet": "运营/品牌：華潤萬家 Vanguard"
+  },
+  {
+    "id": "osm-hk-超市-node-13184306316",
+    "city": "hk",
+    "name": "华润万家",
+    "category": "超市",
+    "coordinates": [
+      113.93283,
+      22.52033
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/13184306316",
+    "noteId": "osm-node-13184306316",
+    "noteTitle": "华润万家 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/13184306316",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-超市-node-13185349775",
+    "city": "hk",
+    "name": "盒马鲜生",
+    "category": "超市",
+    "coordinates": [
+      113.93462,
+      22.49453
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/13185349775",
+    "noteId": "osm-node-13185349775",
+    "noteTitle": "盒马鲜生 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/13185349775",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-超市-node-1975052974",
+    "city": "hk",
+    "name": "惠康 Wellcome",
+    "category": "超市",
+    "coordinates": [
+      114.17125,
+      22.33143
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/1975052974",
+    "noteId": "osm-node-1975052974",
+    "noteTitle": "惠康 Wellcome · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/1975052974",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-超市-node-5253313523",
+    "city": "hk",
+    "name": "759阿信屋",
+    "category": "超市",
+    "coordinates": [
+      114.23196,
+      22.32
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/5253313523",
+    "noteId": "osm-node-5253313523",
+    "noteTitle": "759阿信屋 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/5253313523",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-超市-node-2523126955",
+    "city": "hk",
+    "name": "一田百貨超級市場",
+    "category": "超市",
+    "coordinates": [
+      114.16923,
+      22.45173
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/2523126955",
+    "noteId": "osm-node-2523126955",
+    "noteTitle": "一田百貨超級市場 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/2523126955",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-超市-node-13432752105",
+    "city": "hk",
+    "name": "一田新鮮",
+    "category": "超市",
+    "coordinates": [
+      114.26801,
+      22.42681
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/13432752105",
+    "noteId": "osm-node-13432752105",
+    "noteTitle": "一田新鮮 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/13432752105",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-超市-node-4929022970",
+    "city": "hk",
+    "name": "惠康超級市場水泉澳分店",
+    "category": "超市",
+    "coordinates": [
+      114.19845,
+      22.37219
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/4929022970",
+    "noteId": "osm-node-4929022970",
+    "noteTitle": "惠康超級市場水泉澳分店 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/4929022970",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-超市-node-26412241",
+    "city": "hk",
+    "name": "ParkNShop (Peak Galleria)",
+    "category": "超市",
+    "coordinates": [
+      114.15015,
+      22.27005
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/26412241",
+    "noteId": "osm-node-26412241",
+    "noteTitle": "ParkNShop (Peak Galleria) · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/26412241",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-超市-node-2146262929",
+    "city": "hk",
+    "name": "PARKNSHOP",
+    "category": "超市",
+    "coordinates": [
+      114.1618,
+      22.32155
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/2146262929",
+    "noteId": "osm-node-2146262929",
+    "noteTitle": "PARKNSHOP · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/2146262929",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-超市-way-926495108",
+    "city": "hk",
+    "name": "百佳超級市場",
+    "category": "超市",
+    "coordinates": [
+      114.20889,
+      22.38722
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/926495108",
+    "noteId": "osm-way-926495108",
+    "noteTitle": "百佳超級市場 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/way/926495108",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-hk-超市-node-11090879394",
+    "city": "hk",
+    "name": "759 store",
+    "category": "超市",
+    "coordinates": [
+      114.14561,
+      22.50057
+    ],
+    "address": "香港",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/11090879394",
+    "noteId": "osm-node-11090879394",
+    "noteTitle": "759 store · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/11090879394",
+    "snippet": "香港超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-超市-node-13235673192",
+    "city": "sz",
+    "name": "天虹超市",
+    "category": "超市",
+    "coordinates": [
+      113.8454,
+      22.60963
+    ],
+    "address": "航城大道 航城里购物中心",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/13235673192",
+    "noteId": "osm-node-13235673192",
+    "noteTitle": "天虹超市 · 超市",
+    "noteUrl": "https://www.rainbow.cn/supermarket",
+    "snippet": "深圳超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-超市-way-270684533",
+    "city": "sz",
+    "name": "沃尔玛",
+    "category": "超市",
+    "coordinates": [
+      114.02646,
+      22.55698
+    ],
+    "address": "福田区 香梅北路 2001",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/270684533",
+    "noteId": "osm-way-270684533",
+    "noteTitle": "沃尔玛 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/way/270684533",
+    "snippet": "深圳超市，坐标核自 OpenStreetMap。",
+    "hours": "08:00-22:30"
+  },
+  {
+    "id": "osm-sz-超市-node-10911383166",
+    "city": "sz",
+    "name": "华润万家",
+    "category": "超市",
+    "coordinates": [
+      113.98915,
+      22.6685
+    ],
+    "address": "龙华区 华繁路 10-15",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/10911383166",
+    "noteId": "osm-node-10911383166",
+    "noteTitle": "华润万家 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/10911383166",
+    "snippet": "深圳超市，坐标核自 OpenStreetMap。",
+    "hours": "PH,Mo-Su 07:30-22:00"
+  },
+  {
+    "id": "osm-sz-超市-node-12999381297",
+    "city": "sz",
+    "name": "盒马鲜生",
+    "category": "超市",
+    "coordinates": [
+      113.89746,
+      22.57288
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/12999381297",
+    "noteId": "osm-node-12999381297",
+    "noteTitle": "盒马鲜生 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/12999381297",
+    "snippet": "深圳超市，坐标核自 OpenStreetMap。",
+    "hours": "Mo-Su 10:00-22:00"
+  },
+  {
+    "id": "osm-sz-超市-node-12828537176",
+    "city": "sz",
+    "name": "永辉超市",
+    "category": "超市",
+    "coordinates": [
+      114.09409,
+      22.54212
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/12828537176",
+    "noteId": "osm-node-12828537176",
+    "noteTitle": "永辉超市 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/12828537176",
+    "snippet": "深圳超市，坐标核自 OpenStreetMap。",
+    "hours": "09:00-22:00"
+  },
+  {
+    "id": "osm-sz-超市-node-6452778248",
+    "city": "sz",
+    "name": "Ole'精品超市",
+    "category": "超市",
+    "coordinates": [
+      113.88414,
+      22.55478
+    ],
+    "address": "宝安中心区 新湖路 前海壹方城",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/6452778248",
+    "noteId": "osm-node-6452778248",
+    "noteTitle": "Ole'精品超市 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/6452778248",
+    "snippet": "深圳超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-超市-node-13704724089",
+    "city": "sz",
+    "name": "沃尔玛(东莞凤岗中心店)",
+    "category": "超市",
+    "coordinates": [
+      114.13981,
+      22.74948
+    ],
+    "address": "凤岗镇 凤深大道 126",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/13704724089",
+    "noteId": "osm-node-13704724089",
+    "noteTitle": "沃尔玛(东莞凤岗中心店) · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/13704724089",
+    "snippet": "深圳超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-超市-node-4673699864",
+    "city": "sz",
+    "name": "百佳华",
+    "category": "超市",
+    "coordinates": [
+      113.82481,
+      22.72932
+    ],
+    "address": "新沙路 276",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/4673699864",
+    "noteId": "osm-node-4673699864",
+    "noteTitle": "百佳华 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/4673699864",
+    "snippet": "深圳超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-超市-node-7201281198",
+    "city": "sz",
+    "name": "永旺",
+    "category": "超市",
+    "coordinates": [
+      114.13315,
+      22.57178
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/7201281198",
+    "noteId": "osm-node-7201281198",
+    "noteTitle": "永旺 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/7201281198",
+    "snippet": "深圳超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-超市-way-248181081",
+    "city": "sz",
+    "name": "沃尔玛(布吉大芬店)",
+    "category": "超市",
+    "coordinates": [
+      114.13233,
+      22.61429
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/248181081",
+    "noteId": "osm-way-248181081",
+    "noteTitle": "沃尔玛(布吉大芬店) · 超市",
+    "noteUrl": "https://www.openstreetmap.org/way/248181081",
+    "snippet": "深圳超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-超市-node-9308844712",
+    "city": "sz",
+    "name": "惠康超級市場 - 沙頭角",
+    "category": "超市",
+    "coordinates": [
+      114.22479,
+      22.54579
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/9308844712",
+    "noteId": "osm-node-9308844712",
+    "noteTitle": "惠康超級市場 - 沙頭角 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/9308844712",
+    "snippet": "运营/品牌：惠康 Wellcome"
+  },
+  {
+    "id": "osm-sz-超市-node-13744664801",
+    "city": "sz",
+    "name": "7FRESH七鲜京东自营超市(深圳福田趣坊水围店)",
+    "category": "超市",
+    "coordinates": [
+      114.05931,
+      22.52479
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/13744664801",
+    "noteId": "osm-node-13744664801",
+    "noteTitle": "7FRESH七鲜京东自营超市(深圳福田趣坊水围店) · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/13744664801",
+    "snippet": "深圳超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-超市-way-192576766",
+    "city": "sz",
+    "name": "天虹商场",
+    "category": "超市",
+    "coordinates": [
+      114.11317,
+      22.55072
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/192576766",
+    "noteId": "osm-way-192576766",
+    "noteTitle": "天虹商场 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/way/192576766",
+    "snippet": "深圳超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-超市-way-672002872",
+    "city": "sz",
+    "name": "华润万家吉祥店",
+    "category": "超市",
+    "coordinates": [
+      114.23257,
+      22.7328
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/way/672002872",
+    "noteId": "osm-way-672002872",
+    "noteTitle": "华润万家吉祥店 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/way/672002872",
+    "snippet": "深圳超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-超市-node-335941187",
+    "city": "sz",
+    "name": "Super Rainbow",
+    "category": "超市",
+    "coordinates": [
+      114.07794,
+      22.54654
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/335941187",
+    "noteId": "osm-node-335941187",
+    "noteTitle": "Super Rainbow · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/335941187",
+    "snippet": "深圳超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-超市-node-11692519769",
+    "city": "sz",
+    "name": "Walmart",
+    "category": "超市",
+    "coordinates": [
+      114.52695,
+      22.72266
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/11692519769",
+    "noteId": "osm-node-11692519769",
+    "noteTitle": "Walmart · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/11692519769",
+    "snippet": "深圳超市，坐标核自 OpenStreetMap。"
+  },
+  {
+    "id": "osm-sz-超市-node-13279413090",
+    "city": "sz",
+    "name": "百佳华超市",
+    "category": "超市",
+    "coordinates": [
+      113.88955,
+      22.78211
+    ],
+    "address": "深圳市",
+    "source": "OpenStreetMap",
+    "sourceUrl": "https://www.openstreetmap.org/node/13279413090",
+    "noteId": "osm-node-13279413090",
+    "noteTitle": "百佳华超市 · 超市",
+    "noteUrl": "https://www.openstreetmap.org/node/13279413090",
+    "snippet": "深圳超市，坐标核自 OpenStreetMap。"
   }
 ]
