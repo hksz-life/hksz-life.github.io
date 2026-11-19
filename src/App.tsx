@@ -1,7 +1,7 @@
 import {type ComponentType,useEffect,useMemo,useRef,useState} from 'react';
 import type {Map} from 'maplibre-gl';
 import type {FeatureCollection} from 'geojson';
-import {Search,Sun,Moon,Heart,Compass,ArrowLeft,X,ArrowUpRight,MapPin,Check,ChevronRight,ChevronDown,TrainFront,Clock,Maximize2,Route as RouteIcon,LocateFixed} from 'lucide-react';
+import {Search,Sun,Moon,Heart,Compass,ArrowLeft,X,ArrowUpRight,MapPin,Check,ChevronRight,ChevronDown,TrainFront,Clock,Maximize2,Route as RouteIcon,LocateFixed,Stamp,ThumbsUp,Sprout} from 'lucide-react';
 import MapView from './MapView';
 import PlacePhoto from './PlacePhoto';
 import {TransportDetails} from './Transport';
@@ -32,7 +32,7 @@ const CITY_CONFIG:Record<City,{name:string;center:Coord;zoom:number;bounds:[numb
   transitLabel:'地铁出口与离开点',
  },
 };
-const emptyRecords:Records={favorites:[],visits:{},completed:{}};
+const emptyRecords:Records={favorites:[],visits:{},completed:{},checkins:{},likes:[],tried:{}};
 
 function readRecords():{value:Records;error:string}{
  try{
@@ -40,7 +40,9 @@ function readRecords():{value:Records;error:string}{
   if(!s)return {value:emptyRecords,error:''};
   const v=JSON.parse(s);
   if(!Array.isArray(v.favorites)||!v.favorites.every((x:unknown)=>typeof x==='string')||!v.visits||!v.completed||typeof v.visits!=='object'||typeof v.completed!=='object')throw Error();
-  return {value:v,error:''};
+  const strArr=(x:unknown)=>Array.isArray(x)&&x.every((i):i is string=>typeof i==='string')?x:[];
+  const strMap=(x:unknown)=>x&&typeof x==='object'&&!Array.isArray(x)?x as Record<string,string>:{};
+  return {value:{favorites:v.favorites,visits:v.visits,completed:v.completed,checkins:strMap(v.checkins),likes:strArr(v.likes),tried:strMap(v.tried)},error:''};
  }catch{
   return {value:emptyRecords,error:'本地记录无法读取；本次改动暂不覆盖原记录。'};
  }
@@ -66,8 +68,8 @@ export default function App(){
  const [xhsId,setXhsId]=useState('');
  const [xhsNoteId,setXhsNoteId]=useState('');
  const [selectedMetro,setSelectedMetro]=useState<MetroStation|null>(null);
- const [showRoutes,setShowRoutes]=useState(true);
- const [showMetro,setShowMetro]=useState(true);
+ const [showRoutes,setShowRoutes]=useState(false);
+ const [showMetro,setShowMetro]=useState(false);
  const [showPlaces,setShowPlaces]=useState(true);
  const [routeCats,setRouteCats]=useState<string[]|null>(null);
  const [metroLines,setMetroLines]=useState<string[]|null>(null);
@@ -123,9 +125,17 @@ export default function App(){
   try{localStorage.setItem(KEY,JSON.stringify(next));setNotice('已保存在这台设备');}
   catch{setNotice('浏览器无法保存，记录仅在当前页面有效。');}
  }
- function favorite(id:string){
-  save({...records,favorites:records.favorites.includes(id)?records.favorites.filter(i=>i!==id):[...records.favorites,id]});
+ function toggleRecordTag(id:string,field:'favorites'|'likes'){
+  const list=records[field]??[];
+  save({...records,[field]:list.includes(id)?list.filter(i=>i!==id):[...list,id]});
  }
+ function toggleRecordDate(id:string,field:'checkins'|'tried'){
+  const next={...(records[field]??{})};
+  if(next[id])delete next[id];
+  else next[id]=todayStr;
+  save({...records,[field]:next});
+ }
+ function favorite(id:string){toggleRecordTag(id,'favorites');}
  function toggleDone(r:Route){
   const completed={...records.completed};
   const visits={...records.visits};
@@ -199,13 +209,34 @@ export default function App(){
   setShowMetro(true);setQuery('');setView('metro');fly(s.coordinates,Math.max(map.current?.getZoom()??14,14.2));
  }
 
+ const itemLabel=(id:string)=>places.find(p=>p.id===id)?.nameZh??routes.find(r=>r.id===id)?.title??xhsSpots.find(s=>s.id===id)?.name??xhsNotes.find(n=>n.id===id)?.title??'';
  const favButton=(id:string)=>{
   const saved=records.favorites.includes(id);
-  const label=places.find(p=>p.id===id)?.nameZh??routes.find(r=>r.id===id)?.title??xhsSpots.find(s=>s.id===id)?.name??xhsNotes.find(n=>n.id===id)?.title??'';
+  const label=itemLabel(id);
   return (
    <button className={`action-pill ${saved?'is-saved':''}`} onClick={()=>favorite(id)} aria-label={`${saved?'取消收藏':'收藏'}${label}`}>
     <Heart size={14} fill={saved?'currentColor':'none'}/><span>{saved?'已收藏':'收藏'}</span>
    </button>
+  );
+ };
+ const placeActions=(id:string)=>{
+  const label=itemLabel(id);
+  const checked=!!records.checkins?.[id];
+  const liked=records.likes?.includes(id)??false;
+  const tried=!!records.tried?.[id];
+  return (
+   <>
+    {favButton(id)}
+    <button className={`action-pill ${checked?'is-checkin':''}`} aria-pressed={checked} aria-label={`${checked?'取消打卡':'打卡'}${label}`} onClick={()=>toggleRecordDate(id,'checkins')}>
+     <Stamp size={14}/><span>{checked?'已打卡':'打卡'}</span>
+    </button>
+    <button className={`action-pill ${liked?'is-liked':''}`} aria-pressed={liked} aria-label={`${liked?'取消点赞':'点赞'}${label}`} onClick={()=>toggleRecordTag(id,'likes')}>
+     <ThumbsUp size={14} fill={liked?'currentColor':'none'}/><span>{liked?'已点赞':'点赞'}</span>
+    </button>
+    <button className={`action-pill ${tried?'is-done':''}`} aria-pressed={tried} aria-label={`${tried?'取消拔草':'拔草'}${label}`} onClick={()=>toggleRecordDate(id,'tried')}>
+     <Sprout size={14}/><span>{tried?'已拔草':'拔草'}</span>
+    </button>
+   </>
   );
  };
 
@@ -293,6 +324,20 @@ export default function App(){
   return list;
  },[routes,places,xhsSpots,xhsNotes,records.favorites]);
  const completedRoutes=useMemo(()=>routes.filter(r=>records.completed[r.id]),[routes,records.completed]);
+ const spotFootprints=useMemo(()=>{
+  const list:{id:string;kind:'place'|'xhs';city:City;title:string;cat:string;sub:string;obj:Place|XhsSpot|XhsNote;isNote?:boolean}[]=[];
+  const tag=(id:string)=>{
+   const parts:string[]=[];
+   if(records.checkins?.[id])parts.push(`打卡 ${records.checkins[id]}`);
+   if(records.tried?.[id])parts.push(`拔草 ${records.tried[id]}`);
+   return parts.join(' · ');
+  };
+  for(const p of places){const sub=tag(p.id);if(sub)list.push({id:p.id,kind:'place',city:p.city??'hk',title:p.nameZh,cat:p.categories[0]??'地点',sub,obj:p});}
+  for(const s of xhsSpots){const sub=tag(s.id);if(sub)list.push({id:s.id,kind:'xhs',city:s.city,title:s.name,cat:s.category,sub,obj:s});}
+  for(const n of xhsNotes){const sub=tag(n.id);if(sub)list.push({id:n.id,kind:'xhs',city:n.city,title:n.title,cat:n.category,sub,obj:n,isNote:true});}
+  return list;
+ },[places,xhsSpots,xhsNotes,records.checkins,records.tried]);
+ const footprintCount=completedRoutes.length+spotFootprints.length;
 
  const nearbyRoutes=selectedXhs?cityRoutes.map(r=>{const a=areas.find(x=>x.id===r.areaId);return a?{r,km:distanceKm(selectedXhs.coordinates,a.coordinates)}:null;}).filter((x):x is {r:Route;km:number}=>!!x).sort((a,b)=>a.km-b.km).slice(0,2):[];
  const metroNearbyRoutes=selectedMetro?cityRoutes.map(r=>{const a=areas.find(x=>x.id===r.areaId);return a?{r,km:distanceKm(selectedMetro.coordinates,a.coordinates)}:null;}).filter((x):x is {r:Route;km:number}=>!!x).sort((a,b)=>a.km-b.km).slice(0,4):[];
@@ -484,7 +529,7 @@ export default function App(){
         <PlacePhoto key={place.id} place={place} onLocate={c=>fly(c??place.coordinates,16)} routePosition={route?`第 ${route.placeIds.indexOf(place.id)+1} / ${route.placeIds.length} 站`:undefined}/>
         <p className="lead">{place.description}</p>
         <div className="detail-actions">
-         {favButton(place.id)}
+         {placeActions(place.id)}
          <a className="action-pill" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.nameZh+(place.city==='sz'?' 深圳':' 香港'))}`} target="_blank" rel="noreferrer"><ArrowUpRight size={14}/><span>导航</span></a>
         </div>
         <h2 className="section-label">看点</h2>
@@ -492,32 +537,39 @@ export default function App(){
        </>
       )}
 
-      {view==='saved'&&(
-       <>
-        <div className="panel-tabs sub-tabs">
-         <button className={savedTab==='fav'?'active':''} onClick={()=>setSavedTab('fav')}>收藏 · {favItems.length}</button>
-         <button className={savedTab==='done'?'active':''} onClick={()=>setSavedTab('done')}>足迹 · {completedRoutes.length}</button>
-        </div>
-        <div className="clean-list">
-         {savedTab==='fav'?(
-          favItems.length?favItems.map(x=>{
-           if(x.kind==='route')return routeRow(x.obj as Route);
-           const xm=x.kind==='xhs'?xhsCategoryMeta(x.cat,dark):null;
-           const ItemIcon=xm?xm.icon:MapPin;
-           return (
-            <button className="list-row clean-row" key={x.id} onClick={()=>x.kind==='place'?selectPlace(x.obj as Place):x.isNote?selectXhsNote(x.obj as XhsNote):selectXhs(x.obj as XhsSpot)}>
-             <span className="spot-icon" style={{color:xm?.color??'var(--accent)'}}><ItemIcon size={15}/></span>
-             <span className="row-body"><strong>{x.title}</strong><small>{x.city==='sz'?'深圳':'香港'} · {x.sub}</small></span>
-             <span className="row-end"><ChevronRight size={14}/></span>
-            </button>
-           );
-          }):<p className="empty">暂无收藏，浏览路线或去处时可点击收藏。</p>
-         ):(
-          completedRoutes.length?completedRoutes.map(r=>routeRow(r,`走过 ${records.completed[r.id]}`)):<p className="empty">暂无足迹，在路线页点击「标记走过」即可记录。</p>
-         )}
-        </div>
-       </>
-      )}
+      {view==='saved'&&(()=>{
+       const spotRow=(x:{id:string;kind:'route'|'place'|'xhs';city:City;title:string;cat:string;sub:string;obj:Route|Place|XhsSpot|XhsNote;isNote?:boolean})=>{
+        const xm=x.kind==='xhs'?xhsCategoryMeta(x.cat,dark):null;
+        const ItemIcon=xm?xm.icon:MapPin;
+        return (
+         <button className="list-row clean-row" key={x.id} onClick={()=>x.kind==='place'?selectPlace(x.obj as Place):x.isNote?selectXhsNote(x.obj as XhsNote):selectXhs(x.obj as XhsSpot)}>
+          <span className="spot-icon" style={{color:xm?.color??'var(--accent)'}}><ItemIcon size={15}/></span>
+          <span className="row-body"><strong>{x.title}</strong><small>{x.city==='sz'?'深圳':'香港'} · {x.sub}</small></span>
+          <span className="row-end"><ChevronRight size={14}/></span>
+         </button>
+        );
+       };
+       return (
+        <>
+         <div className="panel-tabs sub-tabs">
+          <button className={savedTab==='fav'?'active':''} onClick={()=>setSavedTab('fav')}>收藏 · {favItems.length}</button>
+          <button className={savedTab==='done'?'active':''} onClick={()=>setSavedTab('done')}>足迹 · {footprintCount}</button>
+         </div>
+         <div className="clean-list">
+          {savedTab==='fav'?(
+           favItems.length?favItems.map(x=>x.kind==='route'?routeRow(x.obj as Route):spotRow(x)):<p className="empty">暂无收藏，浏览路线或去处时可点击收藏。</p>
+          ):(
+           footprintCount?(
+            <>
+             {completedRoutes.map(r=>routeRow(r,`走过 ${records.completed[r.id]}`))}
+             {spotFootprints.map(spotRow)}
+            </>
+           ):<p className="empty">暂无足迹，在路线或地点页点击「标记走过」「打卡」「拔草」即可记录。</p>
+          )}
+         </div>
+        </>
+       );
+      })()}
 
       {view==='metro'&&selectedMetro&&(
        <>
@@ -567,7 +619,7 @@ export default function App(){
           )}
           {selectedXhs.hours&&<p className="detail-hours"><Clock size={13}/><span>{selectedXhs.hours}</span></p>}
           <div className="detail-actions">
-           {favButton(selectedXhs.id)}
+           {placeActions(selectedXhs.id)}
            <button className="action-pill" onClick={()=>focusXhs(selectedXhs,16)}><MapPin size={14}/><span>定位</span></button>
            {selectedXhs.noteUrl&&<a className="action-pill is-accent" href={selectedXhs.noteUrl} target="_blank" rel="noreferrer"><ArrowUpRight size={14}/><span>{selectedXhs.noteUrl.startsWith('https://www.xiaohongshu')?'原帖':'官网'}</span></a>}
            <a className="action-pill" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(selectedXhs.name+(selectedXhs.city==='sz'?' 深圳':' 香港'))}`} target="_blank" rel="noreferrer"><ArrowUpRight size={14}/><span>导航</span></a>
@@ -590,7 +642,7 @@ export default function App(){
           {selectedXhsNote.snippet&&<div className="info-card"><p>{selectedXhsNote.snippet}</p></div>}
           {selectedXhsNote.hints.length>0&&<p className="detail-addr"><MapPin size={13}/><span>{selectedXhsNote.hints.join(' · ')}</span></p>}
           <div className="detail-actions">
-           {favButton(selectedXhsNote.id)}
+           {placeActions(selectedXhsNote.id)}
            {selectedXhsNote.noteUrl&&<a className="action-pill is-accent" href={selectedXhsNote.noteUrl} target="_blank" rel="noreferrer"><ArrowUpRight size={14}/><span>原帖</span></a>}
           </div>
          </>

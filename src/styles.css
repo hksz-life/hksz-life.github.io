@@ -248,6 +248,9 @@ h1{text-wrap:balance;overflow-wrap:break-word}
 .action-pill:hover{background:var(--tint);text-decoration:none;filter:none}
 .action-pill.is-accent{background:var(--accent);border-color:var(--accent);color:var(--paper)}
 .action-pill.is-saved{color:var(--red);border-color:color-mix(in srgb,var(--red) 35%,var(--line));background:color-mix(in srgb,var(--red) 7%,var(--paper))}
+.action-pill.is-liked{color:var(--red);border-color:color-mix(in srgb,var(--red) 35%,var(--line));background:color-mix(in srgb,var(--red) 7%,var(--paper))}
+.action-pill.is-checkin{color:#b4690e;border-color:color-mix(in srgb,#d9822b 40%,var(--line));background:color-mix(in srgb,#d9822b 9%,var(--paper))}
+[data-theme=dark] .action-pill.is-checkin{color:#f3b562}
 .action-pill.is-done{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));background:color-mix(in srgb,var(--accent) 8%,var(--paper))}
 .section-label{font-size:12px;font-weight:600;color:var(--muted);margin:16px 0 6px}
 .panel-content .clean-stops{margin:6px 0 10px}
