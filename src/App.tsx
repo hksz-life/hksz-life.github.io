@@ -653,17 +653,10 @@ export default function App(){
           <span className="detail-badge" style={{color:sm.color}}><SIcon size={12}/>{selectedXhs.category}</span>
           <h1>{selectedXhs.name}</h1>
           {selectedXhs.address&&<p className="detail-addr"><MapPin size={13}/><span>{selectedXhs.address}</span></p>}
-          {(selectedXhs.noteTitle||selectedXhs.snippet)&&(
-           <div className="info-card">
-            {selectedXhs.noteTitle&&<strong>{selectedXhs.noteTitle}</strong>}
-            {selectedXhs.snippet&&<p>{selectedXhs.snippet}</p>}
-           </div>
-          )}
           {selectedXhs.hours&&<p className="detail-hours"><Clock size={13}/><span>{selectedXhs.hours}</span></p>}
           <div className="detail-actions">
            {placeActions(selectedXhs.id)}
            <button className="action-pill" onClick={()=>focusXhs(selectedXhs,16)}><MapPin size={14}/><span>定位</span></button>
-           {selectedXhs.noteUrl&&!selectedXhs.noteUrl.startsWith('https://www.xiaohongshu')&&<a className="action-pill is-accent" href={selectedXhs.noteUrl} target="_blank" rel="noreferrer"><ArrowUpRight size={14}/><span>官网</span></a>}
            <a className="action-pill" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(selectedXhs.name+(selectedXhs.city==='sz'?' 深圳':' 香港'))}`} target="_blank" rel="noreferrer"><ArrowUpRight size={14}/><span>导航</span></a>
           </div>
           {nearbyRoutes.length>0&&(
@@ -681,7 +674,6 @@ export default function App(){
          <>
           <span className="detail-badge" style={{color:nm.color}}><NIcon size={12}/>{selectedXhsNote.category} · 待定位</span>
           <h1>{selectedXhsNote.title}</h1>
-          {selectedXhsNote.snippet&&<div className="info-card"><p>{selectedXhsNote.snippet}</p></div>}
           {selectedXhsNote.hints.length>0&&<p className="detail-addr"><MapPin size={13}/><span>{selectedXhsNote.hints.join(' · ')}</span></p>}
           <div className="detail-actions">
            {placeActions(selectedXhsNote.id)}
