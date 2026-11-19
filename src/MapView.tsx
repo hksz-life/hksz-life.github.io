@@ -1,4 +1,4 @@
-import {useEffect,useLayoutEffect,useRef,useState} from 'react';
+import {type ReactNode,useEffect,useLayoutEffect,useRef,useState} from 'react';
 import {Map,NavigationControl,ScaleControl,setWorkerUrl,type DataDrivenPropertyValueSpecification,type GeoJSONSource,type MapLayerMouseEvent} from 'maplibre-gl';
 import type {FeatureCollection} from 'geojson';
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
@@ -9,7 +9,7 @@ import {categoryColor,routeCategory,xhsCategoryList,xhsCategoryMeta} from './cat
 import {mapStyle} from './style';
 import type {Area,Place,Route,Coord,XhsSpot,MetroStation} from './types';
 setWorkerUrl(workerUrl);
-interface Props {cityName?:string;dark:boolean;routes:Route[];onRoute:(r:Route)=>void;areas:Area[];places:Place[];category:string;activeArea?:Area;selectedPlace?:Place;route?:Route;panel:boolean;visits:Record<string,string>;onArea:(a:Area)=>void;onPlace:(p:Place)=>void;onReady:(m:Map)=>void;location?:Coord;xhsSpots?:XhsSpot[];showXhs?:boolean;selectedXhs?:XhsSpot;onXhs?:(s:XhsSpot)=>void;favorites?:string[];showRoutes?:boolean;routeCats?:string[]|null;showPlaces?:boolean;showMetro?:boolean;metroLines?:string[]|null;metroData?:FeatureCollection|null;selectedMetro?:MetroStation|null;onMetroStation?:(s:MetroStation)=>void}
+interface Props {cityName?:string;dark:boolean;routes:Route[];onRoute:(r:Route)=>void;areas:Area[];places:Place[];category:string;activeArea?:Area;selectedPlace?:Place;route?:Route;panel:boolean;visits:Record<string,string>;onArea:(a:Area)=>void;onPlace:(p:Place)=>void;onReady:(m:Map)=>void;location?:Coord;xhsSpots?:XhsSpot[];showXhs?:boolean;selectedXhs?:XhsSpot;onXhs?:(s:XhsSpot)=>void;favorites?:string[];showRoutes?:boolean;routeCats?:string[]|null;showPlaces?:boolean;showMetro?:boolean;metroLines?:string[]|null;metroData?:FeatureCollection|null;selectedMetro?:MetroStation|null;onMetroStation?:(s:MetroStation)=>void;bubbleCoord?:Coord;bubble?:ReactNode;onMapClick?:()=>void}
 
 const SPOT_ICON_PATHS:Record<string,string[]>={
  吃喝探店:['M6 3v6a3 3 0 0 0 6 0V3','M9 3v18','M17 3v18','M17 3c2.5 2 2.5 6 0 8'],
@@ -115,7 +115,7 @@ export default function MapView(p:Props){
    const lng=Number(el.dataset.lng),lat=Number(el.dataset.lat);
    if(!Number.isFinite(lng)||!Number.isFinite(lat))continue;
    const pt=m.project([lng,lat]);
-   const ay=el.dataset.anchor==='bottom'?'-100%':el.dataset.anchor==='cam'?'-135%':'-50%';
+   const ay=el.dataset.anchor==='bottom'?'-100%':el.dataset.anchor==='cam'?'-135%':el.dataset.anchor==='bubble'?'calc(-100% - 22px)':'-50%';
    el.style.transform=`translate3d(${pt.x}px,${pt.y}px,0) translate(-50%,${ay})`;
   }
  };
@@ -336,6 +336,20 @@ export default function MapView(p:Props){
   };
  },[p.metroData,p.showMetro,p.metroLines,p.dark,loaded,retry]);
 
+ const onMapClickRef=useRef(p.onMapClick);
+ onMapClickRef.current=p.onMapClick;
+ useEffect(()=>{
+  const m=map.current;if(!m)return;
+  const onBgClick=(e:MapLayerMouseEvent)=>{
+   if(!onMapClickRef.current)return;
+   const hitLayers=['xhs-spot-sel-dot','xhs-spot-dot','metro-station-dot','metro-station-label','route-hit'].filter(id=>!!m.getLayer(id));
+   if(hitLayers.length&&m.queryRenderedFeatures(e.point,{layers:hitLayers}).length)return;
+   onMapClickRef.current();
+  };
+  m.on('click',onBgClick);
+  return()=>{m.off('click',onBgClick);};
+ },[loaded,retry]);
+
  const m=map.current;
  const transport=p.route?.transportNodes??[];
  const stopIndicesByPlace:Record<string,number[]>={};
@@ -393,6 +407,11 @@ export default function MapView(p:Props){
    )}
    {m&&p.location&&<i className="location-dot" data-lng={p.location[0]} data-lat={p.location[1]} style={posStyle(p.location)}/>}
    {m&&p.showMetro&&p.selectedMetro&&<i className="selected-metro-pin" data-lng={p.selectedMetro.coordinates[0]} data-lat={p.selectedMetro.coordinates[1]} style={{...posStyle(p.selectedMetro.coordinates),borderColor:p.selectedMetro.color}}/>}
+   {m&&p.bubbleCoord&&p.bubble&&(
+    <div className="spot-bubble-anchor" data-lng={p.bubbleCoord[0]} data-lat={p.bubbleCoord[1]} data-anchor="bubble" style={posStyle(p.bubbleCoord,'calc(-100% - 22px)')}>
+     {p.bubble}
+    </div>
+   )}
   </div>
   {(!loaded||failed)&&<div className="map-status" role="status">{failed?<>地图资源未完整加载 <button onClick={()=>{setFailed(false);setLoaded(false);setRetry(x=>x+1);}}>重试地图</button></>:`正在展开${p.cityName??'香港'}地图…`}</div>}
  </>;

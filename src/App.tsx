@@ -68,6 +68,7 @@ export default function App(){
  const [xhsId,setXhsId]=useState('');
  const [xhsNoteId,setXhsNoteId]=useState('');
  const [selectedMetro,setSelectedMetro]=useState<MetroStation|null>(null);
+ const [bubbleSpot,setBubbleSpot]=useState<XhsSpot|null>(null);
  const [showRoutes,setShowRoutes]=useState(false);
  const [showMetro,setShowMetro]=useState(false);
  const [showPlaces,setShowPlaces]=useState(true);
@@ -100,13 +101,13 @@ export default function App(){
  useEffect(()=>{document.querySelector('.panel-content')?.scrollTo(0,0);},[view,areaId,routeId,placeId,xhsId,xhsNoteId]);
  useEffect(()=>{if(notice!=='已保存在这台设备')return;const timer=setTimeout(()=>setNotice(''),3500);return()=>clearTimeout(timer);},[notice]);
  useEffect(()=>{
-  if(!openMenu)return;
-  const onDown=(e:PointerEvent)=>{if(!layerRef.current?.contains(e.target as Node))setOpenMenu(null);};
-  const onKey=(e:KeyboardEvent)=>{if(e.key==='Escape')setOpenMenu(null);};
+  if(!openMenu&&!bubbleSpot)return;
+  const onDown=(e:PointerEvent)=>{if(openMenu&&!layerRef.current?.contains(e.target as Node))setOpenMenu(null);};
+  const onKey=(e:KeyboardEvent)=>{if(e.key==='Escape'){setOpenMenu(null);setBubbleSpot(null);}};
   window.addEventListener('pointerdown',onDown);
   window.addEventListener('keydown',onKey);
   return()=>{window.removeEventListener('pointerdown',onDown);window.removeEventListener('keydown',onKey);};
- },[openMenu]);
+ },[openMenu,bubbleSpot]);
 
  const cfg=CITY_CONFIG[city];
  const areas=data?.areas??[],places=data?.places??[],routes=data?.routes??[],xhsSpots=data?.xhsSpots??[],xhsNotes=data?.xhsNotes??[];
@@ -156,7 +157,7 @@ export default function App(){
   map.current?.fitBounds(a.bounds,{padding:window.innerWidth<700?{top:140,bottom:window.innerHeight*.48,left:40,right:40}:{top:90,bottom:80,left:430,right:80},maxZoom:15,duration:700});
  }
  function close(){
-  setView(null);setAreaId('');setPlaceId('');setRouteId('');setXhsId('');setXhsNoteId('');setSelectedMetro(null);
+  setView(null);setAreaId('');setPlaceId('');setRouteId('');setXhsId('');setXhsNoteId('');setSelectedMetro(null);setBubbleSpot(null);
  }
  function switchCity(next:City){
   if(next===city)return;
@@ -167,7 +168,7 @@ export default function App(){
  function selectRoute(r:Route){
   const target=r.city??'hk';
   if(target!==city)setCity(target);
-  setAreaId(r.areaId);setRouteId(r.id);setPlaceId('');setXhsId('');setXhsNoteId('');setSelectedMetro(null);
+  setAreaId(r.areaId);setRouteId(r.id);setPlaceId('');setXhsId('');setXhsNoteId('');setSelectedMetro(null);setBubbleSpot(null);
   setShowRoutes(true);setQuery('');setView('route');
   const a=areas.find(x=>x.id===r.areaId);
   if(a)fit(a);
@@ -181,7 +182,7 @@ export default function App(){
   const target=p.city??'hk';
   if(target!==city)setCity(target);
   if(!fromRoute)setRouteId('');
-  setAreaId('');setPlaceId(p.id);setXhsId('');setXhsNoteId('');setSelectedMetro(null);
+  setAreaId('');setPlaceId(p.id);setXhsId('');setXhsNoteId('');setSelectedMetro(null);setBubbleSpot(null);
   setShowPlaces(true);
   setQuery('');setView('place');fly(p.coordinates);
  }
@@ -192,20 +193,26 @@ export default function App(){
    map.current?.fitBounds([[Math.min(...lons),Math.min(...lats)],[Math.max(...lons),Math.max(...lats)]],{padding:window.innerWidth<700?{top:140,bottom:window.innerHeight*.48,left:40,right:40}:{top:90,bottom:80,left:430,right:80},maxZoom:16.8,duration:700});
   }else fly(s.coordinates,zoom);
  }
+ function previewXhs(s:XhsSpot){
+  setView(null);setAreaId('');setPlaceId('');setRouteId('');setXhsId('');setXhsNoteId('');setSelectedMetro(null);
+  setBubbleSpot(s);
+  const z=map.current?.getZoom()??11.5;
+  map.current?.easeTo({center:s.coordinates,zoom:Math.max(z,13.5),duration:450,essential:false});
+ }
  function selectXhs(s:XhsSpot){
   if(s.city!==city)setCity(s.city);
-  setAreaId('');setRouteId('');setPlaceId('');setXhsId(s.id);setXhsNoteId('');setSelectedMetro(null);
+  setAreaId('');setRouteId('');setPlaceId('');setXhsId(s.id);setXhsNoteId('');setSelectedMetro(null);setBubbleSpot(null);
   setShowPlaces(true);setQuery('');setView('xhs');focusXhs(s,15.5);
  }
  function selectXhsNote(n:XhsNote){
   if(n.city!==city)setCity(n.city);
-  setAreaId('');setRouteId('');setPlaceId('');setXhsId('');setXhsNoteId(n.id);setSelectedMetro(null);
+  setAreaId('');setRouteId('');setPlaceId('');setXhsId('');setXhsNoteId(n.id);setSelectedMetro(null);setBubbleSpot(null);
   setQuery('');setView('xhs');
  }
  function selectMetroStation(s:MetroStation){
   if(s.city!==city){setCity(s.city);setMetroLines(null);}
   else if(metroLines?.length===0)setMetroLines(null);
-  setAreaId('');setRouteId('');setPlaceId('');setXhsId('');setXhsNoteId('');setSelectedMetro(s);
+  setAreaId('');setRouteId('');setPlaceId('');setXhsId('');setXhsNoteId('');setSelectedMetro(s);setBubbleSpot(null);
   setShowMetro(true);setQuery('');setView('metro');fly(s.coordinates,Math.max(map.current?.getZoom()??14,14.2));
  }
 
@@ -343,6 +350,38 @@ export default function App(){
  const metroNearbyRoutes=selectedMetro?cityRoutes.map(r=>{const a=areas.find(x=>x.id===r.areaId);return a?{r,km:distanceKm(selectedMetro.coordinates,a.coordinates)}:null;}).filter((x):x is {r:Route;km:number}=>!!x).sort((a,b)=>a.km-b.km).slice(0,4):[];
  const metroNearbySpots=selectedMetro?cityXhs.map(s=>({s,km:distanceKm(selectedMetro.coordinates,s.coordinates)})).sort((a,b)=>a.km-b.km).slice(0,5):[];
 
+ const spotBubble=bubbleSpot?(()=>{
+  const bm=xhsCategoryMeta(bubbleSpot.category,dark);
+  const BIcon=bm.icon;
+  const saved=records.favorites.includes(bubbleSpot.id);
+  const checked=!!records.checkins?.[bubbleSpot.id];
+  const navUrl=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(bubbleSpot.name+(bubbleSpot.city==='sz'?' 深圳':' 香港'))}`;
+  return (
+   <div className="spot-bubble" role="dialog" aria-label={bubbleSpot.name} onClick={e=>e.stopPropagation()}>
+    <div className="spot-bubble-head">
+     <span className="spot-bubble-cat" style={{color:bm.color}}><BIcon size={12}/><span>{bubbleSpot.category}</span></span>
+     <button className="spot-bubble-close" aria-label="关闭气泡" onClick={()=>setBubbleSpot(null)}><X size={13}/></button>
+    </div>
+    <h2 className="spot-bubble-title">{bubbleSpot.name}</h2>
+    {(bubbleSpot.address||bubbleSpot.hours)&&<p className="spot-bubble-sub">{bubbleSpot.address||bubbleSpot.hours}</p>}
+    <div className="spot-bubble-actions">
+     <button className={`spot-bubble-btn ${saved?'is-saved':''}`} aria-pressed={saved} onClick={()=>favorite(bubbleSpot.id)}>
+      <Heart size={12} fill={saved?'currentColor':'none'}/><span>{saved?'已收藏':'收藏'}</span>
+     </button>
+     <button className={`spot-bubble-btn ${checked?'is-checkin':''}`} aria-pressed={checked} onClick={()=>toggleRecordDate(bubbleSpot.id,'checkins')}>
+      <Stamp size={12}/><span>{checked?'已打卡':'打卡'}</span>
+     </button>
+     <a className="spot-bubble-btn" href={navUrl} target="_blank" rel="noreferrer">
+      <ArrowUpRight size={12}/><span>导航</span>
+     </a>
+     <button className="spot-bubble-btn is-detail" onClick={()=>selectXhs(bubbleSpot)}>
+      <span>详情</span><ChevronRight size={12}/>
+     </button>
+    </div>
+   </div>
+  );
+ })():null;
+
  if(error)return <main className="load-error"><h1>港深生活指南</h1><p>{error}</p><button onClick={()=>window.location.reload()}>重新加载</button></main>;
  if(!data)return <main className="load-error"><Compass/><p>正在打开港深生活指南…</p></main>;
 
@@ -366,8 +405,8 @@ export default function App(){
     onReady={m=>{map.current=m;}}
     xhsSpots={mapXhsSpots}
     showXhs={!!selectedXhs}
-    selectedXhs={selectedXhs}
-    onXhs={selectXhs}
+    selectedXhs={selectedXhs??bubbleSpot??undefined}
+    onXhs={previewXhs}
     favorites={records.favorites}
     showRoutes={showRoutesEffective}
     routeCats={routeCats}
@@ -377,6 +416,9 @@ export default function App(){
     metroData={data.metroData}
     selectedMetro={selectedMetro}
     onMetroStation={selectMetroStation}
+    bubbleCoord={bubbleSpot?.coordinates}
+    bubble={spotBubble}
+    onMapClick={()=>setBubbleSpot(null)}
    />
 
    <header className="topbar">
@@ -621,7 +663,7 @@ export default function App(){
           <div className="detail-actions">
            {placeActions(selectedXhs.id)}
            <button className="action-pill" onClick={()=>focusXhs(selectedXhs,16)}><MapPin size={14}/><span>定位</span></button>
-           {selectedXhs.noteUrl&&<a className="action-pill is-accent" href={selectedXhs.noteUrl} target="_blank" rel="noreferrer"><ArrowUpRight size={14}/><span>{selectedXhs.noteUrl.startsWith('https://www.xiaohongshu')?'原帖':'官网'}</span></a>}
+           {selectedXhs.noteUrl&&!selectedXhs.noteUrl.startsWith('https://www.xiaohongshu')&&<a className="action-pill is-accent" href={selectedXhs.noteUrl} target="_blank" rel="noreferrer"><ArrowUpRight size={14}/><span>官网</span></a>}
            <a className="action-pill" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(selectedXhs.name+(selectedXhs.city==='sz'?' 深圳':' 香港'))}`} target="_blank" rel="noreferrer"><ArrowUpRight size={14}/><span>导航</span></a>
           </div>
           {nearbyRoutes.length>0&&(
@@ -643,7 +685,6 @@ export default function App(){
           {selectedXhsNote.hints.length>0&&<p className="detail-addr"><MapPin size={13}/><span>{selectedXhsNote.hints.join(' · ')}</span></p>}
           <div className="detail-actions">
            {placeActions(selectedXhsNote.id)}
-           {selectedXhsNote.noteUrl&&<a className="action-pill is-accent" href={selectedXhsNote.noteUrl} target="_blank" rel="noreferrer"><ArrowUpRight size={14}/><span>原帖</span></a>}
           </div>
          </>
         );

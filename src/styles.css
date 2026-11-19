@@ -198,7 +198,23 @@ h1{text-wrap:balance;overflow-wrap:break-word}
 .layer-orb{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;background:rgba(20,42,46,.06);color:var(--muted);transition:all .15s ease}
 [data-theme=dark] .layer-orb{background:rgba(255,255,255,.08)}
 .layer-chip-btn.on .layer-orb,.layer-all-btn.on .layer-orb{background:color-mix(in srgb,currentColor 13%,transparent);color:currentColor}
-.stop-pin,.transport-marker,.selected-place-pin,.camera-pin,.location-dot,.selected-metro-pin{left:0;top:0;will-change:transform}
+.stop-pin,.transport-marker,.selected-place-pin,.camera-pin,.location-dot,.selected-metro-pin,.spot-bubble-anchor{left:0;top:0;will-change:transform}
+.spot-bubble-anchor{position:absolute;pointer-events:auto;z-index:8}
+.spot-bubble{position:relative;width:254px;max-width:calc(100vw - 24px);background:var(--surface);backdrop-filter:blur(24px) saturate(1.7);-webkit-backdrop-filter:blur(24px) saturate(1.7);border:1px solid var(--glass-border);border-radius:14px;padding:10px 11px;box-shadow:var(--shadow);animation:panelEnter .16s cubic-bezier(.2,.8,.2,1)}
+.spot-bubble::after{content:'';position:absolute;left:50%;bottom:-6px;width:10px;height:10px;background:var(--surface);border-right:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);transform:translateX(-50%) rotate(45deg)}
+.spot-bubble-head{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:3px}
+.spot-bubble-cat{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600}
+.spot-bubble-close{width:22px;height:22px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;color:var(--muted)}
+.spot-bubble-close:hover{background:var(--tint);color:var(--text);filter:none}
+.spot-bubble-title{margin:0;font-size:14px;font-weight:600;color:var(--text);line-height:1.35}
+.spot-bubble-sub{margin:2px 0 8px;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.spot-bubble-actions{display:flex;align-items:center;gap:5px}
+.spot-bubble-btn{flex:1;height:28px;padding:0 5px;border-radius:8px;border:1px solid var(--line);background:var(--paper);font-size:11.5px;font-weight:500;color:var(--text);display:inline-flex;align-items:center;justify-content:center;gap:3px;text-decoration:none;white-space:nowrap;transition:all .14s ease}
+.spot-bubble-btn:hover{background:var(--tint);text-decoration:none;filter:none}
+.spot-bubble-btn.is-saved{color:var(--red);border-color:color-mix(in srgb,var(--red) 35%,var(--line));background:color-mix(in srgb,var(--red) 7%,var(--paper))}
+.spot-bubble-btn.is-checkin{color:#b4690e;border-color:color-mix(in srgb,#d9822b 40%,var(--line));background:color-mix(in srgb,#d9822b 9%,var(--paper))}
+[data-theme=dark] .spot-bubble-btn.is-checkin{color:#f3b562}
+.spot-bubble-btn.is-detail{background:var(--accent);border-color:var(--accent);color:var(--paper)}
 .xhs-pin.is-dot{width:24px;height:24px;min-height:24px;padding:0;justify-content:center;border-radius:50%}
 
 .panel{background:var(--surface);backdrop-filter:blur(24px) saturate(1.65);-webkit-backdrop-filter:blur(24px) saturate(1.65);border:1px solid var(--glass-border);box-shadow:var(--shadow)}
