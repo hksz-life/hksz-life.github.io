@@ -115,8 +115,10 @@ export default function MapView(p:Props){
    const lng=Number(el.dataset.lng),lat=Number(el.dataset.lat);
    if(!Number.isFinite(lng)||!Number.isFinite(lat))continue;
    const pt=m.project([lng,lat]);
-   const ay=el.dataset.anchor==='bottom'?'-100%':el.dataset.anchor==='cam'?'-135%':el.dataset.anchor==='bubble'?'calc(-100% - 22px)':'-50%';
-   el.style.transform=`translate3d(${pt.x}px,${pt.y}px,0) translate(-50%,${ay})`;
+   const x=Math.round(pt.x),y=Math.round(pt.y);
+   if(el.dataset.anchor==='bubble'){el.style.transform=`translate3d(${x}px,${y}px,0)`;continue;}
+   const ay=el.dataset.anchor==='bottom'?'-100%':el.dataset.anchor==='cam'?'-135%':'-50%';
+   el.style.transform=`translate3d(${x}px,${y}px,0) translate(-50%,${ay})`;
   }
  };
 
@@ -376,7 +378,9 @@ export default function MapView(p:Props){
  const posStyle=(c:Coord,ay='-50%')=>{
   if(!m)return undefined;
   const pt=m.project(c);
-  return {transform:`translate3d(${pt.x}px,${pt.y}px,0) translate(-50%,${ay})`};
+  const x=Math.round(pt.x),y=Math.round(pt.y);
+  if(ay==='bubble')return {transform:`translate3d(${x}px,${y}px,0)`};
+  return {transform:`translate3d(${x}px,${y}px,0) translate(-50%,${ay})`};
  };
 
  return <>
@@ -408,7 +412,7 @@ export default function MapView(p:Props){
    {m&&p.location&&<i className="location-dot" data-lng={p.location[0]} data-lat={p.location[1]} style={posStyle(p.location)}/>}
    {m&&p.showMetro&&p.selectedMetro&&<i className="selected-metro-pin" data-lng={p.selectedMetro.coordinates[0]} data-lat={p.selectedMetro.coordinates[1]} style={{...posStyle(p.selectedMetro.coordinates),borderColor:p.selectedMetro.color}}/>}
    {m&&p.bubbleCoord&&p.bubble&&(
-    <div className="spot-bubble-anchor" data-lng={p.bubbleCoord[0]} data-lat={p.bubbleCoord[1]} data-anchor="bubble" style={posStyle(p.bubbleCoord,'calc(-100% - 22px)')}>
+    <div className="spot-bubble-anchor" data-lng={p.bubbleCoord[0]} data-lat={p.bubbleCoord[1]} data-anchor="bubble" style={posStyle(p.bubbleCoord,'bubble')}>
      {p.bubble}
     </div>
    )}
