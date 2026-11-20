@@ -1,5 +1,6 @@
 """Geocode verifiable HK/SZ place_hints from unlocated XHS notes via OSM Nominatim and export remaining unlocated inspiration."""
 import json
+import os
 import pathlib
 import re
 import subprocess
@@ -7,7 +8,7 @@ import time
 import urllib.parse
 
 R = pathlib.Path(__file__).resolve().parents[1]
-XHS_DATA = pathlib.Path('/Users/amadeus/Documents/ChatGPT/工具/xhs/outputs/map-data.json')
+XHS_DATA = pathlib.Path(os.environ.get('XHS_MAP_DATA') or (R.parent / 'xhs/outputs/map-data.json'))
 CACHE_PATH = R / 'data/raw/xhs-geocode-cache.json'
 SPOTS_PATH = R / 'public/data/xhs-spots.json'
 UNLOCATED_PATH = R / 'public/data/xhs-unlocated.json'

@@ -58,15 +58,16 @@ const initial=readRecords();
 export default function App(){
  const todayStr=useMemo(()=>new Intl.DateTimeFormat('en-CA',{year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()),[]);
  const [city,setCity]=useState<City>('hk');
- const [data,setData]=useState<{areas:Area[];places:Place[];routes:Route[];xhsSpots:XhsSpot[];xhsNotes:XhsNote[];metroData:FeatureCollection|null}|null>(null);
+ const [xhsSpots,setXhsSpots]=useState<XhsSpot[]>([]);
+ const [spotsLoaded,setSpotsLoaded]=useState(false);
+ const [routeBundle,setRouteBundle]=useState<{areas:Area[];places:Place[];routes:Route[];xhsNotes:XhsNote[]}|null>(null);
+ const [metroData,setMetroData]=useState<FeatureCollection|null>(null);
  const [error,setError]=useState('');
  const [dark,setDark]=useState(false);
  const [query,setQuery]=useState('');
  const [view,setView]=useState<'route'|'place'|'saved'|'xhs'|'metro'|null>(null);
- const [areaId,setAreaId]=useState('');
  const [routeId,setRouteId]=useState('');
  const [placeId,setPlaceId]=useState('');
- const [xhsId,setXhsId]=useState('');
  const [xhsNoteId,setXhsNoteId]=useState('');
  const [selectedMetro,setSelectedMetro]=useState<MetroStation|null>(null);
  const [bubbleSpot,setBubbleSpot]=useState<XhsSpot|null>(null);
@@ -83,28 +84,67 @@ export default function App(){
  const [notice,setNotice]=useState(initial.error);
  const map=useRef<Map|null>(null);
  const layerRef=useRef<HTMLDivElement|null>(null);
+ const mountedRef=useRef(true);
+ const routesReqRef=useRef<Promise<void>|null>(null);
+ const metroReqRef=useRef<Promise<void>|null>(null);
 
- useEffect(()=>{
-  let active=true;
-  Promise.all(['areas.json','places.geojson','routes.json','xhs-spots.json','xhs-unlocated.json','metro.geojson'].map(f=>fetch(`${import.meta.env.BASE_URL}data/${f}`).then(r=>{
+ function fetchJson<T>(file:string,fallback?:T):Promise<T>{
+  return fetch(`${import.meta.env.BASE_URL}data/${file}`).then(r=>{
    if(!r.ok){
-    if(f.startsWith('xhs-'))return [];
-    if(f==='metro.geojson')return null;
-    throw Error(f);
+    if(fallback!==undefined)return fallback;
+    throw Error(file);
    }
    return r.json();
-  }))).then(([areas,places,routes,xhsSpots,xhsNotes,metroData])=>{
-   if(active){
-    const spots:XhsSpot[]=Array.isArray(xhsSpots)?xhsSpots:[];
-    setSpotCats(defaultSpotCatsFor(spots,city));
-    setData({areas,places:places.features.map((f:{properties:Place})=>f.properties),routes,xhsSpots:spots,xhsNotes:Array.isArray(xhsNotes)?xhsNotes:[],metroData:metroData&&metroData.type==='FeatureCollection'?metroData:null});
-   }
-  }).catch(()=>{if(active)setError('内容未能加载，请刷新重试。');});
-  return()=>{active=false;};
+  });
+ }
+ function ensureRoutesLoaded(){
+  if(routeBundle||routesReqRef.current)return;
+  routesReqRef.current=Promise.all([
+   fetchJson<Area[]>('areas.json'),
+   fetchJson<{features:{properties:Place}[]}>('places.geojson'),
+   fetchJson<Route[]>('routes.json'),
+   fetchJson<XhsNote[]>('xhs-unlocated.json',[]),
+  ]).then(([areas,places,routes,xhsNotes])=>{
+   if(!mountedRef.current)return;
+   setRouteBundle({
+    areas,
+    places:places.features.map(f=>f.properties),
+    routes,
+    xhsNotes:Array.isArray(xhsNotes)?xhsNotes:[],
+   });
+  }).catch(()=>{
+   routesReqRef.current=null;
+   if(mountedRef.current)setNotice('路线与站点资料暂时无法加载，请重试。');
+  });
+ }
+ function ensureMetroLoaded(){
+  if(metroData||metroReqRef.current)return;
+  metroReqRef.current=fetchJson<FeatureCollection|null>('metro.geojson',null)
+   .then(m=>{if(mountedRef.current&&m&&m.type==='FeatureCollection')setMetroData(m);})
+   .catch(()=>{metroReqRef.current=null;});
+ }
+
+ useEffect(()=>{
+  mountedRef.current=true;
+  fetchJson<XhsSpot[]>('xhs-spots.json',[]).then(spots=>{
+   if(!mountedRef.current)return;
+   const list=Array.isArray(spots)?spots:[];
+   setSpotCats(defaultSpotCatsFor(list,city));
+   setXhsSpots(list);
+   setSpotsLoaded(true);
+  }).catch(()=>{if(mountedRef.current)setError('内容未能加载，请刷新重试。');});
+  return()=>{mountedRef.current=false;};
  },[]);
 
+ useEffect(()=>{
+  if(showRoutes||openMenu==='routes'||bubbleExpanded||view==='saved'||view==='metro'||view==='route'||view==='place'||view==='xhs'||query.trim().length>0)ensureRoutesLoaded();
+ },[showRoutes,openMenu,bubbleExpanded,view,query]);
+ useEffect(()=>{
+  if(showMetro||openMenu==='metro')ensureMetroLoaded();
+ },[showMetro,openMenu]);
+
  useEffect(()=>{document.documentElement.dataset.theme=dark?'dark':'light';},[dark]);
- useEffect(()=>{document.querySelector('.panel-content')?.scrollTo(0,0);},[view,areaId,routeId,placeId,xhsId,xhsNoteId]);
+ useEffect(()=>{document.querySelector('.panel-content')?.scrollTo(0,0);},[view,routeId,placeId,xhsNoteId]);
  useEffect(()=>{if(notice!=='已保存在这台设备')return;const timer=setTimeout(()=>setNotice(''),3500);return()=>clearTimeout(timer);},[notice]);
  useEffect(()=>{
   if(!openMenu&&!bubbleSpot)return;
@@ -116,13 +156,13 @@ export default function App(){
  },[openMenu,bubbleSpot]);
 
  const cfg=CITY_CONFIG[city];
- const areas=data?.areas??[],places=data?.places??[],routes=data?.routes??[],xhsSpots=data?.xhsSpots??[],xhsNotes=data?.xhsNotes??[];
+ const areas=routeBundle?.areas??[],places=routeBundle?.places??[],routes=routeBundle?.routes??[],xhsNotes=routeBundle?.xhsNotes??[];
  const cityAreas=useMemo(()=>areas.filter(a=>(a.city??'hk')===city),[areas,city]);
  const cityRoutes=useMemo(()=>routes.filter(r=>(r.city??'hk')===city),[routes,city]);
  const cityPlaces=useMemo(()=>places.filter(p=>(p.city??'hk')===city),[places,city]);
  const cityXhs=useMemo(()=>xhsSpots.filter(s=>s.city===city),[xhsSpots,city]);
 
- const route=routes.find(r=>r.id===routeId),area=areas.find(a=>a.id===(route?.areaId??areaId)),place=places.find(p=>p.id===placeId),selectedXhs=xhsSpots.find(s=>s.id===xhsId),selectedXhsNote=xhsNotes.find(n=>n.id===xhsNoteId);
+ const route=routes.find(r=>r.id===routeId),area=areas.find(a=>a.id===route?.areaId),place=places.find(p=>p.id===placeId),selectedXhsNote=xhsNotes.find(n=>n.id===xhsNoteId);
  const activeRoute=view==='route'||view==='place'?route:undefined;
  const areaRoutes=useMemo(()=>route?cityRoutes.filter(r=>r.areaId===route.areaId):[],[cityRoutes,route]);
 
@@ -161,18 +201,18 @@ export default function App(){
   map.current?.fitBounds(a.bounds,{padding:window.innerWidth<700?{top:140,bottom:window.innerHeight*.48,left:40,right:40}:{top:90,bottom:80,left:430,right:80},maxZoom:15,duration:700});
  }
  function close(){
-  setView(null);setAreaId('');setPlaceId('');setRouteId('');setXhsId('');setXhsNoteId('');setSelectedMetro(null);setBubbleSpot(null);setBubbleExpanded(false);
+  setView(null);setPlaceId('');setRouteId('');setXhsNoteId('');setSelectedMetro(null);setBubbleSpot(null);setBubbleExpanded(false);
  }
  function switchCity(next:City){
   if(next===city)return;
-  setCity(next);setQuery('');setMetroLines(null);setSpotCats(data?defaultSpotCatsFor(data.xhsSpots,next):null);setOpenMenu(null);
+  setCity(next);setQuery('');setMetroLines(null);setSpotCats(spotsLoaded?defaultSpotCatsFor(xhsSpots,next):null);setOpenMenu(null);
   close();
   map.current?.fitBounds(CITY_CONFIG[next].bounds,{padding:60,duration:850});
  }
  function selectRoute(r:Route){
   const target=r.city??'hk';
   if(target!==city)setCity(target);
-  setAreaId(r.areaId);setRouteId(r.id);setPlaceId('');setXhsId('');setXhsNoteId('');setSelectedMetro(null);setBubbleSpot(null);
+  setRouteId(r.id);setPlaceId('');setXhsNoteId('');setSelectedMetro(null);setBubbleSpot(null);
   setShowRoutes(true);setQuery('');setView('route');
   const a=areas.find(x=>x.id===r.areaId);
   if(a)fit(a);
@@ -186,7 +226,7 @@ export default function App(){
   const target=p.city??'hk';
   if(target!==city)setCity(target);
   if(!fromRoute)setRouteId('');
-  setAreaId('');setPlaceId(p.id);setXhsId('');setXhsNoteId('');setSelectedMetro(null);setBubbleSpot(null);
+  setPlaceId(p.id);setXhsNoteId('');setSelectedMetro(null);setBubbleSpot(null);
   setShowPlaces(true);
   setQuery('');setView('place');fly(p.coordinates);
  }
@@ -198,26 +238,26 @@ export default function App(){
   }else map.current?.flyTo({center:s.coordinates,zoom,offset:[0,95],duration:650,essential:false});
  }
  function previewXhs(s:XhsSpot){
-  setView(null);setAreaId('');setPlaceId('');setRouteId('');setXhsId('');setXhsNoteId('');setSelectedMetro(null);
+  setView(null);setPlaceId('');setRouteId('');setXhsNoteId('');setSelectedMetro(null);
   setBubbleSpot(s);setBubbleExpanded(false);
   const z=map.current?.getZoom()??11.5;
   map.current?.easeTo({center:s.coordinates,zoom:Math.max(z,13.5),offset:[0,65],duration:450,essential:false});
  }
  function selectXhs(s:XhsSpot){
-  if(s.city!==city){setCity(s.city);setSpotCats(data?defaultSpotCatsFor(data.xhsSpots,s.city):null);}
-  setView(null);setAreaId('');setRouteId('');setPlaceId('');setXhsId('');setXhsNoteId('');setSelectedMetro(null);
+  if(s.city!==city){setCity(s.city);setSpotCats(spotsLoaded?defaultSpotCatsFor(xhsSpots,s.city):null);}
+  setView(null);setPlaceId('');setRouteId('');setXhsNoteId('');setSelectedMetro(null);
   setBubbleSpot(s);setBubbleExpanded(true);
   setShowPlaces(true);setQuery('');focusXhs(s,15.5);
  }
  function selectXhsNote(n:XhsNote){
   if(n.city!==city)setCity(n.city);
-  setAreaId('');setRouteId('');setPlaceId('');setXhsId('');setXhsNoteId(n.id);setSelectedMetro(null);setBubbleSpot(null);
+  setRouteId('');setPlaceId('');setXhsNoteId(n.id);setSelectedMetro(null);setBubbleSpot(null);
   setQuery('');setView('xhs');
  }
  function selectMetroStation(s:MetroStation){
   if(s.city!==city){setCity(s.city);setMetroLines(null);}
   else if(metroLines?.length===0)setMetroLines(null);
-  setAreaId('');setRouteId('');setPlaceId('');setXhsId('');setXhsNoteId('');setSelectedMetro(s);setBubbleSpot(null);
+  setRouteId('');setPlaceId('');setXhsNoteId('');setSelectedMetro(s);setBubbleSpot(null);
   setShowMetro(true);setQuery('');setView('metro');fly(s.coordinates,Math.max(map.current?.getZoom()??14,14.2));
  }
 
@@ -280,7 +320,7 @@ export default function App(){
  const cityMetroLines=useMemo(()=>{
   const seen=new Set<string>();
   const out:{name:string;color:string}[]=[];
-  for(const f of data?.metroData?.features??[]){
+  for(const f of metroData?.features??[]){
    const pr=f.properties;
    if(!pr||pr.kind!=='line'||pr.city!==city)continue;
    const name=String(pr.name??'');
@@ -289,7 +329,7 @@ export default function App(){
    out.push({name,color:String(pr.color??'#167a74')});
   }
   return out;
- },[data?.metroData,city]);
+ },[metroData,city]);
  const allRouteCatNames=useMemo(()=>categories.map(c=>c.name as string),[]);
  const allMetroLineNames=useMemo(()=>cityMetroLines.map(l=>l.name),[cityMetroLines]);
  const allSpotCatNames=useMemo(()=>xhsCats.map(([c])=>c),[xhsCats]);
@@ -297,7 +337,7 @@ export default function App(){
  const activeMetroLines=useMemo(()=>metroLines===null?allMetroLineNames:metroLines,[metroLines,allMetroLineNames]);
  const activeSpotCats=useMemo(()=>spotCats===null?allSpotCatNames:spotCats,[spotCats,allSpotCatNames]);
  const showRoutesEffective=showRoutes&&activeRouteCats.length>0;
- const showMetroEffective=showMetro&&activeMetroLines.length>0;
+ const showMetroEffective=showMetro&&(metroData?activeMetroLines.length>0:true);
  const showPlacesEffective=showPlaces&&activeSpotCats.length>0;
  const mapXhsSpots=useMemo(()=>{
   if(spotCats===null)return cityXhs;
@@ -416,7 +456,7 @@ export default function App(){
  })():null;
 
  if(error)return <main className="load-error"><h1>港深生活指南</h1><p>{error}</p><button onClick={()=>window.location.reload()}>重新加载</button></main>;
- if(!data)return <main className="load-error"><Compass/><p>正在打开港深生活指南…</p></main>;
+ if(!spotsLoaded)return <main className="load-error"><Compass/><p>正在打开港深生活指南…</p></main>;
 
  return (
   <main className="app">
@@ -446,7 +486,7 @@ export default function App(){
     showPlaces={showPlacesEffective}
     showMetro={showMetroEffective}
     metroLines={metroLines}
-    metroData={data.metroData}
+    metroData={metroData}
     selectedMetro={selectedMetro}
     onMetroStation={selectMetroStation}
     bubbleCoord={bubbleSpot?.coordinates}
@@ -500,16 +540,20 @@ export default function App(){
           <span className="layer-orb" style={effective&&selected===null?{color:'var(--accent)'}:undefined}><MainIcon size={12}/></span><span>{allLabel}</span>
          </button>
          <div className="layer-sep"/>
-         <div className="layer-grid">
-          {items.map(({name,color,icon:ItemIcon})=>{
-           const on=visible&&activeNames.includes(name);
-           return (
-            <button className={`layer-chip-btn ${on?'on':''}`} key={name} style={on?{color}:undefined} role="menuitemcheckbox" aria-checked={on} onClick={()=>toggleLayerCat(name,allNames,visible,selected,setSelected,setVisible)}>
-             <span className="layer-orb"><ItemIcon size={12}/></span><span>{name}</span>
-            </button>
-           );
-          })}
-         </div>
+         {key==='metro'&&items.length===0?(
+          <p className="layer-loading">正在加载地铁线路…</p>
+         ):(
+          <div className="layer-grid">
+           {items.map(({name,color,icon:ItemIcon})=>{
+            const on=visible&&activeNames.includes(name);
+            return (
+             <button className={`layer-chip-btn ${on?'on':''}`} key={name} style={on?{color}:undefined} role="menuitemcheckbox" aria-checked={on} onClick={()=>toggleLayerCat(name,allNames,visible,selected,setSelected,setVisible)}>
+              <span className="layer-orb"><ItemIcon size={12}/></span><span>{name}</span>
+             </button>
+            );
+           })}
+          </div>
+         )}
         </div>
        )}
       </div>

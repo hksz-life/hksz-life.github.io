@@ -111,12 +111,21 @@ export default function MapView(p:Props){
  const syncDOMMarkers=()=>{
   const m=map.current,root=markersRef.current;
   if(!m||!root)return;
+  const cw=root.clientWidth;
   for(const el of root.children as HTMLCollectionOf<HTMLElement>){
    const lng=Number(el.dataset.lng),lat=Number(el.dataset.lat);
    if(!Number.isFinite(lng)||!Number.isFinite(lat))continue;
    const pt=m.project([lng,lat]);
    const x=Math.round(pt.x),y=Math.round(pt.y);
-   if(el.dataset.anchor==='bubble'){el.style.transform=`translate3d(${x}px,${y}px,0)`;continue;}
+   if(el.dataset.anchor==='bubble'){
+    const box=el.firstElementChild as HTMLElement|null;
+    const bw=box?.offsetWidth||256;
+    const half=Math.round(bw/2),pad=12;
+    const dx=cw>bw+pad*2?Math.round(Math.max(pad+half-x,Math.min(cw-pad-half-x,0))):0;
+    el.style.transform=`translate3d(${x+dx}px,${y}px,0)`;
+    el.style.setProperty('--tail-x',`${Math.max(-(half-20),Math.min(half-20,-dx))}px`);
+    continue;
+   }
    const ay=el.dataset.anchor==='bottom'?'-100%':el.dataset.anchor==='cam'?'-135%':'-50%';
    el.style.transform=`translate3d(${x}px,${y}px,0) translate(-50%,${ay})`;
   }
@@ -134,7 +143,7 @@ export default function MapView(p:Props){
   m.on('resize',syncDOMMarkers);
   m.on('moveend',update);
   m.on('load',()=>{if(!disposed){setLoaded(true);setFailed(false);update();syncDOMMarkers();}});
-  m.on('error',()=>{if(!disposed)setFailed(true);});
+  m.on('error',()=>{if(!disposed&&!m.isStyleLoaded())setFailed(true);});
   m.on('idle',()=>{if(!disposed&&m.areTilesLoaded()){setLoaded(true);setFailed(false);}});
   const timeout=setTimeout(()=>{if(!disposed&&!m.loaded())setFailed(true);},18000);
   return()=>{disposed=true;clearTimeout(timeout);m.off('move',syncDOMMarkers);m.off('resize',syncDOMMarkers);m.off('moveend',update);m.remove();map.current=null;};

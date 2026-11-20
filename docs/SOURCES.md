@@ -28,7 +28,7 @@
 
 ## 地理数据
 
-- `places.geojson`、`routes.geojson` 及嵌入 `routes.json` 中标为 OSM 来源的衍生地理数据：© OpenStreetMap contributors，[ODbL 1.0](https://opendatacommons.org/licenses/odbl/1-0/)。公开分发时保留此许可、署名和可下载地理数据。应用代码与旅游文章不是从 OSM 复制。
+- `places.geojson` 及嵌入 `routes.json` 中标为 OSM 来源的衍生地理数据：© OpenStreetMap contributors，[ODbL 1.0](https://opendatacommons.org/licenses/odbl/1-0/)。公开分发时保留此许可、署名和可下载地理数据。应用代码与旅游文章不是从 OSM 复制。
 - [OpenFreeMap](https://openfreemap.org/) 提供矢量底图；前端永久保留署名。底图使用 OpenMapTiles schema。服务需要联网，无服务可用性保证。
 - [FOSSGIS / OSRM](https://routing.openstreetmap.de/about.html) 提供 foot profile。开发阶段少量串行路线请求，间隔 >1 秒，原始响应缓存，前端不进行远程算路。遵守最多每秒一次、不得重度使用的政策。保留修正地图链接。
 - [Nominatim 使用政策](https://operations.osmfoundation.org/policies/nominatim/)：仅用于本次少量固定地点研究；单线程、间隔 >1 秒、自定义 User-Agent、缓存。禁止用公共实例提供自动补全或高流量搜索；本应用搜索完全离线查本地 JSON。
