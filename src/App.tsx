@@ -510,135 +510,138 @@ export default function App(){
     onMapClick={()=>{setBubbleSpot(null);setBubbleExpanded(false);}}
    />
 
-   <header className="topbar">
-    <div className="search-wrap">
-     <Search size={14}/>
-     <input aria-label="搜索路线、地点或去处" maxLength={80} value={query} onChange={e=>setQuery(e.target.value)} placeholder="搜索港深地点、路线、菜系…"/>
-     {query&&<button aria-label="清空搜索" onClick={()=>setQuery('')}><X size={13}/></button>}
-     {query&&(
-      <div className="search-results">
-       {searchResults.length?searchResults.map(x=>(
-        <button key={x.type+x.id} onClick={()=>x.type==='route'?selectRoute(x.obj as Route):x.type==='place'?selectPlace(x.obj as Place):x.type==='xhs'?selectXhs(x.obj as XhsSpot):selectXhsNote(x.obj as XhsNote)}>
-         <MapPin size={15}/>
-         <span>{x.name}<small>{x.city==='sz'?'深圳':'香港'} · {x.type==='route'?'路线':x.type==='xhs'?'去处':x.type==='xhsNote'?'灵感':'地点'}</small></span>
-         <ChevronRight size={14}/>
-        </button>
-       )):(
-        <div className="search-empty">
-         <p>无匹配结果，可试试：</p>
-         <div className="search-suggestions">{SEARCH_SUGGESTIONS.map(k=><button key={k} className="chip" onClick={()=>setQuery(k)}>{k}</button>)}</div>
-        </div>
-       )}
-      </div>
-     )}
-    </div>
-    <div className="topbar-tools">
-     <button className={`icon-button ${view==='saved'?'active':''}`} aria-label="收藏与足迹" title="收藏与足迹" aria-pressed={view==='saved'} onClick={()=>{if(view==='saved')close();else{close();setView('saved');}}}><Heart size={15} fill={view==='saved'?'currentColor':'none'}/></button>
-     <button className="icon-button" aria-label="查看港深全域" title="查看港深全域" onClick={()=>{close();map.current?.fitBounds(HKSZ_BOUNDS,{padding:50,duration:800});}}><LocateFixed size={15}/></button>
-     <button className="icon-button" aria-label={dark?'切换浅色地图':'切换深色地图'} title={dark?'浅色底图':'深色底图'} onClick={()=>setDark(!dark)}>{dark?<Sun size={15}/>:<Moon size={15}/>}</button>
-    </div>
-   </header>
-
-   <div className="layer-bar" ref={layerRef} role="group" aria-label="地图显示开关">
-    <div className="layer-track">
-     {layerControls.map(({key,label,allLabel,caretAria,menuAria,icon:MainIcon,visible,effective,selected,allNames,activeNames,setVisible,setSelected,items})=>(
-      <div className={`layer-split ${effective?'active':''}`} key={key}>
-       <button className="layer-main" aria-pressed={effective} onClick={()=>{if(effective)setVisible(false);else{if(selected?.length===0)setSelected(null);setVisible(true);}}}><MainIcon size={13}/><span>{label}</span></button>
-       <button className={`layer-caret ${openMenu===key?'open':''}`} aria-label={caretAria} aria-expanded={openMenu===key} onClick={()=>setOpenMenu(m=>m===key?null:key)}><ChevronDown size={12}/></button>
-       {openMenu===key&&(
-        <div className="layer-menu" role="menu" aria-label={menuAria}>
-         <button className={`layer-all-btn ${effective&&selected===null&&!(key==='places'&&selectedCuisine)?'on':''}`} role="menuitemcheckbox" aria-checked={effective&&selected===null&&!(key==='places'&&selectedCuisine)} onClick={()=>{if(effective&&selected===null&&!(key==='places'&&selectedCuisine))setVisible(false);else{setSelected(null);if(key==='places')setSelectedCuisine(null);setVisible(true);}}}>
-          <span className="layer-orb" style={effective&&selected===null&&!(key==='places'&&selectedCuisine)?{color:'var(--accent)'}:undefined}><MainIcon size={12}/></span><span>{allLabel}</span>
+   <div className="top-hud">
+    <header className="topbar">
+     <div className="search-wrap">
+      <Search size={14}/>
+      <input aria-label="搜索路线、地点或去处" maxLength={80} value={query} onChange={e=>setQuery(e.target.value)} placeholder="搜索港深…"/>
+      {query&&<button aria-label="清空搜索" onClick={()=>setQuery('')}><X size={13}/></button>}
+      {query&&(
+       <div className="search-results">
+        {searchResults.length?searchResults.map(x=>(
+         <button key={x.type+x.id} onClick={()=>x.type==='route'?selectRoute(x.obj as Route):x.type==='place'?selectPlace(x.obj as Place):x.type==='xhs'?selectXhs(x.obj as XhsSpot):selectXhsNote(x.obj as XhsNote)}>
+          <MapPin size={15}/>
+          <span>{x.name}<small>{x.city==='sz'?'深圳':'香港'} · {x.type==='route'?'路线':x.type==='xhs'?'去处':x.type==='xhsNote'?'灵感':'地点'}</small></span>
+          <ChevronRight size={14}/>
          </button>
-         <div className="layer-sep"/>
-         {key==='metro'?(
-          items.length===0?<p className="layer-loading">正在加载地铁线路…</p>:(
-           <>
-            {hkMetroLines.length>0&&(
-             <>
-              <div className="layer-subhead"><span>香港港铁</span><small>{hkMetroLines.length}</small></div>
-              <div className="layer-grid">
-               {hkMetroLines.map(({name,color})=>{
-                const on=visible&&activeNames.includes(name);
-                return (
-                 <button className={`layer-chip-btn ${on?'on':''}`} key={name} style={on?{color}:undefined} role="menuitemcheckbox" aria-checked={on} onClick={()=>toggleLayerCat(name,allNames,visible,selected,setSelected,setVisible)}>
-                  <span className="layer-orb"><TrainFront size={12}/></span><span>{name}</span>
-                 </button>
-                );
-               })}
-              </div>
-             </>
-            )}
-            {szMetroLines.length>0&&(
-             <>
-              <div className="layer-sep"/>
-              <div className="layer-subhead"><span>深圳地铁</span><small>{szMetroLines.length}</small></div>
-              <div className="layer-grid">
-               {szMetroLines.map(({name,color})=>{
-                const on=visible&&activeNames.includes(name);
-                return (
-                 <button className={`layer-chip-btn ${on?'on':''}`} key={name} style={on?{color}:undefined} role="menuitemcheckbox" aria-checked={on} onClick={()=>toggleLayerCat(name,allNames,visible,selected,setSelected,setVisible)}>
-                  <span className="layer-orb"><TrainFront size={12}/></span><span>{name}</span>
-                 </button>
-                );
-               })}
-              </div>
-             </>
-            )}
-           </>
-          )
-         ):(
-          <div className="layer-grid">
-           {items.map(({name,color,icon:ItemIcon})=>{
-            const on=visible&&activeNames.includes(name);
-            return (
-             <button className={`layer-chip-btn ${on?'on':''}`} key={name} style={on?{color}:undefined} role="menuitemcheckbox" aria-checked={on} onClick={()=>{toggleLayerCat(name,allNames,visible,selected,setSelected,setVisible);if(key==='places'&&name==='吃喝探店'&&on&&selectedCuisine)setSelectedCuisine(null);}}>
-              <span className="layer-orb"><ItemIcon size={12}/></span><span>{name}</span>
-             </button>
-            );
-           })}
-          </div>
-         )}
-         {key==='places'&&allCuisines.length>0&&(
-          <>
-           <div className="layer-sep"/>
-           <div className="layer-subhead">
-            <span>菜系细分</span>
-            {selectedCuisine&&<button type="button" onClick={()=>setSelectedCuisine(null)}>清除</button>}
-           </div>
-           <div className="layer-cuisine-row">
-            {allCuisines.map(([c,n])=>{
-             const on=selectedCuisine===c;
+        )):(
+         <div className="search-empty">
+          <p>无匹配结果，可试试：</p>
+          <div className="search-suggestions">{SEARCH_SUGGESTIONS.map(k=><button key={k} className="chip" onClick={()=>setQuery(k)}>{k}</button>)}</div>
+         </div>
+        )}
+       </div>
+      )}
+     </div>
+    </header>
+
+    <div className="layer-bar" ref={layerRef} role="group" aria-label="地图显示开关">
+     <div className="layer-track">
+      {layerControls.map(({key,label,allLabel,caretAria,menuAria,icon:MainIcon,visible,effective,selected,allNames,activeNames,setVisible,setSelected,items})=>(
+       <div className={`layer-split ${effective?'active':''}`} key={key}>
+        <button className="layer-main" aria-pressed={effective} onClick={()=>{if(effective)setVisible(false);else{if(selected?.length===0)setSelected(null);setVisible(true);}}}><MainIcon size={13}/><span>{label}</span></button>
+        <button className={`layer-caret ${openMenu===key?'open':''}`} aria-label={caretAria} aria-expanded={openMenu===key} onClick={()=>setOpenMenu(m=>m===key?null:key)}><ChevronDown size={12}/></button>
+        {openMenu===key&&(
+         <div className="layer-menu" role="menu" aria-label={menuAria}>
+          <button className={`layer-all-btn ${effective&&selected===null&&!(key==='places'&&selectedCuisine)?'on':''}`} role="menuitemcheckbox" aria-checked={effective&&selected===null&&!(key==='places'&&selectedCuisine)} onClick={()=>{if(effective&&selected===null&&!(key==='places'&&selectedCuisine))setVisible(false);else{setSelected(null);if(key==='places')setSelectedCuisine(null);setVisible(true);}}}>
+           <span className="layer-orb" style={effective&&selected===null&&!(key==='places'&&selectedCuisine)?{color:'var(--accent)'}:undefined}><MainIcon size={12}/></span><span>{allLabel}</span>
+          </button>
+          <div className="layer-sep"/>
+          {key==='metro'?(
+           items.length===0?<p className="layer-loading">正在加载地铁线路…</p>:(
+            <>
+             {hkMetroLines.length>0&&(
+              <>
+               <div className="layer-subhead"><span>香港港铁</span><small>{hkMetroLines.length}</small></div>
+               <div className="layer-grid">
+                {hkMetroLines.map(({name,color})=>{
+                 const on=visible&&activeNames.includes(name);
+                 return (
+                  <button className={`layer-chip-btn ${on?'on':''}`} key={name} style={on?{color}:undefined} role="menuitemcheckbox" aria-checked={on} onClick={()=>toggleLayerCat(name,allNames,visible,selected,setSelected,setVisible)}>
+                   <span className="layer-orb"><TrainFront size={12}/></span><span>{name}</span>
+                  </button>
+                 );
+                })}
+               </div>
+              </>
+             )}
+             {szMetroLines.length>0&&(
+              <>
+               <div className="layer-sep"/>
+               <div className="layer-subhead"><span>深圳地铁</span><small>{szMetroLines.length}</small></div>
+               <div className="layer-grid">
+                {szMetroLines.map(({name,color})=>{
+                 const on=visible&&activeNames.includes(name);
+                 return (
+                  <button className={`layer-chip-btn ${on?'on':''}`} key={name} style={on?{color}:undefined} role="menuitemcheckbox" aria-checked={on} onClick={()=>toggleLayerCat(name,allNames,visible,selected,setSelected,setVisible)}>
+                   <span className="layer-orb"><TrainFront size={12}/></span><span>{name}</span>
+                  </button>
+                 );
+                })}
+               </div>
+              </>
+             )}
+            </>
+           )
+          ):(
+           <div className="layer-grid">
+            {items.map(({name,color,icon:ItemIcon})=>{
+             const on=visible&&activeNames.includes(name);
              return (
-              <button type="button" key={c} className={`layer-cuisine-pill ${on?'on':''}`} aria-pressed={on} onClick={()=>{
-               if(on){setSelectedCuisine(null);return;}
-               setSelectedCuisine(c);
-               setShowPlaces(true);
-               if(spotCats!==null&&!spotCats.includes('吃喝探店')){
-                const next=[...spotCats,'吃喝探店'];
-                setSpotCats(next.length===allSpotCatNames.length?null:next);
-               }
-              }}>
-               <span>{c}</span><small>{n}</small>
+              <button className={`layer-chip-btn ${on?'on':''}`} key={name} style={on?{color}:undefined} role="menuitemcheckbox" aria-checked={on} onClick={()=>{toggleLayerCat(name,allNames,visible,selected,setSelected,setVisible);if(key==='places'&&name==='吃喝探店'&&on&&selectedCuisine)setSelectedCuisine(null);}}>
+               <span className="layer-orb"><ItemIcon size={12}/></span><span>{name}</span>
               </button>
              );
             })}
            </div>
-          </>
-         )}
-         {key==='places'&&closedCount>0&&(
-          <>
-           <div className="layer-sep"/>
-           <button type="button" className={`layer-toggle-row ${hideClosed?'on':''}`} role="menuitemcheckbox" aria-checked={hideClosed} onClick={()=>setHideClosed(v=>!v)}>
-            <span className="layer-check">{hideClosed&&<Check size={11}/>}</span>
-            <span>隐藏已停业/结业 ({closedCount})</span>
-           </button>
-          </>
-         )}
-        </div>
-       )}
-      </div>
-     ))}
+          )}
+          {key==='places'&&allCuisines.length>0&&(
+           <>
+            <div className="layer-sep"/>
+            <div className="layer-subhead">
+             <span>菜系细分</span>
+             {selectedCuisine&&<button type="button" onClick={()=>setSelectedCuisine(null)}>清除</button>}
+            </div>
+            <div className="layer-cuisine-row">
+             {allCuisines.map(([c,n])=>{
+              const on=selectedCuisine===c;
+              return (
+               <button type="button" key={c} className={`layer-cuisine-pill ${on?'on':''}`} aria-pressed={on} onClick={()=>{
+                if(on){setSelectedCuisine(null);return;}
+                setSelectedCuisine(c);
+                setShowPlaces(true);
+                if(spotCats!==null&&!spotCats.includes('吃喝探店')){
+                 const next=[...spotCats,'吃喝探店'];
+                 setSpotCats(next.length===allSpotCatNames.length?null:next);
+                }
+               }}>
+                <span>{c}</span><small>{n}</small>
+               </button>
+              );
+             })}
+            </div>
+           </>
+          )}
+          {key==='places'&&closedCount>0&&(
+           <>
+            <div className="layer-sep"/>
+            <button type="button" className={`layer-toggle-row ${hideClosed?'on':''}`} role="menuitemcheckbox" aria-checked={hideClosed} onClick={()=>setHideClosed(v=>!v)}>
+             <span className="layer-check">{hideClosed&&<Check size={11}/>}</span>
+             <span>隐藏已停业/结业 ({closedCount})</span>
+            </button>
+           </>
+          )}
+         </div>
+        )}
+       </div>
+      ))}
+     </div>
+    </div>
+
+    <div className="topbar-tools" role="group" aria-label="快捷工具">
+     <button className={`icon-button ${view==='saved'?'active':''}`} aria-label="收藏与足迹" title="收藏与足迹" aria-pressed={view==='saved'} onClick={()=>{if(view==='saved')close();else{close();setView('saved');}}}><Heart size={15} fill={view==='saved'?'currentColor':'none'}/></button>
+     <button className="icon-button" aria-label="查看港深全域" title="查看港深全域" onClick={()=>{close();map.current?.fitBounds(HKSZ_BOUNDS,{padding:50,duration:800});}}><LocateFixed size={15}/></button>
+     <button className="icon-button" aria-label={dark?'切换浅色地图':'切换深色地图'} title={dark?'浅色底图':'深色底图'} onClick={()=>setDark(!dark)}>{dark?<Sun size={15}/>:<Moon size={15}/>}</button>
     </div>
    </div>
 
