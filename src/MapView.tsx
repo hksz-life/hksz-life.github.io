@@ -231,12 +231,13 @@ export default function MapView(p:Props){
    const features=(p.xhsSpots??[]).map(s=>{
     const sel=s.id===p.selectedXhs?.id;
     const isFav=favSet.has(s.id);
+    const closed=s.status==='closed'||s.status==='ended'||s.status==='paused';
     const catOk=SPOT_ICON_PATHS[s.category]?s.category:'待分类';
-    const prio=sel?0:isFav?1:s.category==='艺术看展'||s.category==='户外自然'?2:s.category==='咖啡甜品'||s.category==='机位与拍照'||s.category==='酒吧饮品'?3:s.category==='校园设施'?5:4;
+    const prio=sel?0:closed?6:isFav?1:s.category==='艺术看展'||s.category==='户外自然'?2:s.category==='咖啡甜品'||s.category==='机位与拍照'||s.category==='酒吧饮品'?3:s.category==='校园设施'?5:4;
     return {
      type:'Feature' as const,
      geometry:{type:'Point' as const,coordinates:s.coordinates},
-     properties:{id:s.id,name:s.name,shortName:s.name.length>12?s.name.slice(0,12)+'…':s.name,selected:sel,priority:prio,icon:sel?`spot-sel-${catOk}-${suffix}`:`spot-${catOk}-${suffix}`}
+     properties:{id:s.id,name:s.name,shortName:s.name.length>12?s.name.slice(0,12)+'…':s.name,selected:sel,closed,priority:prio,icon:sel?`spot-sel-${catOk}-${suffix}`:`spot-${catOk}-${suffix}`}
     };
    });
    const data={type:'FeatureCollection' as const,features};
@@ -258,7 +259,7 @@ export default function MapView(p:Props){
     id:'xhs-spot-dot',type:'symbol',source:'xhs-spots',
     filter:['!=',['get','selected'],true],
     layout:{visibility:vis,'icon-image':['get','icon'],'icon-size':['interpolate',['linear'],['zoom'],10.5,0.82,13,0.94,16,1.05],'icon-allow-overlap':false,'icon-padding':3,'text-field':textField,'text-font':['Noto Sans Regular'],'text-size':11,'text-offset':[0,1.28],'text-anchor':'top','text-optional':true,'symbol-sort-key':['get','priority']},
-    paint:{'text-color':labelColor,'text-halo-color':halo,'text-halo-width':2}
+    paint:{'icon-opacity':['case',['get','closed'],0.48,1],'text-opacity':['case',['get','closed'],0.58,1],'text-color':labelColor,'text-halo-color':halo,'text-halo-width':2}
    });
    m.addLayer({
     id:'xhs-spot-sel-dot',type:'symbol',source:'xhs-spots',

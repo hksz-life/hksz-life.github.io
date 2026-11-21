@@ -7,6 +7,7 @@ import re
 
 R = pathlib.Path(__file__).resolve().parents[1]
 XHS_DATA = pathlib.Path(os.environ.get('XHS_MAP_DATA') or (R.parent / 'xhs/outputs/map-data.json'))
+CURATED_PHASE2 = pathlib.Path(__file__).resolve().parent / 'curated-phase2-spots.json'
 OUT = R / 'public/data/xhs-spots.json'
 
 VALID_CATS = {
@@ -14,6 +15,7 @@ VALID_CATS = {
     '旅行', '机位与拍照', '超市', '商场', '医院', '校园设施', '待分类',
 }
 EXPLANATORY_PAREN_RE = re.compile(r'[（(][^）)]*(?:正文|原设计展|原笔记|原帖|参考点|挂标|合集)[^）)]*[）)]$')
+OPTIONAL_META_KEYS = ('hours', 'foodGroups', 'foodCuisines', 'precision', 'status', 'statusNote', 'geometry', 'menuUrl', 'orderNote')
 
 
 def in_city_bounds(lng: float, lat: float, city: str) -> bool:
@@ -50,11 +52,26 @@ def spot_score(spot: dict, idx: int) -> tuple:
     )
 
 
-def dedupe_spots(spots: list[dict]) -> tuple[list[dict], int]:
+def is_duplicate_spot(a: dict, b: dict, na: str, ba: str, nb: str, bb: str, d: float) -> bool:
+    if (na == nb and d < 500) or (ba == bb and len(ba) >= 2 and d < 60):
+        return True
+    if a.get('noteId') and a.get('noteId') == b.get('noteId') and d < 3000:
+        if ba == bb and len(ba) >= 2:
+            return True
+        if len(ba) >= 4 and len(bb) >= 4 and (ba.startswith(bb) or bb.startswith(ba)):
+            return True
+        if na.startswith('527') and nb.startswith('527'):
+            return True
+    if ('527clafoutis' in na and '527clafoutis' in nb and d < 500) or ('527' in ba and '527' in bb and d < 800):
+        return True
+    return False
+
+
+def dedupe_spots(spots: list[dict]) -> tuple[list[dict], list[str]]:
     """Merge duplicate same-city XHS spots while keeping OSM and campus layers isolated."""
     used: set[int] = set()
     kept_indices: list[int] = []
-    removed = 0
+    removed_names: list[str] = []
 
     for i, a in enumerate(spots):
         if i in used:
@@ -73,21 +90,111 @@ def dedupe_spots(spots: list[dict]) -> tuple[list[dict], int]:
                 continue
             nb, bb = norm_name(b['name']), norm_name(base_name(b['name']))
             d = haversine_m(a['coordinates'], b['coordinates'])
-            if (na == nb and d < 500) or (ba == bb and len(ba) >= 2 and d < 60):
+            if is_duplicate_spot(a, b, na, ba, nb, bb, d):
                 group.append(j)
                 used.add(j)
         used.add(i)
-        winner = max(group, key=lambda idx: spot_score(spots[idx], idx))
-        kept_indices.append(winner)
-        removed += len(group) - 1
+        winner_idx = max(group, key=lambda idx: spot_score(spots[idx], idx))
+        winner = dict(spots[winner_idx])
+        for idx in group:
+            if idx == winner_idx:
+                continue
+            loser = spots[idx]
+            removed_names.append(f"{loser['name']} ({loser['id']} -> kept {winner['id']})")
+            for key in OPTIONAL_META_KEYS:
+                if not winner.get(key) and loser.get(key):
+                    winner[key] = loser[key]
+        spots[winner_idx] = winner
+        kept_indices.append(winner_idx)
 
-    return [spots[idx] for idx in sorted(kept_indices)], removed
+    return [spots[idx] for idx in sorted(kept_indices)], removed_names
+
+
+def find_map_match(spot: dict, loc_by_sid: dict, loc_by_note: dict):
+    sid = str(spot.get('id') or '')
+    if sid in loc_by_sid:
+        return loc_by_sid[sid]
+    nid = str(spot.get('noteId') or '')
+    cands = loc_by_note.get(nid, [])
+    sb = norm_name(base_name(spot.get('name', '')))
+    if not sb:
+        return None, None
+    for row, loc in cands:
+        lb = norm_name(base_name(loc.get('name', '')))
+        if not lb:
+            continue
+        if sb == lb or (
+            len(sb) >= 3 and len(lb) >= 3 and (
+                sb.startswith(lb) or lb.startswith(sb)
+                or (len(sb) >= 4 and sb[:4] in lb)
+                or (len(lb) >= 4 and lb[:4] in sb)
+            )
+        ):
+            return row, loc
+    return None, None
+
+
+def enrich_spots_from_map_data(spots: list[dict], rows: list[dict]) -> dict:
+    loc_by_sid: dict[str, tuple[dict, dict]] = {}
+    loc_by_note: dict[str, list[tuple[dict, dict]]] = {}
+    for row in rows:
+        nid = str(row.get('id') or '')
+        if not nid:
+            continue
+        for idx, loc in enumerate(row.get('locations') or []):
+            loc_by_sid[f'xhs-{nid}-{idx}'] = (row, loc)
+            loc_by_note.setdefault(nid, []).append((row, loc))
+
+    stats = {'foodGroups': 0, 'foodCuisines': 0, 'precision': 0, 'status': 0}
+    for spot in spots:
+        if not str(spot.get('id', '')).startswith('xhs-'):
+            continue
+        row, loc = find_map_match(spot, loc_by_sid, loc_by_note)
+        loc = loc or {}
+        single_loc = bool(row) and len(row.get('locations') or []) <= 1
+        if not spot.get('foodGroups'):
+            fg = loc.get('food_groups') or (row.get('food_groups') if single_loc else None)
+            if isinstance(fg, list) and fg:
+                spot['foodGroups'] = fg
+        if not spot.get('foodCuisines'):
+            fc = loc.get('food_cuisines') or (row.get('food_cuisines') if single_loc else None)
+            if isinstance(fc, list) and fc:
+                spot['foodCuisines'] = fc
+        if not spot.get('precision'):
+            prec = loc.get('precision')
+            if isinstance(prec, str) and prec.strip():
+                spot['precision'] = prec.strip()
+
+        raw_status = str(loc.get('status') or '')
+        raw_note = str(loc.get('status_note') or '').strip()
+        nm = str(spot.get('name') or '')
+        derived_status = None
+        if raw_status == 'closed' or '已结业' in raw_note:
+            derived_status = 'closed'
+        elif '已结束营运' in raw_note or '已结束营运' in nm or '已迁出' in raw_note or '已迁出' in nm:
+            derived_status = 'ended'
+        elif any(k in raw_note or k in nm for k in ('暂停营业', '疑似闭店', '现况待核对', '现况有冲突')):
+            derived_status = 'paused'
+        if derived_status and spot.get('status') != 'seasonal':
+            spot['status'] = derived_status
+            if raw_note:
+                spot['statusNote'] = raw_note[:140]
+            elif '已迁出' in nm:
+                spot['statusNote'] = '原店址已迁出，前往前请核实最新地址。'
+            elif '现况' in nm:
+                spot['statusNote'] = '原店址现况待核对，前往前请确认营业状态。'
+
+        for k in stats:
+            if spot.get(k):
+                stats[k] += 1
+    return stats
 
 
 def main():
     existing = json.loads(OUT.read_text()) if OUT.exists() else []
     seen = {s['id'] for s in existing}
     added = []
+    rows = []
 
     if XHS_DATA.exists():
         raw = json.loads(XHS_DATA.read_text())
@@ -130,13 +237,33 @@ def main():
                     'snippet': ' '.join(str(r.get('content') or '').split())[:200],
                 })
 
-    merged, deduped = dedupe_spots(existing + added)
+    if CURATED_PHASE2.exists():
+        for c in json.loads(CURATED_PHASE2.read_text()):
+            sid = c['id']
+            if sid in seen:
+                continue
+            seen.add(sid)
+            added.append(c)
+
+    all_spots = existing + added
+    stats = enrich_spots_from_map_data(all_spots, rows) if rows else {}
+    merged, removed_names = dedupe_spots(all_spots)
+    if rows:
+        stats = {
+            k: sum(1 for s in merged if str(s.get('id', '')).startswith('xhs-') and s.get(k))
+            for k in ('foodGroups', 'foodCuisines', 'precision', 'status')
+        }
     OUT.write_text(json.dumps(merged, ensure_ascii=False, indent=2) + '\n')
     hk = sum(1 for s in merged if s['city'] == 'hk')
     sz = sum(1 for s in merged if s['city'] == 'sz')
     hk_new = sum(1 for s in added if s['city'] == 'hk')
     sz_new = sum(1 for s in added if s['city'] == 'sz')
-    print(f'Added {len(added)} new XHS spots (+{hk_new} HK, +{sz_new} SZ), removed {deduped} duplicates. Total: {len(merged)} ({hk} HK, {sz} SZ) -> {OUT}')
+    print(f'Added {len(added)} new XHS spots (+{hk_new} HK, +{sz_new} SZ), removed {len(removed_names)} duplicates. Total: {len(merged)} ({hk} HK, {sz} SZ) -> {OUT}')
+    if removed_names:
+        for rn in removed_names:
+            print(f'  removed dup: {rn}')
+    if stats:
+        print(f'Enriched metadata counts across XHS spots: {stats}')
 
 
 if __name__ == '__main__':

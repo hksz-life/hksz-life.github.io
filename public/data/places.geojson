@@ -30352,6 +30352,60 @@
           22.582268
         ]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "lt1-nam-shan-finish",
+        "city": "hk",
+        "nameZh": "南山郊游径口（凤凰径一段终点）",
+        "nameEn": "Nam Shan (Lantau Trail Sec. 1 Finish)",
+        "coordinates": [
+          113.988184,
+          22.256253
+        ],
+        "district": "离岛区",
+        "categories": [
+          "山海之间",
+          "离岛慢游"
+        ],
+        "description": "凤凰径第一段终点，衔接屿南道与南山烧烤/露营区及凤凰径第二段起步点；可于附近巴士站乘屿巴 3M 往返梅窝或东涌。",
+        "sourceUrl": "https://www.hiking.gov.hk/trail",
+        "coordinateSource": "AFCD Official GPX (Lantau Trail Section 1)",
+        "coordinateKind": "trail-endpoint",
+        "verifiedAt": "2026-11-21",
+        "priority": 185,
+        "visitDuration": 0,
+        "visitGuide": {
+          "kind": "transport",
+          "minutes": [
+            5,
+            10
+          ],
+          "durationNote": "郊游径出入口及接驳节点，候车及休息时间另计。",
+          "highlights": [
+            "凤凰径第一段终点与郊游径标距柱",
+            "屿巴 3M 往返梅窝码头或东涌站"
+          ],
+          "arrivalSteps": [
+            "自梅窝码头沿屿南道步行上山抵达南山郊游径口（东涌道与屿南道交界处一带）。",
+            "步行数分钟即可至屿南道南山巴士站乘 3M 离开，或继续衔接凤凰径第二段上大东山。"
+          ],
+          "transportSourceUrl": "https://www.nlb.com.hk/",
+          "contentSourceUrl": "https://www.hiking.gov.hk/trail",
+          "checkedAt": "2026-11-21",
+          "transportNote": "静态资料，不含实时班次、临时改道或天气封山信息。"
+        },
+        "dataLicense": "https://opendatacommons.org/licenses/odbl/1-0/",
+        "attribution": "© 渔农自然护理署 AFCD / OpenStreetMap contributors"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.988184,
+          22.256253
+        ]
+      }
     }
   ]
 }

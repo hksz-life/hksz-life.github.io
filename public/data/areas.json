@@ -4005,5 +4005,39 @@
     "timeOfDay": "清晨 / 白天（避开正午酷热及天黑后下山）",
     "priority": 200,
     "status": "active"
+  },
+  {
+    "id": "lantau-1",
+    "city": "hk",
+    "nameZh": "凤凰径一段·梅窝至南山",
+    "nameEn": "Lantau Trail Sec. 1 · Mui Wo to Nam Shan",
+    "categories": [
+      "山海之间",
+      "离岛慢游"
+    ],
+    "description": "凤凰径起点路段，自梅窝渡轮码头沿林荫屿南道稳步爬升至南山郊游径口，沿途回望银矿湾与梅窝谷地。",
+    "duration": "约 1.5 小时",
+    "transport": "中环6号码头乘新渡轮至梅窝码头起步；终点南山乘屿巴 3M 返回梅窝或往东涌站。",
+    "sourceUrl": "https://www.hiking.gov.hk/trail",
+    "verifiedAt": "2026-11-21",
+    "placeIds": [
+      "mw-pier",
+      "lt1-nam-shan-finish"
+    ],
+    "coordinates": [
+      113.99501,
+      22.26088
+    ],
+    "bounds": [
+      113.9832,
+      22.2511,
+      114.0068,
+      22.2707
+    ],
+    "boundsNote": "范围包络涵盖凤凰径第一段梅窝起步点至南山终点。",
+    "weather": "全程多为沥青林荫道，晴天注意防晒补水；夏季午后较闷热建议早行。",
+    "timeOfDay": "清晨 / 白天",
+    "priority": 190,
+    "status": "active"
   }
 ]

@@ -1,7 +1,7 @@
 import {type ComponentType,useEffect,useMemo,useRef,useState} from 'react';
 import type {Map} from 'maplibre-gl';
 import type {FeatureCollection} from 'geojson';
-import {Search,Sun,Moon,Heart,Compass,ArrowLeft,X,ArrowUpRight,MapPin,Check,ChevronRight,ChevronDown,TrainFront,Clock,Maximize2,Route as RouteIcon,LocateFixed,Stamp} from 'lucide-react';
+import {Search,Sun,Moon,Heart,Compass,ArrowLeft,X,ArrowUpRight,MapPin,Check,ChevronRight,ChevronDown,TrainFront,Clock,Maximize2,Route as RouteIcon,LocateFixed,Stamp,AlertTriangle} from 'lucide-react';
 import MapView from './MapView';
 import PlacePhoto from './PlacePhoto';
 import {TransportDetails} from './Transport';
@@ -78,6 +78,8 @@ export default function App(){
  const [routeCats,setRouteCats]=useState<string[]|null>(null);
  const [metroLines,setMetroLines]=useState<string[]|null>(null);
  const [spotCats,setSpotCats]=useState<string[]|null>(null);
+ const [selectedCuisine,setSelectedCuisine]=useState<string|null>(null);
+ const [hideClosed,setHideClosed]=useState(true);
  const [openMenu,setOpenMenu]=useState<'routes'|'metro'|'places'|null>(null);
  const [savedTab,setSavedTab]=useState<'fav'|'done'>('fav');
  const [records,setRecords]=useState<Records>(initial.value);
@@ -205,7 +207,7 @@ export default function App(){
  }
  function switchCity(next:City){
   if(next===city)return;
-  setCity(next);setQuery('');setMetroLines(null);setSpotCats(spotsLoaded?defaultSpotCatsFor(xhsSpots,next):null);setOpenMenu(null);
+  setCity(next);setQuery('');setMetroLines(null);setSelectedCuisine(null);setSpotCats(spotsLoaded?defaultSpotCatsFor(xhsSpots,next):null);setOpenMenu(null);
   close();
   map.current?.fitBounds(CITY_CONFIG[next].bounds,{padding:60,duration:850});
  }
@@ -244,7 +246,8 @@ export default function App(){
   map.current?.easeTo({center:s.coordinates,zoom:Math.max(z,13.5),offset:[0,65],duration:450,essential:false});
  }
  function selectXhs(s:XhsSpot){
-  if(s.city!==city){setCity(s.city);setSpotCats(spotsLoaded?defaultSpotCatsFor(xhsSpots,s.city):null);}
+  if(s.city!==city){setCity(s.city);setSelectedCuisine(null);setSpotCats(spotsLoaded?defaultSpotCatsFor(xhsSpots,s.city):null);}
+  else if(selectedCuisine&&!s.foodCuisines?.includes(selectedCuisine))setSelectedCuisine(null);
   setView(null);setPlaceId('');setRouteId('');setXhsNoteId('');setSelectedMetro(null);
   setBubbleSpot(s);setBubbleExpanded(true);
   setShowPlaces(true);setQuery('');focusXhs(s,15.5);
@@ -307,7 +310,7 @@ export default function App(){
  const searchResults=qLower?[
   ...routes.map(r=>({id:r.id,city:r.city??'hk' as City,name:r.title,en:(areas.find(a=>a.id===r.areaId)?.nameEn??'')+' '+r.categories.join(' '),type:'route' as const,obj:r})),
   ...places.map(p=>({id:p.id,city:p.city??'hk' as City,name:p.nameZh,en:p.nameEn??'',type:'place' as const,obj:p})),
-  ...xhsSpots.map(s=>({id:s.id,city:s.city,name:s.name,en:s.category+' '+s.address,type:'xhs' as const,obj:s})),
+  ...xhsSpots.map(s=>({id:s.id,city:s.city,name:s.name,en:`${s.category} ${s.address} ${(s.foodCuisines??[]).join(' ')} ${(s.foodGroups??[]).join(' ')}`,type:'xhs' as const,obj:s})),
   ...xhsNotes.map(n=>({id:n.id,city:n.city,name:n.title,en:n.category+' '+n.hints.join(' '),type:'xhsNote' as const,obj:n})),
  ].filter(x=>(x.name+x.en).toLowerCase().includes(qLower)).sort((a,b)=>Number(b.city===city)-Number(a.city===city)).slice(0,10):[];
 
@@ -339,10 +342,23 @@ export default function App(){
  const showRoutesEffective=showRoutes&&activeRouteCats.length>0;
  const showMetroEffective=showMetro&&(metroData?activeMetroLines.length>0:true);
  const showPlacesEffective=showPlaces&&activeSpotCats.length>0;
- const mapXhsSpots=useMemo(()=>{
-  if(spotCats===null)return cityXhs;
-  return cityXhs.filter(s=>spotCats.includes(s.category)||s.id===bubbleSpot?.id);
- },[cityXhs,spotCats,bubbleSpot?.id]);
+ const isSpotClosed=(s:XhsSpot)=>s.status==='closed'||s.status==='ended'||s.status==='paused';
+ const closedCount=useMemo(()=>cityXhs.filter(isSpotClosed).length,[cityXhs]);
+ const cityCuisines=useMemo(()=>{
+  const m:Record<string,number>={};
+  for(const s of cityXhs){
+   if(hideClosed&&isSpotClosed(s))continue;
+   for(const c of s.foodCuisines??[])m[c]=(m[c]??0)+1;
+  }
+  return Object.entries(m).sort((a,b)=>b[1]-a[1]).filter(([,n])=>n>=3).slice(0,12);
+ },[cityXhs,hideClosed]);
+ const mapXhsSpots=useMemo(()=>cityXhs.filter(s=>{
+  if(s.id===bubbleSpot?.id)return true;
+  if(hideClosed&&isSpotClosed(s))return false;
+  if(spotCats!==null&&!spotCats.includes(s.category))return false;
+  if(selectedCuisine&&!s.foodCuisines?.includes(selectedCuisine))return false;
+  return true;
+ }),[cityXhs,hideClosed,spotCats,selectedCuisine,bubbleSpot?.id]);
  function toggleLayerCat(name:string,allNames:string[],visible:boolean,selected:string[]|null,setSelected:(v:string[]|null)=>void,setVisible:(v:boolean)=>void){
   if(!visible){setSelected([name]);setVisible(true);return;}
   const cur=selected===null?allNames:selected;
@@ -352,7 +368,7 @@ export default function App(){
  }
  const routeBtnLabel=!showRoutesEffective||routeCats===null?'线路':routeCats.length===1?`线路 · ${SHORT_CAT[routeCats[0]]??routeCats[0].slice(0,2)}`:`线路 · ${routeCats.length}`;
  const metroBtnLabel=!showMetroEffective||metroLines===null?'地铁':metroLines.length===1?`地铁 · ${metroLines[0]}`:`地铁 · ${metroLines.length}`;
- const placeBtnLabel=!showPlacesEffective||spotCats===null?'地点':spotCats.length===1?`地点 · ${SHORT_CAT[spotCats[0]]??spotCats[0].slice(0,2)}`:`地点 · ${spotCats.length}`;
+ const placeBtnLabel=!showPlacesEffective?'地点':selectedCuisine?`地点 · ${selectedCuisine}`:spotCats===null?'地点':spotCats.length===1?`地点 · ${SHORT_CAT[spotCats[0]]??spotCats[0].slice(0,2)}`:`地点 · ${spotCats.length}`;
  const layerControls:{key:'routes'|'metro'|'places';label:string;allLabel:string;caretAria:string;menuAria:string;icon:ComponentType<{size?:number}>;visible:boolean;effective:boolean;selected:string[]|null;allNames:string[];activeNames:string[];setVisible:(v:boolean)=>void;setSelected:(v:string[]|null)=>void;items:{name:string;color:string;icon:ComponentType<{size?:number}>}[]}[]=[
   {key:'routes',label:routeBtnLabel,allLabel:'全部线路',caretAria:'细分线路类别',menuAria:'线路类别细分',icon:RouteIcon,visible:showRoutes,effective:showRoutesEffective,selected:routeCats,allNames:allRouteCatNames,activeNames:activeRouteCats,setVisible:setShowRoutes,setSelected:setRouteCats,items:categories.map(({name,icon})=>({name,color:categoryColor(name,dark),icon}))},
   {key:'metro',label:metroBtnLabel,allLabel:'全部地铁',caretAria:'细分地铁线路',menuAria:'地铁线路细分',icon:TrainFront,visible:showMetro,effective:showMetroEffective,selected:metroLines,allNames:allMetroLineNames,activeNames:activeMetroLines,setVisible:setShowMetro,setSelected:setMetroLines,items:cityMetroLines.map(({name,color})=>({name,color,icon:TrainFront}))},
@@ -388,15 +404,32 @@ export default function App(){
   const saved=records.favorites.includes(bubbleSpot.id);
   const checked=!!records.checkins?.[bubbleSpot.id];
   const navUrl=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(bubbleSpot.name+(bubbleSpot.city==='sz'?' 深圳':' 香港'))}`;
+  const statusLabel=bubbleSpot.status?{closed:'已结业',ended:'已结束营运',paused:'暂停营业/待核',seasonal:'季节性开放'}[bubbleSpot.status]:'';
+  const cuisineTags=(bubbleSpot.foodCuisines?.length?bubbleSpot.foodCuisines:(bubbleSpot.foodGroups??[]).filter(g=>g!=='菜系'&&!(bubbleSpot.category==='咖啡甜品'&&g==='甜品'))).slice(0,3);
+  const precTag=bubbleExpanded?(bubbleSpot.precision==='building'?'楼宇参考点':bubbleSpot.precision==='address-estimate'?'地址估算':''):'';
   return (
    <div className={`spot-bubble ${bubbleExpanded?'is-expanded':''}`} role="dialog" aria-label={bubbleSpot.name} onClick={e=>e.stopPropagation()}>
     <div className="spot-bubble-head">
-     <span className="spot-bubble-cat" style={{color:bm.color}}><BIcon size={12}/><span>{bubbleSpot.category}</span></span>
+     <div className="spot-bubble-head-left">
+      <span className="spot-bubble-cat" style={{color:bm.color}}><BIcon size={12}/><span>{bubbleSpot.category}</span></span>
+      {bubbleSpot.status&&statusLabel&&<span className={`spot-bubble-status is-${bubbleSpot.status}`}>{statusLabel}</span>}
+     </div>
      <button className="spot-bubble-close" aria-label="关闭气泡" onClick={()=>{setBubbleSpot(null);setBubbleExpanded(false);}}><X size={13}/></button>
     </div>
     <h2 className="spot-bubble-title">{bubbleSpot.name}</h2>
+    {(cuisineTags.length>0||precTag)&&(
+     <div className="spot-bubble-tags">
+      {cuisineTags.map(t=><span key={t} className="spot-tag">{t}</span>)}
+      {precTag&&<span className="spot-tag is-precision">{precTag}</span>}
+     </div>
+    )}
     {bubbleExpanded?(
      <>
+      {bubbleSpot.status&&bubbleSpot.statusNote&&(
+       <p className={`spot-bubble-alert is-${bubbleSpot.status}`}>
+        <AlertTriangle size={12}/><span>{bubbleSpot.statusNote}</span>
+       </p>
+      )}
       {(bubbleSpot.address||bubbleSpot.hours)&&(
        <div className="spot-bubble-meta">
         {bubbleSpot.address&&<p><MapPin size={12}/><span>{bubbleSpot.address}</span></p>}
@@ -536,8 +569,8 @@ export default function App(){
        <button className={`layer-caret ${openMenu===key?'open':''}`} aria-label={caretAria} aria-expanded={openMenu===key} onClick={()=>setOpenMenu(m=>m===key?null:key)}><ChevronDown size={12}/></button>
        {openMenu===key&&(
         <div className="layer-menu" role="menu" aria-label={menuAria}>
-         <button className={`layer-all-btn ${effective&&selected===null?'on':''}`} role="menuitemcheckbox" aria-checked={effective&&selected===null} onClick={()=>{if(effective&&selected===null)setVisible(false);else{setSelected(null);setVisible(true);}}}>
-          <span className="layer-orb" style={effective&&selected===null?{color:'var(--accent)'}:undefined}><MainIcon size={12}/></span><span>{allLabel}</span>
+         <button className={`layer-all-btn ${effective&&selected===null&&!(key==='places'&&selectedCuisine)?'on':''}`} role="menuitemcheckbox" aria-checked={effective&&selected===null&&!(key==='places'&&selectedCuisine)} onClick={()=>{if(effective&&selected===null&&!(key==='places'&&selectedCuisine))setVisible(false);else{setSelected(null);if(key==='places')setSelectedCuisine(null);setVisible(true);}}}>
+          <span className="layer-orb" style={effective&&selected===null&&!(key==='places'&&selectedCuisine)?{color:'var(--accent)'}:undefined}><MainIcon size={12}/></span><span>{allLabel}</span>
          </button>
          <div className="layer-sep"/>
          {key==='metro'&&items.length===0?(
@@ -547,12 +580,48 @@ export default function App(){
            {items.map(({name,color,icon:ItemIcon})=>{
             const on=visible&&activeNames.includes(name);
             return (
-             <button className={`layer-chip-btn ${on?'on':''}`} key={name} style={on?{color}:undefined} role="menuitemcheckbox" aria-checked={on} onClick={()=>toggleLayerCat(name,allNames,visible,selected,setSelected,setVisible)}>
+             <button className={`layer-chip-btn ${on?'on':''}`} key={name} style={on?{color}:undefined} role="menuitemcheckbox" aria-checked={on} onClick={()=>{toggleLayerCat(name,allNames,visible,selected,setSelected,setVisible);if(key==='places'&&name==='吃喝探店'&&on&&selectedCuisine)setSelectedCuisine(null);}}>
               <span className="layer-orb"><ItemIcon size={12}/></span><span>{name}</span>
              </button>
             );
            })}
           </div>
+         )}
+         {key==='places'&&cityCuisines.length>0&&(
+          <>
+           <div className="layer-sep"/>
+           <div className="layer-subhead">
+            <span>菜系细分</span>
+            {selectedCuisine&&<button type="button" onClick={()=>setSelectedCuisine(null)}>清除</button>}
+           </div>
+           <div className="layer-cuisine-row">
+            {cityCuisines.map(([c,n])=>{
+             const on=selectedCuisine===c;
+             return (
+              <button type="button" key={c} className={`layer-cuisine-pill ${on?'on':''}`} aria-pressed={on} onClick={()=>{
+               if(on){setSelectedCuisine(null);return;}
+               setSelectedCuisine(c);
+               setShowPlaces(true);
+               if(spotCats!==null&&!spotCats.includes('吃喝探店')){
+                const next=[...spotCats,'吃喝探店'];
+                setSpotCats(next.length===allSpotCatNames.length?null:next);
+               }
+              }}>
+               <span>{c}</span><small>{n}</small>
+              </button>
+             );
+            })}
+           </div>
+          </>
+         )}
+         {key==='places'&&closedCount>0&&(
+          <>
+           <div className="layer-sep"/>
+           <button type="button" className={`layer-toggle-row ${hideClosed?'on':''}`} role="menuitemcheckbox" aria-checked={hideClosed} onClick={()=>setHideClosed(v=>!v)}>
+            <span className="layer-check">{hideClosed&&<Check size={11}/>}</span>
+            <span>隐藏已停业/结业 ({closedCount})</span>
+           </button>
+          </>
          )}
         </div>
        )}
