@@ -14,27 +14,13 @@ const SHORT_CAT:Record<string,string>={
  城市街巷:'街巷',山海之间:'山海',小店闲逛:'小店',高楼与海港:'海港',离岛慢游:'离岛',历史建筑:'古迹',
  校园设施:'校园',吃喝探店:'吃喝',咖啡甜品:'咖啡',艺术看展:'看展',户外自然:'自然',机位与拍照:'机位',酒吧饮品:'酒吧',
 };
-const CITY_CONFIG:Record<City,{name:string;center:Coord;zoom:number;bounds:[number,number,number,number];suggestions:string[];transitLabel:string}>={
- hk:{
-  name:'香港',
-  center:[114.135,22.29],
-  zoom:11.5,
-  bounds:[113.83,22.17,114.4,22.57],
-  suggestions:['长洲','大坑','西九','中环','大潭'],
-  transitLabel:'港铁出口与离开点',
- },
- sz:{
-  name:'深圳',
-  center:[114.06,22.545],
-  zoom:11.1,
-  bounds:[113.86,22.47,114.62,22.67],
-  suggestions:['蛇口','南头','华侨城','盐田','大鹏'],
-  transitLabel:'地铁出口与离开点',
- },
-};
+const HKSZ_BOUNDS:[number,number,number,number]=[113.84,22.18,114.55,22.66];
+const HKSZ_CENTER:Coord=[114.11,22.41];
+const SEARCH_SUGGESTIONS=['中环','蛇口','大坑','南头','西九','华侨城'];
+const HK_LINE_ORDER=['港岛线','荃湾线','观塘线','东铁线','屯马线','东涌线','将军澳线','南港岛线','机场快线','迪士尼线'];
 const emptyRecords:Records={favorites:[],visits:{},completed:{},checkins:{}};
 const DEFAULT_HIDDEN_SPOT_CATS=new Set(['超市','商场','校园设施','医院']);
-const defaultSpotCatsFor=(spots:XhsSpot[],c:City)=>[...new Set(spots.filter(s=>s.city===c).map(s=>s.category))].filter(cat=>!DEFAULT_HIDDEN_SPOT_CATS.has(cat));
+const defaultSpotCatsFor=(spots:XhsSpot[])=>[...new Set(spots.map(s=>s.category))].filter(cat=>!DEFAULT_HIDDEN_SPOT_CATS.has(cat));
 
 function readRecords():{value:Records;error:string}{
  try{
@@ -57,7 +43,6 @@ const initial=readRecords();
 
 export default function App(){
  const todayStr=useMemo(()=>new Intl.DateTimeFormat('en-CA',{year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()),[]);
- const [city,setCity]=useState<City>('hk');
  const [xhsSpots,setXhsSpots]=useState<XhsSpot[]>([]);
  const [spotsLoaded,setSpotsLoaded]=useState(false);
  const [routeBundle,setRouteBundle]=useState<{areas:Area[];places:Place[];routes:Route[];xhsNotes:XhsNote[]}|null>(null);
@@ -131,7 +116,7 @@ export default function App(){
   fetchJson<XhsSpot[]>('xhs-spots.json',[]).then(spots=>{
    if(!mountedRef.current)return;
    const list=Array.isArray(spots)?spots:[];
-   setSpotCats(defaultSpotCatsFor(list,city));
+   setSpotCats(defaultSpotCatsFor(list));
    setXhsSpots(list);
    setSpotsLoaded(true);
   }).catch(()=>{if(mountedRef.current)setError('内容未能加载，请刷新重试。');});
@@ -157,16 +142,11 @@ export default function App(){
   return()=>{window.removeEventListener('pointerdown',onDown);window.removeEventListener('keydown',onKey);};
  },[openMenu,bubbleSpot]);
 
- const cfg=CITY_CONFIG[city];
  const areas=routeBundle?.areas??[],places=routeBundle?.places??[],routes=routeBundle?.routes??[],xhsNotes=routeBundle?.xhsNotes??[];
- const cityAreas=useMemo(()=>areas.filter(a=>(a.city??'hk')===city),[areas,city]);
- const cityRoutes=useMemo(()=>routes.filter(r=>(r.city??'hk')===city),[routes,city]);
- const cityPlaces=useMemo(()=>places.filter(p=>(p.city??'hk')===city),[places,city]);
- const cityXhs=useMemo(()=>xhsSpots.filter(s=>s.city===city),[xhsSpots,city]);
 
  const route=routes.find(r=>r.id===routeId),area=areas.find(a=>a.id===route?.areaId),place=places.find(p=>p.id===placeId),selectedXhsNote=xhsNotes.find(n=>n.id===xhsNoteId);
  const activeRoute=view==='route'||view==='place'?route:undefined;
- const areaRoutes=useMemo(()=>route?cityRoutes.filter(r=>r.areaId===route.areaId):[],[cityRoutes,route]);
+ const areaRoutes=useMemo(()=>route?routes.filter(r=>r.areaId===route.areaId):[],[routes,route]);
 
  function save(next:Records){
   setRecords(next);
@@ -205,15 +185,7 @@ export default function App(){
  function close(){
   setView(null);setPlaceId('');setRouteId('');setXhsNoteId('');setSelectedMetro(null);setBubbleSpot(null);setBubbleExpanded(false);
  }
- function switchCity(next:City){
-  if(next===city)return;
-  setCity(next);setQuery('');setMetroLines(null);setSelectedCuisine(null);setSpotCats(spotsLoaded?defaultSpotCatsFor(xhsSpots,next):null);setOpenMenu(null);
-  close();
-  map.current?.fitBounds(CITY_CONFIG[next].bounds,{padding:60,duration:850});
- }
  function selectRoute(r:Route){
-  const target=r.city??'hk';
-  if(target!==city)setCity(target);
   setRouteId(r.id);setPlaceId('');setXhsNoteId('');setSelectedMetro(null);setBubbleSpot(null);
   setShowRoutes(true);setQuery('');setView('route');
   const a=areas.find(x=>x.id===r.areaId);
@@ -225,8 +197,6 @@ export default function App(){
   fit(a);
  }
  function selectPlace(p:Place,fromRoute=false){
-  const target=p.city??'hk';
-  if(target!==city)setCity(target);
   if(!fromRoute)setRouteId('');
   setPlaceId(p.id);setXhsNoteId('');setSelectedMetro(null);setBubbleSpot(null);
   setShowPlaces(true);
@@ -246,20 +216,17 @@ export default function App(){
   map.current?.easeTo({center:s.coordinates,zoom:Math.max(z,13.5),offset:[0,65],duration:450,essential:false});
  }
  function selectXhs(s:XhsSpot){
-  if(s.city!==city){setCity(s.city);setSelectedCuisine(null);setSpotCats(spotsLoaded?defaultSpotCatsFor(xhsSpots,s.city):null);}
-  else if(selectedCuisine&&!s.foodCuisines?.includes(selectedCuisine))setSelectedCuisine(null);
+  if(selectedCuisine&&!s.foodCuisines?.includes(selectedCuisine))setSelectedCuisine(null);
   setView(null);setPlaceId('');setRouteId('');setXhsNoteId('');setSelectedMetro(null);
   setBubbleSpot(s);setBubbleExpanded(true);
   setShowPlaces(true);setQuery('');focusXhs(s,15.5);
  }
  function selectXhsNote(n:XhsNote){
-  if(n.city!==city)setCity(n.city);
   setRouteId('');setPlaceId('');setXhsNoteId(n.id);setSelectedMetro(null);setBubbleSpot(null);
   setQuery('');setView('xhs');
  }
  function selectMetroStation(s:MetroStation){
-  if(s.city!==city){setCity(s.city);setMetroLines(null);}
-  else if(metroLines?.length===0)setMetroLines(null);
+  if(metroLines?.length===0)setMetroLines(null);
   setRouteId('');setPlaceId('');setXhsNoteId('');setSelectedMetro(s);setBubbleSpot(null);
   setShowMetro(true);setQuery('');setView('metro');fly(s.coordinates,Math.max(map.current?.getZoom()??14,14.2));
  }
@@ -307,34 +274,50 @@ export default function App(){
  };
 
  const qLower=query.trim().toLowerCase();
- const searchResults=qLower?[
-  ...routes.map(r=>({id:r.id,city:r.city??'hk' as City,name:r.title,en:(areas.find(a=>a.id===r.areaId)?.nameEn??'')+' '+r.categories.join(' '),type:'route' as const,obj:r})),
-  ...places.map(p=>({id:p.id,city:p.city??'hk' as City,name:p.nameZh,en:p.nameEn??'',type:'place' as const,obj:p})),
-  ...xhsSpots.map(s=>({id:s.id,city:s.city,name:s.name,en:`${s.category} ${s.address} ${(s.foodCuisines??[]).join(' ')} ${(s.foodGroups??[]).join(' ')}`,type:'xhs' as const,obj:s})),
-  ...xhsNotes.map(n=>({id:n.id,city:n.city,name:n.title,en:n.category+' '+n.hints.join(' '),type:'xhsNote' as const,obj:n})),
- ].filter(x=>(x.name+x.en).toLowerCase().includes(qLower)).sort((a,b)=>Number(b.city===city)-Number(a.city===city)).slice(0,10):[];
+ const searchResults=qLower?(()=>{
+  const c=map.current?.getCenter();
+  const center:Coord=c?[c.lng,c.lat]:HKSZ_CENTER;
+  return [
+   ...routes.map(r=>({id:r.id,city:r.city??'hk' as City,name:r.title,en:(areas.find(a=>a.id===r.areaId)?.nameEn??'')+' '+r.categories.join(' '),coord:areas.find(a=>a.id===r.areaId)?.coordinates,type:'route' as const,obj:r})),
+   ...places.map(p=>({id:p.id,city:p.city??'hk' as City,name:p.nameZh,en:p.nameEn??'',coord:p.coordinates,type:'place' as const,obj:p})),
+   ...xhsSpots.map(s=>({id:s.id,city:s.city,name:s.name,en:`${s.category} ${s.address} ${(s.foodCuisines??[]).join(' ')} ${(s.foodGroups??[]).join(' ')}`,coord:s.coordinates,type:'xhs' as const,obj:s})),
+   ...xhsNotes.map(n=>({id:n.id,city:n.city,name:n.title,en:n.category+' '+n.hints.join(' '),coord:undefined,type:'xhsNote' as const,obj:n})),
+  ].filter(x=>(x.name+x.en).toLowerCase().includes(qLower)).sort((a,b)=>(a.coord?distanceKm(center,a.coord):1e9)-(b.coord?distanceKm(center,b.coord):1e9)).slice(0,10);
+ })():[];
 
  const xhsCats=useMemo(()=>{
   const m:Record<string,number>={};
-  for(const s of cityXhs)m[s.category]=(m[s.category]??0)+1;
+  for(const s of xhsSpots)m[s.category]=(m[s.category]??0)+1;
   return Object.entries(m).sort((a,b)=>b[1]-a[1]);
- },[cityXhs]);
+ },[xhsSpots]);
 
- const cityMetroLines=useMemo(()=>{
+ const {hkMetroLines,szMetroLines,allMetroLines}=useMemo(()=>{
   const seen=new Set<string>();
-  const out:{name:string;color:string}[]=[];
+  const hk:{name:string;color:string}[]=[];
+  const sz:{name:string;color:string}[]=[];
   for(const f of metroData?.features??[]){
    const pr=f.properties;
-   if(!pr||pr.kind!=='line'||pr.city!==city)continue;
+   if(!pr||pr.kind!=='line')continue;
    const name=String(pr.name??'');
    if(!name||seen.has(name))continue;
    seen.add(name);
-   out.push({name,color:String(pr.color??'#167a74')});
+   const item={name,color:String(pr.color??'#167a74')};
+   if(pr.city==='sz')sz.push(item);
+   else hk.push(item);
   }
-  return out;
- },[metroData,city]);
+  hk.sort((a,b)=>{
+   const ia=HK_LINE_ORDER.indexOf(a.name),ib=HK_LINE_ORDER.indexOf(b.name);
+   return (ia<0?99:ia)-(ib<0?99:ib);
+  });
+  sz.sort((a,b)=>{
+   const na=Number.parseInt(a.name,10),nb=Number.parseInt(b.name,10);
+   if(!Number.isNaN(na)&&!Number.isNaN(nb)&&na!==nb)return na-nb;
+   return a.name.localeCompare(b.name,'zh-Hans-CN');
+  });
+  return {hkMetroLines:hk,szMetroLines:sz,allMetroLines:[...hk,...sz]};
+ },[metroData]);
  const allRouteCatNames=useMemo(()=>categories.map(c=>c.name as string),[]);
- const allMetroLineNames=useMemo(()=>cityMetroLines.map(l=>l.name),[cityMetroLines]);
+ const allMetroLineNames=useMemo(()=>allMetroLines.map(l=>l.name),[allMetroLines]);
  const allSpotCatNames=useMemo(()=>xhsCats.map(([c])=>c),[xhsCats]);
  const activeRouteCats=useMemo(()=>routeCats===null?allRouteCatNames:routeCats,[routeCats,allRouteCatNames]);
  const activeMetroLines=useMemo(()=>metroLines===null?allMetroLineNames:metroLines,[metroLines,allMetroLineNames]);
@@ -343,22 +326,22 @@ export default function App(){
  const showMetroEffective=showMetro&&(metroData?activeMetroLines.length>0:true);
  const showPlacesEffective=showPlaces&&activeSpotCats.length>0;
  const isSpotClosed=(s:XhsSpot)=>s.status==='closed'||s.status==='ended'||s.status==='paused';
- const closedCount=useMemo(()=>cityXhs.filter(isSpotClosed).length,[cityXhs]);
- const cityCuisines=useMemo(()=>{
+ const closedCount=useMemo(()=>xhsSpots.filter(isSpotClosed).length,[xhsSpots]);
+ const allCuisines=useMemo(()=>{
   const m:Record<string,number>={};
-  for(const s of cityXhs){
+  for(const s of xhsSpots){
    if(hideClosed&&isSpotClosed(s))continue;
    for(const c of s.foodCuisines??[])m[c]=(m[c]??0)+1;
   }
   return Object.entries(m).sort((a,b)=>b[1]-a[1]).filter(([,n])=>n>=3).slice(0,12);
- },[cityXhs,hideClosed]);
- const mapXhsSpots=useMemo(()=>cityXhs.filter(s=>{
+ },[xhsSpots,hideClosed]);
+ const mapXhsSpots=useMemo(()=>xhsSpots.filter(s=>{
   if(s.id===bubbleSpot?.id)return true;
   if(hideClosed&&isSpotClosed(s))return false;
   if(spotCats!==null&&!spotCats.includes(s.category))return false;
   if(selectedCuisine&&!s.foodCuisines?.includes(selectedCuisine))return false;
   return true;
- }),[cityXhs,hideClosed,spotCats,selectedCuisine,bubbleSpot?.id]);
+ }),[xhsSpots,hideClosed,spotCats,selectedCuisine,bubbleSpot?.id]);
  function toggleLayerCat(name:string,allNames:string[],visible:boolean,selected:string[]|null,setSelected:(v:string[]|null)=>void,setVisible:(v:boolean)=>void){
   if(!visible){setSelected([name]);setVisible(true);return;}
   const cur=selected===null?allNames:selected;
@@ -371,7 +354,7 @@ export default function App(){
  const placeBtnLabel=!showPlacesEffective?'地点':selectedCuisine?`地点 · ${selectedCuisine}`:spotCats===null?'地点':spotCats.length===1?`地点 · ${SHORT_CAT[spotCats[0]]??spotCats[0].slice(0,2)}`:`地点 · ${spotCats.length}`;
  const layerControls:{key:'routes'|'metro'|'places';label:string;allLabel:string;caretAria:string;menuAria:string;icon:ComponentType<{size?:number}>;visible:boolean;effective:boolean;selected:string[]|null;allNames:string[];activeNames:string[];setVisible:(v:boolean)=>void;setSelected:(v:string[]|null)=>void;items:{name:string;color:string;icon:ComponentType<{size?:number}>}[]}[]=[
   {key:'routes',label:routeBtnLabel,allLabel:'全部线路',caretAria:'细分线路类别',menuAria:'线路类别细分',icon:RouteIcon,visible:showRoutes,effective:showRoutesEffective,selected:routeCats,allNames:allRouteCatNames,activeNames:activeRouteCats,setVisible:setShowRoutes,setSelected:setRouteCats,items:categories.map(({name,icon})=>({name,color:categoryColor(name,dark),icon}))},
-  {key:'metro',label:metroBtnLabel,allLabel:'全部地铁',caretAria:'细分地铁线路',menuAria:'地铁线路细分',icon:TrainFront,visible:showMetro,effective:showMetroEffective,selected:metroLines,allNames:allMetroLineNames,activeNames:activeMetroLines,setVisible:setShowMetro,setSelected:setMetroLines,items:cityMetroLines.map(({name,color})=>({name,color,icon:TrainFront}))},
+  {key:'metro',label:metroBtnLabel,allLabel:'全部地铁',caretAria:'细分地铁线路',menuAria:'地铁线路细分',icon:TrainFront,visible:showMetro,effective:showMetroEffective,selected:metroLines,allNames:allMetroLineNames,activeNames:activeMetroLines,setVisible:setShowMetro,setSelected:setMetroLines,items:allMetroLines.map(({name,color})=>({name,color,icon:TrainFront}))},
   {key:'places',label:placeBtnLabel,allLabel:'全部地点',caretAria:'细分地点类别',menuAria:'地点类别细分',icon:MapPin,visible:showPlaces,effective:showPlacesEffective,selected:spotCats,allNames:allSpotCatNames,activeNames:activeSpotCats,setVisible:setShowPlaces,setSelected:setSpotCats,items:xhsCats.map(([c])=>{const xm=xhsCategoryMeta(c,dark);return {name:c,color:xm.color,icon:xm.icon};})},
  ];
 
@@ -394,9 +377,9 @@ export default function App(){
  },[places,xhsSpots,xhsNotes,records.checkins]);
  const footprintCount=completedRoutes.length+spotFootprints.length;
 
- const nearbyRoutes=bubbleSpot?cityRoutes.map(r=>{const a=areas.find(x=>x.id===r.areaId);return a?{r,km:distanceKm(bubbleSpot.coordinates,a.coordinates)}:null;}).filter((x):x is {r:Route;km:number}=>!!x).sort((a,b)=>a.km-b.km).slice(0,2):[];
- const metroNearbyRoutes=selectedMetro?cityRoutes.map(r=>{const a=areas.find(x=>x.id===r.areaId);return a?{r,km:distanceKm(selectedMetro.coordinates,a.coordinates)}:null;}).filter((x):x is {r:Route;km:number}=>!!x).sort((a,b)=>a.km-b.km).slice(0,4):[];
- const metroNearbySpots=selectedMetro?cityXhs.map(s=>({s,km:distanceKm(selectedMetro.coordinates,s.coordinates)})).sort((a,b)=>a.km-b.km).slice(0,5):[];
+ const nearbyRoutes=bubbleSpot?routes.map(r=>{const a=areas.find(x=>x.id===r.areaId);return a?{r,km:distanceKm(bubbleSpot.coordinates,a.coordinates)}:null;}).filter((x):x is {r:Route;km:number}=>!!x).sort((a,b)=>a.km-b.km).slice(0,2):[];
+ const metroNearbyRoutes=selectedMetro?routes.map(r=>{const a=areas.find(x=>x.id===r.areaId);return a?{r,km:distanceKm(selectedMetro.coordinates,a.coordinates)}:null;}).filter((x):x is {r:Route;km:number}=>!!x).sort((a,b)=>a.km-b.km).slice(0,4):[];
+ const metroNearbySpots=selectedMetro?xhsSpots.filter(s=>!hideClosed||!isSpotClosed(s)).map(s=>({s,km:distanceKm(selectedMetro.coordinates,s.coordinates)})).sort((a,b)=>a.km-b.km).slice(0,5):[];
 
  const spotBubble=bubbleSpot?(()=>{
   const bm=xhsCategoryMeta(bubbleSpot.category,dark);
@@ -494,12 +477,12 @@ export default function App(){
  return (
   <main className="app">
    <MapView
-    cityName={cfg.name}
-    routes={cityRoutes}
+    cityName="港深"
+    routes={routes}
     onRoute={selectRoute}
     dark={dark}
-    areas={cityAreas}
-    places={cityPlaces}
+    areas={areas}
+    places={places}
     category=""
     activeArea={undefined}
     selectedPlace={place}
@@ -528,14 +511,9 @@ export default function App(){
    />
 
    <header className="topbar">
-    <div className="city-switch" role="group" aria-label="选择漫游城市">
-     {(['hk','sz'] as const).map(c=>(
-      <button key={c} className={city===c?'active':''} aria-pressed={city===c} onClick={()=>switchCity(c)}>{CITY_CONFIG[c].name}</button>
-     ))}
-    </div>
     <div className="search-wrap">
      <Search size={14}/>
-     <input aria-label="搜索路线、地点或去处" maxLength={80} value={query} onChange={e=>setQuery(e.target.value)} placeholder="搜索…"/>
+     <input aria-label="搜索路线、地点或去处" maxLength={80} value={query} onChange={e=>setQuery(e.target.value)} placeholder="搜索港深地点、路线、菜系…"/>
      {query&&<button aria-label="清空搜索" onClick={()=>setQuery('')}><X size={13}/></button>}
      {query&&(
       <div className="search-results">
@@ -548,7 +526,7 @@ export default function App(){
        )):(
         <div className="search-empty">
          <p>无匹配结果，可试试：</p>
-         <div className="search-suggestions">{cfg.suggestions.map(k=><button key={k} className="chip" onClick={()=>setQuery(k)}>{k}</button>)}</div>
+         <div className="search-suggestions">{SEARCH_SUGGESTIONS.map(k=><button key={k} className="chip" onClick={()=>setQuery(k)}>{k}</button>)}</div>
         </div>
        )}
       </div>
@@ -556,7 +534,7 @@ export default function App(){
     </div>
     <div className="topbar-tools">
      <button className={`icon-button ${view==='saved'?'active':''}`} aria-label="收藏与足迹" title="收藏与足迹" aria-pressed={view==='saved'} onClick={()=>{if(view==='saved')close();else{close();setView('saved');}}}><Heart size={15} fill={view==='saved'?'currentColor':'none'}/></button>
-     <button className="icon-button" aria-label={`查看${cfg.name}全域`} title={`查看${cfg.name}全域`} onClick={()=>{close();map.current?.fitBounds(cfg.bounds,{padding:60,duration:800});}}><LocateFixed size={15}/></button>
+     <button className="icon-button" aria-label="查看港深全域" title="查看港深全域" onClick={()=>{close();map.current?.fitBounds(HKSZ_BOUNDS,{padding:50,duration:800});}}><LocateFixed size={15}/></button>
      <button className="icon-button" aria-label={dark?'切换浅色地图':'切换深色地图'} title={dark?'浅色底图':'深色底图'} onClick={()=>setDark(!dark)}>{dark?<Sun size={15}/>:<Moon size={15}/>}</button>
     </div>
    </header>
@@ -573,8 +551,42 @@ export default function App(){
           <span className="layer-orb" style={effective&&selected===null&&!(key==='places'&&selectedCuisine)?{color:'var(--accent)'}:undefined}><MainIcon size={12}/></span><span>{allLabel}</span>
          </button>
          <div className="layer-sep"/>
-         {key==='metro'&&items.length===0?(
-          <p className="layer-loading">正在加载地铁线路…</p>
+         {key==='metro'?(
+          items.length===0?<p className="layer-loading">正在加载地铁线路…</p>:(
+           <>
+            {hkMetroLines.length>0&&(
+             <>
+              <div className="layer-subhead"><span>香港港铁</span><small>{hkMetroLines.length}</small></div>
+              <div className="layer-grid">
+               {hkMetroLines.map(({name,color})=>{
+                const on=visible&&activeNames.includes(name);
+                return (
+                 <button className={`layer-chip-btn ${on?'on':''}`} key={name} style={on?{color}:undefined} role="menuitemcheckbox" aria-checked={on} onClick={()=>toggleLayerCat(name,allNames,visible,selected,setSelected,setVisible)}>
+                  <span className="layer-orb"><TrainFront size={12}/></span><span>{name}</span>
+                 </button>
+                );
+               })}
+              </div>
+             </>
+            )}
+            {szMetroLines.length>0&&(
+             <>
+              <div className="layer-sep"/>
+              <div className="layer-subhead"><span>深圳地铁</span><small>{szMetroLines.length}</small></div>
+              <div className="layer-grid">
+               {szMetroLines.map(({name,color})=>{
+                const on=visible&&activeNames.includes(name);
+                return (
+                 <button className={`layer-chip-btn ${on?'on':''}`} key={name} style={on?{color}:undefined} role="menuitemcheckbox" aria-checked={on} onClick={()=>toggleLayerCat(name,allNames,visible,selected,setSelected,setVisible)}>
+                  <span className="layer-orb"><TrainFront size={12}/></span><span>{name}</span>
+                 </button>
+                );
+               })}
+              </div>
+             </>
+            )}
+           </>
+          )
          ):(
           <div className="layer-grid">
            {items.map(({name,color,icon:ItemIcon})=>{
@@ -587,7 +599,7 @@ export default function App(){
            })}
           </div>
          )}
-         {key==='places'&&cityCuisines.length>0&&(
+         {key==='places'&&allCuisines.length>0&&(
           <>
            <div className="layer-sep"/>
            <div className="layer-subhead">
@@ -595,7 +607,7 @@ export default function App(){
             {selectedCuisine&&<button type="button" onClick={()=>setSelectedCuisine(null)}>清除</button>}
            </div>
            <div className="layer-cuisine-row">
-            {cityCuisines.map(([c,n])=>{
+            {allCuisines.map(([c,n])=>{
              const on=selectedCuisine===c;
              return (
               <button type="button" key={c} className={`layer-cuisine-pill ${on?'on':''}`} aria-pressed={on} onClick={()=>{

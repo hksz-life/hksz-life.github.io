@@ -134,7 +134,7 @@ export default function MapView(p:Props){
  useEffect(()=>{
   if(!container.current)return;
   let disposed=false;let m:Map;
-  try{m=new Map({container:container.current,style:mapStyle(latest.current.dark),center:[114.135,22.29],zoom:11.5,minZoom:8,maxZoom:19,attributionControl:{compact:true}});}catch{setFailed(true);return;}
+  try{m=new Map({container:container.current,style:mapStyle(latest.current.dark),center:[114.11,22.41],zoom:10.35,minZoom:8,maxZoom:19,attributionControl:{compact:true}});}catch{setFailed(true);return;}
   map.current=m;latest.current.onReady(m);
   m.addControl(new NavigationControl({visualizePitch:true}),'bottom-right');
   m.addControl(new ScaleControl({maxWidth:100}),'bottom-left');
@@ -396,7 +396,7 @@ export default function MapView(p:Props){
  };
 
  return <>
-  <div className="map-canvas" ref={container} aria-label={`${p.cityName??'香港'}互动地图`}/>
+  <div className="map-canvas" ref={container} aria-label={`${p.cityName??'港深'}互动地图`}/>
   <div className="map-markers" ref={markersRef} aria-label="路线交通节点与编号站点">
    {m&&showSpots&&sightStops.filter(s=>s.place.id!==p.selectedPlace?.id).map(({place,orderText})=>(
     <button key={`stop-${place.id}`} className="stop-pin" data-lng={place.coordinates[0]} data-lat={place.coordinates[1]} style={posStyle(place.coordinates)} title={`第 ${orderText} 站 · ${place.nameZh}`} aria-label={`第 ${orderText} 站：${place.nameZh}`} onClick={()=>p.onPlace(place)}>
@@ -429,6 +429,6 @@ export default function MapView(p:Props){
     </div>
    )}
   </div>
-  {(!loaded||failed)&&<div className="map-status" role="status">{failed?<>地图资源未完整加载 <button onClick={()=>{setFailed(false);setLoaded(false);setRetry(x=>x+1);}}>重试地图</button></>:`正在展开${p.cityName??'香港'}地图…`}</div>}
+  {(!loaded||failed)&&<div className="map-status" role="status">{failed?<>地图资源未完整加载 <button onClick={()=>{setFailed(false);setLoaded(false);setRetry(x=>x+1);}}>重试地图</button></>:`正在展开${p.cityName??'港深'}地图…`}</div>}
  </>;
 }
